@@ -34,11 +34,17 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        resources: 'bootstrap_3_horizontal_layout.html.twig'
+    globals:
+        app_name:     "ÁTICA FCT"
+        app_repository: "https://github.com/iesoretania/atica-fct"
+        app_version:  "6.0"
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   "%database_driver%"
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"

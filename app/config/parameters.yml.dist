@@ -1,19 +1,41 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+# Este fichero es una plantilla del contenido que debería tener "parameters.yml"
+#
+# No hagas ningún cambio aquí, hazlo directamente en el fichero "parameters.yml". Dicho fichero se genera
+# automáticamente al hacer un "composer install"
+#
 parameters:
+    # Datos de conexión con la base de datos a usar: pdo_mysql, pdo_pgsql, pdo_sqlite, etc.
+    database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    # Nombre por defecto del schema o base de datos
+    database_name:     atica
+    # Nombre y contraseña del usuario que accederá a la base de datos. ¡No usar "root" en producción!
     database_user:     root
     database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
+    # Si vas a usar SQLite, deberías modificar la línea siguiente para indicar donde almacenar la base de datos
     # database_path: "%kernel.root_dir%/data.db3"
 
+    # En el caso de usar una cuenta de GMail para enviar notificaciones,
+    # cambia "smtp" por "gmail", "127.0.0.1" por "~"; en mailer_user coloca
+    # la cuenta de correo completa y en mailer_password la contraseña de acceso
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
 
-    # A secret key that's used to generate certain security-related tokens
+    # Nombre de la sesión que se utilizará para almacenar datos en el navegador del usuario
+    session_name:      aticafct
+
+    # Cambia la frase siguiente por cualquier secuencia aleatoria
+    # Puedes generar una desde aquí: http://nux.net/secret
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Prefijo de las notificaciones enviadas a los usuarios
+    notification.prefix:        "[ÁTICA FCT] "
+
+    # Remitente de las notificaciones
+    notification.email_from:    %mailer_user%
+
+    # Caducidad de los restablecimientos de contraseña (en minutos)
+    password_reset.expire:      30
