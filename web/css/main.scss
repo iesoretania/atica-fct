@@ -1,0 +1,60 @@
+// Colocar aquí personalizaciones de Bootstrap y Fontawesome
+
+@import "flatly/variables";
+$breadcrumb-separator: ">";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "flatly/bootswatch";
+@import "../../node_modules/font-awesome/scss/font-awesome";
+
+/* Icono de hamburguesa animado */
+.navbar {
+  .navbar-toggle {
+    &:hover, &:focus {
+      background-color: transparent;
+    }
+    &.collapsed {
+      .icon-bar {
+        &:nth-of-type(2) {
+          transform: rotate(0deg);
+          top: 0;
+        }
+        &:nth-of-type(3) {
+          opacity: 1;
+          width: 100%;
+          margin-left: 0;
+        }
+        &:nth-of-type(4) {
+          transform: rotate(0deg);
+          bottom: 0;
+        }
+      }
+    }
+    .icon-bar {
+      position: relative;
+      transition: all 500ms ease-in-out;
+
+      &:nth-of-type(2) {
+        transform: rotate(45deg);
+        top: 6px;
+      }
+      &:nth-of-type(3) {
+        opacity: 0;
+        width: 0;
+        margin-left: 50%;
+      }
+      &:nth-of-type(4) {
+        transform: rotate(-45deg);
+        bottom: 6px;
+      }
+    }
+  }
+}
+
+/* Cambiar iconos de Glyphicons por sus equivalentes en Fontawesome */
+.glyphicon {
+  @extend .fa;
+
+  &.glyphicon-exclamation-sign {
+    @extend .fa-exclamation-triangle;
+  }
+}
