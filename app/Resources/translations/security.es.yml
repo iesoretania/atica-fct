@@ -1,0 +1,34 @@
+form.login.submit: ACCEDER A LA APLICACIÓN
+form.login.title: Introduzca sus credenciales de acceso
+form.login.username_email: Nombre de usuario o correo electrónico
+form.login.email: Correo electrónico
+form.login.password: Contraseña
+form.login.password.reset: ¿Olvidó la contraseña?
+form.login.footer: Esta aplicación es {{ link }} con licencia AGPL3
+form.login.footer.link.caption: software libre
+
+form.reset.title: Restablecimiento de contraseña
+form.reset.submit: COMENZAR PROCESO
+form.reset.back: Volver al formulario de entrada
+form.reset.notfound: No se ha encontrado la dirección indicada.
+form.reset.notvalid: No se ha encontrado la petición de restablecimiento o bien ha caducado. Vuelva a solicitarla.
+form.reset.password_new: Introduzca la nueva contraseña
+form.reset.password_repeat: Vuelva a introducirla
+form.reset.submit_set: CONFIGURAR NUEVA CONTRASEÑA
+form.reset.sent: Se han enviado instrucciones a la dirección %email%.
+form.reset.error: No se han podido enviar las instrucciones a la dirección indicada.
+form.reset.wait: Debe esperar al menos %expiry% minutos entre solicitudes.
+form.reset.email.subject: Restablecimiento de contraseña
+form.reset.email.body: |
+    Estimado %name%:
+
+    Hemos recibido una solicitud de restablecimiento de contraseña. En el caso de que desee cambiar su contraseña
+    por una nueva debe hacer clic en el siguiente enlace: %link%
+
+    El enlace caducará en %expiry% minutos a contar desde la solicitud.
+
+    Si cree que ha recibido este mensaje por error ignórelo, no es necesario que realice ninguna acción adicional.
+
+    Un cordial saludo.
+
+form.reset.message: Contraseña restablecida con éxito
