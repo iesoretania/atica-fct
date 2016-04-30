@@ -10,3 +10,12 @@ services:
     app.mailer:
         class: AppBundle\Service\MailerService
         arguments: ["%notification.prefix%", "%notification.email_from%", "@mailer", "@translator"]
+
+    app.menu_builders_chain:
+        class: AppBundle\Service\MenuBuilderChain
+
+    app.menu:
+        class: AppBundle\Service\AppMenu
+        arguments: ['@security.authorization_checker']
+        tags:
+            -  { name: atica_core.menu_builder }
