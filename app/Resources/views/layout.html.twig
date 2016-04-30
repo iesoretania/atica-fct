@@ -1,0 +1,59 @@
+{% trans_default_domain 'menu' %}
+{% extends 'base.html.twig' %}
+{% import 'macros_layout.html.twig' as ml %}
+
+{% block title %}
+    {% if title is defined and title is not empty %}
+        {{ title }} -
+    {% elseif breadcrumb is defined %}
+        {{ ((breadcrumb|last).caption)|trans }} -
+    {% endif %}
+    {{- user_extension.currentOrganization ? user_extension.currentOrganization.name }}
+{%- endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="sr-only">{{ 'navbar.expand'|trans }}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ path('frontpage') }}">
+                    {% block navbartitle %}{{ user_extension.currentOrganization ? user_extension.currentOrganization.name : app_name }}{% endblock %}
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                {{ ml.navbar_menu(menu|default(menu_extension.menu)) }}
+                {% if not app.user %}
+                    <a href="{{ path('login') }}" class="btn btn-default navbar-btn pull-right">Entrar en la aplicación</a>
+                {% else %}
+                    {% include 'partial_usermenu.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% if breadcrumb is defined %}
+            {% include 'partial_breadcrumb.html.twig' %}
+        {% endif %}
+        {% if title is defined %}
+            <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>
+        {% endif %}
+        {{ ml.flash_message('success', 'success') }}
+        {{ ml.flash_message('error', 'danger') }}
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer no-print" role="contentinfo">
+        <div class="container">
+            {% block footer %}
+                <p class="text-muted">
+                    &copy; 2015-{{ 'now'|date('Y') }}, Luis Ramón López López
+                </p>
+            {% endblock %}
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% trans_default_domain 'menu' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros_menu.html.twig' as mm %}
+
+{% block content %}
+    <section class="row tile-row">
+        {% for item in menu_item.children %}
+            {{ mm.menu_item(item.caption, item.description, item.routeName, item.routeParams, item.color, item.icon) }}
+        {% endfor %}
+        <article class="col-md-4 tile tile-col-4 tile-teal">
+            <a class="tile-link" href="{{ path('frontpage') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-home fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>{{ 'menu.back'|trans }}</h4>
+                    <p>{{ 'menu.back.detail'|trans }}</p>
+                </div>
+            </a>
+        </article>
+    </section>
+{% endblock %}

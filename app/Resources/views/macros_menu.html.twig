@@ -1,0 +1,14 @@
+{% trans_default_domain 'menu' %}
+{% macro menu_item(caption, description, path, parameters, color, icon) %}
+    <article class="col-md-4 tile tile-col-4 tile-{{ color }}">
+        <a class="tile-link" href="{{ path(path, parameters) }}">
+            <div class="tile-icon-holder">
+                <i class="fa fa-{{ icon }} fa-4x"></i>
+            </div>
+            <div class="text-holder">
+                <h4>{{ caption | trans }}</h4>
+                <p>{{ description | trans }}</p>
+            </div>
+        </a>
+    </article>
+{% endmacro %}

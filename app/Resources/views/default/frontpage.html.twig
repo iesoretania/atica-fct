@@ -1,0 +1,13 @@
+{% trans_default_domain 'menu' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros_menu.html.twig' as mm %}
+{% block content %}
+    <section class="row tile-row">
+        {% for item in menu|default(menu_extension.menu) %}
+            {{ mm.menu_item(item.caption, item.description, item.routeName, item.routeParams, item.color, item.icon) }}
+        {% endfor %}
+
+        {{ mm.menu_item('menu.personal', 'menu.personal.detail', 'personal_form', {}, 'purple', 'cog') }}
+        {{ mm.menu_item('menu.logout', 'menu.logout.detail', 'logout', {}, 'gray', 'power-off') }}
+    </section>
+{% endblock %}

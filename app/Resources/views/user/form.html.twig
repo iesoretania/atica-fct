@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {{ m.link_button(path('frontpage'), 'menu.back'|trans({}, 'menu'), 'arrow-left', 'btn-default') }}
+{% endblock %}

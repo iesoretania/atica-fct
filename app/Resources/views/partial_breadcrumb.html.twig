@@ -1,0 +1,14 @@
+{% trans_default_domain 'menu' %}
+<ol class="breadcrumb">
+    {% spaceless %}
+        <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        {% for item in breadcrumb %}
+            <li>
+                {%- if item.path is defined %}<a href="{{ path(item.path, item.options is defined ? item.options : {}) }}">{% endif -%}
+                    {%- if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif -%}
+                    {%- if item.caption is defined %}{{- item.caption|trans -}}{% endif %}{{- item.fixed|default('') -}}
+                {%- if item.path is defined %}</a>{% endif -%}
+            </li>
+        {%- endfor %}
+    {% endspaceless %}
+</ol>
