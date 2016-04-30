@@ -39,3 +39,5 @@ parameters:
 
     # Caducidad de los restablecimientos de contraseña (en minutos)
     password_reset.expire:      30
+
+    organization.name: "I.E.S. Test"

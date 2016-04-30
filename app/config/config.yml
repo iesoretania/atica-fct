@@ -40,6 +40,8 @@ twig:
         app_name:     "ÁTICA FCT"
         app_repository: "https://github.com/iesoretania/atica-fct"
         app_version:  "6.0"
+        app_organization: "%organization.name%"
+        menu_extension: "@app.menu_builders_chain"
 
 # Doctrine Configuration
 doctrine:

@@ -8,7 +8,7 @@
     {% elseif breadcrumb is defined %}
         {{ ((breadcrumb|last).caption)|trans }} -
     {% endif %}
-    {{- user_extension.currentOrganization ? user_extension.currentOrganization.name }}
+    {{- app_organization }}
 {%- endblock %}
 
 {% block body %}
@@ -22,7 +22,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ path('frontpage') }}">
-                    {% block navbartitle %}{{ user_extension.currentOrganization ? user_extension.currentOrganization.name : app_name }}{% endblock %}
+                    {% block navbartitle %}{{ app_organization }}{% endblock %}
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">

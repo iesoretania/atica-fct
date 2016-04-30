@@ -1,0 +1,26 @@
+form.username: Nombre de usuario
+form.reference: Referencia
+form.first_name: Nombre
+form.last_name: Apellidos
+form.display_name: Nombre mostrado
+form.gender: Sexo
+form.gender_unknown: Desconocido
+form.gender_male: Hombre
+form.gender_female: Mujer
+form.initials: Iniciales
+form.email: Correo electrónico
+form.enabled: El usuario está activo
+form.global_administrator: Es administrador global
+form.profiles: Perfiles activos
+form.old_password: Contraseña antigua
+form.new_password: Nueva contraseña
+form.new_password_repeat: Repita nueva contraseña
+
+form.submit: Guardar cambios
+form.change_password: Guardar los cambios y cambiar la contraseña
+
+alert.password_changed: Datos guardados correctamente y contraseña cambiada
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+form.back: Volver

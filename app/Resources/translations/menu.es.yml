@@ -1,0 +1,27 @@
+
+menu.personal: Datos personales
+menu.personal.detail: Permite modificar los datos propios
+
+menu.logout: Desconectar
+menu.logout.detail: Sale de la aplicación
+
+menu.title: Menú principal
+
+menu.back: Volver a la portada
+menu.back.detail: Muestra el menú principal
+menu.new: Nuevo elemento
+menu.delete: Eliminar elemento
+
+navbar.expand: Desplegar navegación
+navbar.logged.as: Conectado como {{ user }}
+menu.impersonate: Acceder como el usuario
+menu.impersonate.exit: Volver al usuario normal
+
+menu.admin: Administración
+menu.admin.detail: Permite realizar cambios en la configuración de la plataforma
+
+menu.admin.stats: Estadísticas y registros
+menu.admin.stats.detail: Muestra el estado global de la plataforma
+
+menu.admin.manage.users: Usuarios
+menu.admin.manage.users.detail: Permite invitar, modificar o desasociar usuarios
