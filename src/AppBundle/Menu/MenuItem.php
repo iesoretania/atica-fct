@@ -229,7 +229,7 @@ class MenuItem
      */
     public function removeChild(MenuItem $child)
     {
-         $this->children->remove($child);
+        $this->children->removeElement($child);
         return $this;
     }
 

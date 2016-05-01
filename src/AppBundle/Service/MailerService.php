@@ -31,6 +31,10 @@ class MailerService
      */
     private $mailer;
 
+    private $prefix;
+    
+    private $from;
+
     /**
      * @var TranslatorInterface
      */
