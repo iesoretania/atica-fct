@@ -56,7 +56,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      * @Assert\Length(min=7)
      * @var string
      */
