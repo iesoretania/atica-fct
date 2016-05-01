@@ -1,3 +1,14 @@
+{% macro paginator_th(pagination, class, field, caption) %}
+    <th class="{{ class }} {% if pagination.isSorted(field) %}sorted{% endif %}">{{ knp_pagination_sortable(pagination, caption, field) }}</th>
+{% endmacro %}
+
+{% macro paginator_stats(pagination) %}
+    {{ 'showing'|trans({
+        '%first%': min((pagination.getCurrentPageNumber-1)*pagination.getItemNumberPerPage+1, pagination.getTotalItemCount),
+        '%last%': min((pagination.getCurrentPageNumber)*pagination.getItemNumberPerPage, pagination.getTotalItemCount),
+        '%total%': pagination.getTotalItemCount }, 'messages') }}
+{% endmacro %}
+
 {% macro start_button() %}
     <div class="form-group">
         <div class="col-sm-2"></div>

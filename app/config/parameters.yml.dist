@@ -40,4 +40,8 @@ parameters:
     # Caducidad de los restablecimientos de contraseña (en minutos)
     password_reset.expire:      30
 
+    # Elementos predeterminados por página en los listados
+    page.size:                  20
+
+    # Nombre de la organización que se mostrará
     organization.name: "I.E.S. Test"
