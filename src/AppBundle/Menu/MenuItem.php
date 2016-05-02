@@ -258,4 +258,22 @@ class MenuItem
         $this->parent = $parent;
         return $this;
     }
+
+    /**
+     * Devuelve la ruta del ítem hasta la raíz
+     * 
+     * @return MenuItem[]|null
+     */
+    public function getPath()
+    {
+        $path = [$this];
+        $current = $this;
+
+        while (null !== $current->getParent()) {
+            array_unshift($path, $current->getParent());
+            $current = $current->getParent();
+        }
+
+        return $path;
+    }
 }

@@ -80,6 +80,31 @@ class MenuBuilderChain
         return $menu;
     }
 
+    public function getSubmenuItemByName(MenuItem $submenu, $name)
+    {
+        foreach ($submenu->getChildren() as $item) {
+            if ($item->getName() === $name) {
+                return $item;
+            } else {
+                return $this->getSubmenuItemByName($item, $name);
+            }
+        }
+
+        return null;
+    }
+
+    public function getMenuItemByName($name)
+    {
+        foreach ($this->getMenu() as $item) {
+            $menuItem = $this->getSubmenuItemByName($item, $name);
+
+            if (null !== $menuItem) {
+                return $menuItem;
+            }
+        }
+        return null;
+    }
+
     public function clearCache()
     {
         $this->menuCache = null;
