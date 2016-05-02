@@ -21,14 +21,16 @@
 namespace AppBundle\Service;
 
 use AppBundle\Menu\MenuItem;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class AppMenu implements MenuBuilderInterface
 {
-    public function updateMenu(ArrayCollection $menu)
+    public function updateMenu(&$menu)
     {
-        $mainItem = $menu->first();
+        /**
+         * @var $mainItem MenuItem
+         */
+        $mainItem = reset($menu);
 
         $item = new MenuItem();
         $item
@@ -52,7 +54,7 @@ class AppMenu implements MenuBuilderInterface
 
         $mainItem->addChild($item);
 
-        $menu->add($mainItem);
+        $menu[] = $mainItem;
     }
 
     public function getMenuPriority()

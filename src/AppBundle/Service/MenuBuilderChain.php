@@ -21,7 +21,6 @@
 namespace AppBundle\Service;
 
 use AppBundle\Menu\MenuItem;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class MenuBuilderChain
 {
@@ -57,7 +56,7 @@ class MenuBuilderChain
             return $this->menuCache;
         }
 
-        $menu = new ArrayCollection();
+        $menu = [];
 
         $mainItem = new MenuItem();
         $mainItem
@@ -68,7 +67,7 @@ class MenuBuilderChain
             ->setColor('white')
             ->setIcon('home');
 
-        $menu->add($mainItem);
+        $menu[] = $mainItem;
 
         ksort($this->menuBuilders);
 

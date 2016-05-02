@@ -3,7 +3,7 @@
 {% import '::macros_menu.html.twig' as mm %}
 {% block content %}
     <section class="row tile-row">
-        {% for item in menu|default(menu_extension.menu.first.children) %}
+        {% for item in menu|default((menu_extension.menu|first).children) %}
             {{ mm.menu_item(item.caption, item.description, item.routeName, item.routeParams, item.color, item.icon) }}
         {% endfor %}
     </section>

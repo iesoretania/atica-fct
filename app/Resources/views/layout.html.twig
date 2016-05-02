@@ -26,7 +26,7 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-main">
-                {{ ml.navbar_menu(menu|default(menu_extension.menu.first.children)) }}
+                {{ ml.navbar_menu(menu|default((menu_extension.menu|first).children)) }}
                 {% if not app.user %}
                     <a href="{{ path('login') }}" class="btn btn-default navbar-btn pull-right">Entrar en la aplicación</a>
                 {% else %}

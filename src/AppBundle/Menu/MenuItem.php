@@ -20,10 +20,11 @@
 
 namespace AppBundle\Menu;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 class MenuItem
 {
+    const AT_THE_BEGINNING = 1;
+    const AT_THE_END = 2;
+
     /**
      * @var string
      */
@@ -60,7 +61,7 @@ class MenuItem
     protected $color;
 
     /**
-     * @var ArrayCollection
+     * @var MenuItem[]
      */
     protected $children;
 
@@ -74,7 +75,7 @@ class MenuItem
      */
     public function __construct()
     {
-        $this->children = new ArrayCollection();
+        $this->children = [];
         $this->parent = null;
     }
 
@@ -216,9 +217,14 @@ class MenuItem
      * @param MenuItem $child
      * @return MenuItem
      */
-    public function addChild(MenuItem $child)
+    public function addChild(MenuItem $child, $where = self::AT_THE_END)
     {
-        $this->children->add($child);
+        if ($where === self::AT_THE_END) {
+            $this->children[] = $child;
+        } else {
+            array_unshift($this->children, $child);
+        }
+
         $child->setParent($this);
         return $this;
     }
@@ -229,7 +235,9 @@ class MenuItem
      */
     public function removeChild(MenuItem $child)
     {
-        $this->children->removeElement($child);
+        $this->children = array_filter($this->children, function(MenuItem $e) use ($child) {
+            return $e !== $child;
+        });
         return $this;
     }
 

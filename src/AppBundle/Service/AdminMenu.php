@@ -21,7 +21,6 @@
 namespace AppBundle\Service;
 
 use AppBundle\Menu\MenuItem;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class AdminMenu implements MenuBuilderInterface
@@ -33,7 +32,7 @@ class AdminMenu implements MenuBuilderInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function updateMenu(ArrayCollection $menu)
+    public function updateMenu(&$menu)
     {
         $isAdministrator = $this->authorizationChecker->isGranted("ROLE_ADMIN");
 
@@ -44,7 +43,7 @@ class AdminMenu implements MenuBuilderInterface
         /**
          * @var $root MenuItem
          */
-        $root = $menu->first();
+        $root = reset($menu);
 
         $mainItem = new MenuItem();
         $mainItem
@@ -66,7 +65,7 @@ class AdminMenu implements MenuBuilderInterface
 
         $mainItem->addChild($item);
 
-        $root->addChild($mainItem);
+        $root->addChild($mainItem, MenuItem::AT_THE_BEGINNING);
     }
 
     public function getMenuPriority()

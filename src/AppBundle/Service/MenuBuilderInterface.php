@@ -20,11 +20,21 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Menu\MenuItem;
 
 interface MenuBuilderInterface
 {
-    public function updateMenu(ArrayCollection $menu);
+    /**
+     * Se pasa un array de elementos MenuItem para que se actualice con nuevas entradas
+     *
+     * @param $menu MenuItem[]
+     */
+    public function updateMenu(&$menu);
 
+    /**
+     * Devuelve una cadena con la prioridad de llamada de estas entradas de menú
+     *
+     * @return string
+     */
     public function getMenuPriority();
 }
