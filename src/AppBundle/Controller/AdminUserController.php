@@ -58,10 +58,7 @@ class AdminUserController extends Controller
 
         return $this->render('admin/manage_users.html.twig',
             [
-                'breadcrumb' => [
-                    ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
-                    ['caption' => 'menu.admin.manage.users', 'icon' => 'users']
-                ],
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_users'),
                 'title' => null,
                 'pagination' => $pagination
             ]);
@@ -120,9 +117,8 @@ class AdminUserController extends Controller
 
         return $this->render('admin/form_user.html.twig', [
             'form' => $form->createView(),
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_users'),
             'breadcrumb' => [
-                ['caption' => 'menu.manage', 'icon' => 'wrench', 'path' => 'admin_menu'],
-                ['caption' => 'menu.admin.manage.users', 'icon' => 'users', 'path' => 'admin_users'],
                 ['fixed' => $titulo]
             ],
             'title' => $titulo

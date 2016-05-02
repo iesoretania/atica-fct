@@ -1,13 +1,20 @@
 {% trans_default_domain 'menu' %}
 <ol class="breadcrumb">
     {% spaceless %}
-        <li><a href="{{ path('frontpage') }}"><i class="fa fa-home fa-2x"></i></a></li>
-        {% for item in breadcrumb %}
+        {% for menu_item in menu_item.path %}
+            <li>
+                <a href="{{ path(menu_item.routeName, menu_item.routeParams) }}">
+                    {%- if menu_item.icon %}<i class="fa fa-{{ menu_item.icon }}{% if loop.first %} fa-2x{% endif %}"></i> {% endif -%}
+                    {%- if not loop.first and menu_item.caption %}{{- menu_item.caption|trans -}}{% endif %}
+                </a>
+            </li>
+        {%- endfor -%}
+        {%- for item in breadcrumb|default([]) %}
             <li>
                 {%- if item.path is defined %}<a href="{{ path(item.path, item.options is defined ? item.options : {}) }}">{% endif -%}
                     {%- if item.icon is defined %}<i class="fa fa-{{ item.icon }}"></i> {% endif -%}
-                    {%- if item.caption is defined %}{{- item.caption|trans -}}{% endif %}{{- item.fixed|default('') -}}
-                {%- if item.path is defined %}</a>{% endif -%}
+                    {%- if not loop.first and item.caption is defined %}{{- item.caption|trans -}}{% endif %}{{- item.fixed|default('') -}}
+                    {%- if item.path is defined %}</a>{% endif -%}
             </li>
         {%- endfor %}
     {% endspaceless %}

@@ -36,11 +36,11 @@
         </div>
     </nav>
     <div class="container">
-        {% if breadcrumb is defined %}
+        {% if menu_item is defined and menu_item is not empty %}
             {% include 'partial_breadcrumb.html.twig' %}
         {% endif %}
         {% if title is defined %}
-            <h1 class="well">{{ ((title is null and breadcrumb is defined) ? (breadcrumb|last).caption|trans : title) }}</h1>
+            <h1 class="well">{{ ((title is null and menu_item is defined) ? menu_item.caption|trans : title) }}</h1>
         {% endif %}
         {{ ml.flash_message('success', 'success') }}
         {{ ml.flash_message('error', 'danger') }}

@@ -72,9 +72,7 @@ class UserController extends Controller
 
         return $this->render('user/form.html.twig', [
             'form' => $form->createView(),
-            'breadcrumb' => [
-                ['caption' => 'menu.personal', 'icon' => 'cog']
-            ],
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('personal_form'),
             'title' => null
         ]);
     }

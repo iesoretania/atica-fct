@@ -80,29 +80,30 @@ class MenuBuilderChain
         return $menu;
     }
 
-    public function getSubmenuItemByName(MenuItem $submenu, $name)
+    public function getSubmenuItemByRouteName(MenuItem $submenu, $name)
     {
-        foreach ($submenu->getChildren() as $item) {
-            if ($item->getName() === $name) {
-                return $item;
-            } else {
-                return $this->getSubmenuItemByName($item, $name);
+        if ($submenu->getRouteName() === $name) {
+            return $submenu;
+        }
+
+        $children = $submenu->getChildren();
+
+        foreach ($children as $item) {
+            $result = $this->getSubmenuItemByRouteName($item, $name);
+            if (null !== $result) {
+                return $result;
             }
         }
 
         return null;
     }
 
-    public function getMenuItemByName($name)
+    public function getMenuItemByRouteName($name)
     {
-        foreach ($this->getMenu() as $item) {
-            $menuItem = $this->getSubmenuItemByName($item, $name);
+        $menu = $this->getMenu();
+        $root = reset($menu);
 
-            if (null !== $menuItem) {
-                return $menuItem;
-            }
-        }
-        return null;
+        return $this->getSubmenuItemByRouteName($root, $name);
     }
 
     public function clearCache()

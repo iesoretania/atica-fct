@@ -20,7 +20,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Menu\MenuItem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,24 +35,10 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $menu = $this->get('app.menu_builders_chain')->getMenu();
-
-        $menuItem = [];
-
-        /**
-         * @var MenuItem $item
-         */
-        foreach ($menu as $item) {
-            if ($item->getName() === 'admin') {
-                $menuItem = $item;
-            }
-        }
-
+        $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_menu');
+        
         return $this->render('admin/menu.html.twig',
             [
-                'breadcrumb' => [
-                    ['caption' => $menuItem->getCaption(), 'icon' => $menuItem->getIcon()]
-                ],
                 'menu_item' => $menuItem
             ]);
     }
