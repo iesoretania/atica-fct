@@ -21,6 +21,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Menu\MenuItem;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MenuBuilderChain
 {
@@ -40,9 +41,9 @@ class MenuBuilderChain
         $this->menuCache = null;
     }
 
-    public function addMenuBuilder($menuBuilder)
+    public function addMenuBuilder(MenuBuilderInterface $menuBuilder)
     {
-        $this->menuBuilders[] = $menuBuilder;
+        $this->menuBuilders[$menuBuilder->getMenuPriority()] = $menuBuilder;
     }
 
     public function getChain()
@@ -56,15 +57,24 @@ class MenuBuilderChain
             return $this->menuCache;
         }
 
-        $menu = [];
+        $menu = new ArrayCollection();
+
+        $mainItem = new MenuItem();
+        $mainItem
+            ->setName('frontpage')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.frontpage')
+            ->setDescription('menu.frontpage.detail')
+            ->setColor('white')
+            ->setIcon('home');
+
+        $menu->add($mainItem);
+
+        ksort($this->menuBuilders);
 
         foreach ($this->menuBuilders as $menuBuilder) {
-            $menuStructure = $menuBuilder->getMenuStructure();
-            if ($menuStructure) {
-                $menu[$menuBuilder->getMenuPriority()] = $menuStructure;
-            }
+            $menuBuilder->updateMenu($menu);
         }
-        ksort($menu, SORT_NUMERIC);
 
         $this->menuCache = $menu;
 

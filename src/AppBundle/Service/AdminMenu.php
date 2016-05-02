@@ -24,39 +24,53 @@ use AppBundle\Menu\MenuItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-class AppMenu implements MenuBuilderInterface
+class AdminMenu implements MenuBuilderInterface
 {
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationChecker $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     public function updateMenu(ArrayCollection $menu)
     {
-        $mainItem = $menu->first();
+        $isAdministrator = $this->authorizationChecker->isGranted("ROLE_ADMIN");
+
+        if (!$isAdministrator) {
+            return null;
+        }
+
+        /**
+         * @var $root MenuItem
+         */
+        $root = $menu->first();
+
+        $mainItem = new MenuItem();
+        $mainItem
+            ->setName('admin')
+            ->setRouteName('admin_menu')
+            ->setCaption('menu.admin')
+            ->setDescription('menu.admin.detail')
+            ->setColor('teal')
+            ->setIcon('wrench');
 
         $item = new MenuItem();
         $item
-            ->setName('personal')
-            ->setRouteName('personal_form')
-            ->setCaption('menu.personal')
-            ->setDescription('menu.personal.detail')
-            ->setColor('purple')
-            ->setIcon('cog');
+            ->setName('admin.users')
+            ->setRouteName('admin_users')
+            ->setCaption('menu.admin.manage.users')
+            ->setDescription('menu.admin.manage.users.detail')
+            ->setColor('magenta')
+            ->setIcon('users');
 
         $mainItem->addChild($item);
 
-        $item = new MenuItem();
-        $item
-            ->setName('logout')
-            ->setRouteName('logout')
-            ->setCaption('menu.logout')
-            ->setDescription('menu.logout.detail')
-            ->setColor('gray')
-            ->setIcon('power-off');
-
-        $mainItem->addChild($item);
-
-        $menu->add($mainItem);
+        $root->addChild($mainItem);
     }
 
     public function getMenuPriority()
     {
-        return '9999-App';
+        return '1000-Admin';
     }
 }

@@ -20,9 +20,11 @@
 
 namespace AppBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 interface MenuBuilderInterface
 {
-    public function getMenuStructure();
+    public function updateMenu(ArrayCollection $menu);
 
     public function getMenuPriority();
 }

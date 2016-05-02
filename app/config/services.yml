@@ -16,6 +16,11 @@ services:
 
     app.menu:
         class: AppBundle\Service\AppMenu
-        arguments: ['@security.authorization_checker']
+        tags:
+            -  { name: atica_core.menu_builder }
+
+    app.admin.menu:
+        class: AppBundle\Service\AdminMenu
+        autowire: true
         tags:
             -  { name: atica_core.menu_builder }
