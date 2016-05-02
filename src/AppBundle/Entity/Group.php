@@ -25,6 +25,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="student_group")
  * @UniqueEntity(fields={"name"})
  */
 class Group
@@ -45,17 +46,153 @@ class Group
 
     /**
      * @ORM\ManyToOne(targetEntity="Training", inversedBy="groups")
+     * @var Training
      */
     protected $training;
 
     /**
      * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="tutorizedGroups")
+     * @var Teacher[]
      */
     protected $tutors;
 
     /**
      * @ORM\OneToMany(targetEntity="Student", mappedBy="group")
+     * @var Student[]
      */
     protected $students;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tutors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->students = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Group
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set training
+     *
+     * @param \AppBundle\Entity\Training $training
+     *
+     * @return Group
+     */
+    public function setTraining(\AppBundle\Entity\Training $training = null)
+    {
+        $this->training = $training;
+
+        return $this;
+    }
+
+    /**
+     * Get training
+     *
+     * @return \AppBundle\Entity\Training
+     */
+    public function getTraining()
+    {
+        return $this->training;
+    }
+
+    /**
+     * Add tutor
+     *
+     * @param \AppBundle\Entity\Teacher $tutor
+     *
+     * @return Group
+     */
+    public function addTutor(\AppBundle\Entity\Teacher $tutor)
+    {
+        $this->tutors[] = $tutor;
+
+        return $this;
+    }
+
+    /**
+     * Remove tutor
+     *
+     * @param \AppBundle\Entity\Teacher $tutor
+     */
+    public function removeTutor(\AppBundle\Entity\Teacher $tutor)
+    {
+        $this->tutors->removeElement($tutor);
+    }
+
+    /**
+     * Get tutors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTutors()
+    {
+        return $this->tutors;
+    }
+
+    /**
+     * Add student
+     *
+     * @param \AppBundle\Entity\Student $student
+     *
+     * @return Group
+     */
+    public function addStudent(\AppBundle\Entity\Student $student)
+    {
+        $this->students[] = $student;
+
+        return $this;
+    }
+
+    /**
+     * Remove student
+     *
+     * @param \AppBundle\Entity\Student $student
+     */
+    public function removeStudent(\AppBundle\Entity\Student $student)
+    {
+        $this->students->removeElement($student);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
 }

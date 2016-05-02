@@ -455,5 +455,4 @@ class Person
 
         return $this;
     }
-
 }

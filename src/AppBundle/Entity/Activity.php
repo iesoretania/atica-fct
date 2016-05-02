@@ -21,13 +21,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields={"name"})
  */
-class Department
+class Activity
 {
     /**
      * @ORM\Id
@@ -44,24 +42,17 @@ class Department
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Training", mappedBy="department")
-     * @var Training[]
+     * @ORM\Column(type="text", nullable=true)
+     * @var string
      */
-    protected $trainings;
+    protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="directs")
-     * @var Teacher
+     * @ORM\ManyToOne(targetEntity="Training", inversedBy="activities")
+     * @var Training
      */
-    protected $head;
+    protected $training;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->trainings = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -78,7 +69,7 @@ class Department
      *
      * @param string $name
      *
-     * @return Department
+     * @return Activity
      */
     public function setName($name)
     {
@@ -98,60 +89,50 @@ class Department
     }
 
     /**
-     * Add training
+     * Set description
      *
-     * @param \AppBundle\Entity\Training $training
+     * @param string $description
      *
-     * @return Department
+     * @return Activity
      */
-    public function addTraining(\AppBundle\Entity\Training $training)
+    public function setDescription($description)
     {
-        $this->trainings[] = $training;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Remove training
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set training
      *
      * @param \AppBundle\Entity\Training $training
-     */
-    public function removeTraining(\AppBundle\Entity\Training $training)
-    {
-        $this->trainings->removeElement($training);
-    }
-
-    /**
-     * Get trainings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Activity
      */
-    public function getTrainings()
+    public function setTraining(\AppBundle\Entity\Training $training = null)
     {
-        return $this->trainings;
-    }
-
-    /**
-     * Set head
-     *
-     * @param \AppBundle\Entity\Teacher $head
-     *
-     * @return Department
-     */
-    public function setHead(\AppBundle\Entity\Teacher $head = null)
-    {
-        $this->head = $head;
+        $this->training = $training;
 
         return $this;
     }
 
     /**
-     * Get head
+     * Get training
      *
-     * @return \AppBundle\Entity\Teacher
+     * @return \AppBundle\Entity\Training
      */
-    public function getHead()
+    public function getTraining()
     {
-        return $this->head;
+        return $this->training;
     }
 }

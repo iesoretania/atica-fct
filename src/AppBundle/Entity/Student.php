@@ -49,4 +49,121 @@ class Student
      */
     protected $group;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="student")
+     */
+    protected $agreements;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->agreements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Student
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set id
+     *
+     * @param \AppBundle\Entity\Person $id
+     *
+     * @return Student
+     */
+    public function setId(\AppBundle\Entity\Person $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return \AppBundle\Entity\Person
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \AppBundle\Entity\Group $group
+     *
+     * @return Student
+     */
+    public function setGroup(\AppBundle\Entity\Group $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \AppBundle\Entity\Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Add agreement
+     *
+     * @param \AppBundle\Entity\Agreement $agreement
+     *
+     * @return Student
+     */
+    public function addAgreement(\AppBundle\Entity\Agreement $agreement)
+    {
+        $this->agreements[] = $agreement;
+
+        return $this;
+    }
+
+    /**
+     * Remove agreement
+     *
+     * @param \AppBundle\Entity\Agreement $agreement
+     */
+    public function removeAgreement(\AppBundle\Entity\Agreement $agreement)
+    {
+        $this->agreements->removeElement($agreement);
+    }
+
+    /**
+     * Get agreements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgreements()
+    {
+        return $this->agreements;
+    }
 }
