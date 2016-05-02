@@ -64,6 +64,12 @@ class Training
     protected $activities;
 
     /**
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    protected $programHours;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -196,5 +202,29 @@ class Training
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * Set programHours
+     *
+     * @param integer $programHours
+     *
+     * @return Training
+     */
+    public function setProgramHours($programHours)
+    {
+        $this->programHours = $programHours;
+
+        return $this;
+    }
+
+    /**
+     * Get programHours
+     *
+     * @return integer
+     */
+    public function getProgramHours()
+    {
+        return $this->programHours;
     }
 }

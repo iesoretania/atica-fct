@@ -122,7 +122,19 @@ class Person
      * @var string
      */
     protected $email;
-    
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    protected $tokenValidity;
+
     /**
      * Get id
      *
@@ -454,5 +466,53 @@ class Person
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return Person
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set tokenValidity
+     *
+     * @param \DateTime $tokenValidity
+     *
+     * @return Person
+     */
+    public function setTokenValidity($tokenValidity)
+    {
+        $this->tokenValidity = $tokenValidity;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenValidity
+     *
+     * @return \DateTime
+     */
+    public function getTokenValidity()
+    {
+        return $this->tokenValidity;
     }
 }

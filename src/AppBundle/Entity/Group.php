@@ -26,7 +26,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="student_group")
+ * @ORM\Table(name="classroom")
  * @UniqueEntity(fields={"name"})
  */
 class Group

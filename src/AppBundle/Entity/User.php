@@ -86,6 +86,12 @@ class User implements UserInterface, \Serializable
     protected $globalAdministrator;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    protected $lastLogin;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -348,5 +354,29 @@ class User implements UserInterface, \Serializable
         }
 
         return $roles;
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param \DateTime $lastLogin
+     *
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return \DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }
