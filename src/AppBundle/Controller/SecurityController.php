@@ -55,10 +55,8 @@ class SecurityController extends Controller
 
         // ¿se ha enviado una dirección?
         if ($form->isSubmitted() && $form->isValid()) {
+
             // comprobar que está asociada a un usuario
-            /**
-             * @var Person|null
-             */
             $person = $this->getDoctrine()->getManager()->getRepository('AppBundle:Person')->findOneBy(['email' => $email]);
 
             $user = (null !== $person) ? $person->getUser() : null;
@@ -70,7 +68,7 @@ class SecurityController extends Controller
                 $this->get('session')->set('_security.last_username', $email);
 
                 // obtener tiempo de expiración del token
-                $expire = (int)($this->getParameter('password_reset.expire'));
+                $expire = (int) $this->getParameter('password_reset.expire');
 
                 // comprobar que no se ha generado un token hace poco
                 if ($user->getToken() && $user->getTokenValidity() > new \DateTime()) {

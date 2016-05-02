@@ -43,7 +43,7 @@ class AdminController extends Controller
         /**
          * @var MenuItem $item
          */
-        foreach($menu as $item) {
+        foreach ($menu as $item) {
             if ($item->getName() === 'admin') {
                 $menuItem = $item;
             }

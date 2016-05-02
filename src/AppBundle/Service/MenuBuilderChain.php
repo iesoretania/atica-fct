@@ -58,7 +58,7 @@ class MenuBuilderChain
 
         $menu = [];
 
-        foreach($this->menuBuilders as $menuBuilder) {
+        foreach ($this->menuBuilders as $menuBuilder) {
             $menuStructure = $menuBuilder->getMenuStructure();
             if ($menuStructure) {
                 $menu[$menuBuilder->getMenuPriority()] = $menuStructure;

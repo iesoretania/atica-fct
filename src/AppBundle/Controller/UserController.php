@@ -65,8 +65,7 @@ class UserController extends Controller
                 return new RedirectResponse(
                     $this->generateUrl('frontpage')
                 );
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'user'));
             }
         }
