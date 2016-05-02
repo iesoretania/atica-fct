@@ -27,7 +27,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -111,11 +110,8 @@ class AdminUserController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('success', $message);
-                return new RedirectResponse(
-                    $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'admin_users' : 'frontpage')
-                );
-            }
-            catch (\Exception $e) {
+                return $this->redirectToRoute('admin_users');
+            } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'user'));
             }
         }

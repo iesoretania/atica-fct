@@ -31,7 +31,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
@@ -122,9 +122,14 @@ class UserType extends AbstractType
                         'label' => 'form.old_password',
                         'required' => false,
                         'mapped' => false,
-                        'constraints' => new UserPassword([
-                            'groups' => ['password']
-                        ])
+                        'constraints' => [
+                            new UserPassword([
+                                'groups' => ['password']
+                            ]),
+                            new NotBlank([
+                                'groups' => ['password']
+                            ])
+                        ]
                     ]);
             }
         }
@@ -145,7 +150,7 @@ class UserType extends AbstractType
                                 'minMessage' => 'password.min_length',
                                 'groups' => ['password']
                             ]),
-                            new NotNull([
+                            new NotBlank([
                                 'groups' => ['password']
                             ])
                         ]
@@ -155,11 +160,11 @@ class UserType extends AbstractType
                         'required' => $options['new']
                     ]
                 ])
-                ->add('changePassword', SubmitType::class, array(
+                ->add('changePassword', SubmitType::class, [
                     'label' => 'form.change_password',
-                    'attr' => array('class' => 'btn btn-success'),
-                    'validation_groups' => array('Default', 'password')
-                ));
+                    'attr' => ['class' => 'btn btn-success'],
+                    'validation_groups' => ['Default', 'password']
+                ]);
         }
     }
 
@@ -173,7 +178,8 @@ class UserType extends AbstractType
             'translation_domain' => 'user',
             'admin' => false,
             'new' => false,
-            'me' => false
+            'me' => false,
+            'validation_groups' => ['Default']
         ]);
     }
 }

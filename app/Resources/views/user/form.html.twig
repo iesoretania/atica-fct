@@ -5,5 +5,5 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
-    {{ m.link_button(path('frontpage'), 'menu.back'|trans({}, 'menu'), 'arrow-left', 'btn-default') }}
+    {{ m.link_button(path('frontpage'), 'arrow-left', 'btn-default', 'menu.back'|trans({}, 'menu')) }}
 {% endblock %}

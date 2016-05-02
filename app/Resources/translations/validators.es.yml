@@ -1,0 +1,2 @@
+password.min_length: La contraseña debe tener como mínimo {{ limit }} caracteres.
+password.no_match: Las nuevas contraseñas no coinciden.
