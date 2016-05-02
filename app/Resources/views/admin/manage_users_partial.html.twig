@@ -1,0 +1,36 @@
+{% trans_default_domain 'admin' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        {{ m.paginator_th(elements, 'col-md-4', 'p.lastName', 'user.lastName'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'p.firstName', 'user.firstName'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-3', 'p.email', 'user.email'|trans) }}
+        <th class="col-md-3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in elements %}
+        <tr>
+            <td>{{ user.person.lastName }}</td>
+            <td>{{ user.person.firstName }}</td>
+            <td>{{ user.person.email }}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('admin_user_form', {'user': user.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-user"></i> {{ 'form.view' | trans }}</a>
+                    <a href="" class="btn btn-danger col-xs-12 col-sm-6" ><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">{{ m.paginator_stats(elements) }}</th>
+    </tr>
+    </tfoot>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(elements) }}
+</div>

@@ -48,4 +48,22 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function supportsClass($class) {
         return $class === 'AppBundle\Entity\User';
     }
+
+    /**
+     * Crea un nuevo usuario y su persona asociada
+     *
+     * @return User
+     */
+    public function createNewUser()
+    {
+        $user = new User();
+        $person = new Person();
+        $person->setDisplayName('');
+        $user->setPerson($person);
+
+        $this->getEntityManager()->persist($user->getPerson());
+        $this->getEntityManager()->persist($user);
+
+        return $user;
+    }
 }

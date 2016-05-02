@@ -52,7 +52,7 @@ class AppMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.users')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_users')
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
             ->setColor('magenta')
