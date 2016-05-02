@@ -32,9 +32,9 @@ class Teacher
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Person")
      * @ORM\JoinColumn(name="id")
-     * @var int
+     * @var Person
      */
-    protected $id;
+    protected $person;
 
     /**
      * @ORM\ManyToMany(targetEntity="Group", mappedBy="tutors")
@@ -65,27 +65,27 @@ class Teacher
     }
 
     /**
-     * Set id
+     * Set person
      *
-     * @param Person $id
+     * @param Person $person
      *
      * @return Teacher
      */
-    public function setId(Person $id)
+    public function setPerson(Person $person)
     {
-        $this->id = $id;
+        $this->person = $person;
 
         return $this;
     }
 
     /**
-     * Get id
+     * Get person
      *
      * @return Person
      */
     public function getId()
     {
-        return $this->id;
+        return $this->person;
     }
 
     /**
