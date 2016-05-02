@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -45,7 +46,7 @@ class Department
 
     /**
      * @ORM\OneToMany(targetEntity="Training", mappedBy="department")
-     * @var Training[]
+     * @var Collection
      */
     protected $trainings;
 
@@ -100,11 +101,11 @@ class Department
     /**
      * Add training
      *
-     * @param \AppBundle\Entity\Training $training
+     * @param Training $training
      *
      * @return Department
      */
-    public function addTraining(\AppBundle\Entity\Training $training)
+    public function addTraining(Training $training)
     {
         $this->trainings[] = $training;
 
@@ -114,9 +115,9 @@ class Department
     /**
      * Remove training
      *
-     * @param \AppBundle\Entity\Training $training
+     * @param Training $training
      */
-    public function removeTraining(\AppBundle\Entity\Training $training)
+    public function removeTraining(Training $training)
     {
         $this->trainings->removeElement($training);
     }
@@ -124,7 +125,7 @@ class Department
     /**
      * Get trainings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTrainings()
     {
@@ -134,11 +135,11 @@ class Department
     /**
      * Set head
      *
-     * @param \AppBundle\Entity\Teacher $head
+     * @param Teacher $head
      *
      * @return Department
      */
-    public function setHead(\AppBundle\Entity\Teacher $head = null)
+    public function setHead(Teacher $head = null)
     {
         $this->head = $head;
 
@@ -148,7 +149,7 @@ class Department
     /**
      * Get head
      *
-     * @return \AppBundle\Entity\Teacher
+     * @return Teacher
      */
     public function getHead()
     {

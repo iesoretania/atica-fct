@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -51,8 +52,10 @@ class Student
 
     /**
      * @ORM\OneToMany(targetEntity="Agreement", mappedBy="student")
+     * @var Collection
      */
     protected $agreements;
+
     /**
      * Constructor
      */
@@ -88,11 +91,11 @@ class Student
     /**
      * Set id
      *
-     * @param \AppBundle\Entity\Person $id
+     * @param Person $id
      *
      * @return Student
      */
-    public function setId(\AppBundle\Entity\Person $id)
+    public function setId(Person $id)
     {
         $this->id = $id;
 
@@ -102,7 +105,7 @@ class Student
     /**
      * Get id
      *
-     * @return \AppBundle\Entity\Person
+     * @return Person
      */
     public function getId()
     {
@@ -112,11 +115,11 @@ class Student
     /**
      * Set group
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param Group $group
      *
      * @return Student
      */
-    public function setGroup(\AppBundle\Entity\Group $group)
+    public function setGroup(Group $group)
     {
         $this->group = $group;
 
@@ -126,7 +129,7 @@ class Student
     /**
      * Get group
      *
-     * @return \AppBundle\Entity\Group
+     * @return Group
      */
     public function getGroup()
     {
@@ -136,11 +139,11 @@ class Student
     /**
      * Add agreement
      *
-     * @param \AppBundle\Entity\Agreement $agreement
+     * @param Agreement $agreement
      *
      * @return Student
      */
-    public function addAgreement(\AppBundle\Entity\Agreement $agreement)
+    public function addAgreement(Agreement $agreement)
     {
         $this->agreements[] = $agreement;
 
@@ -150,9 +153,9 @@ class Student
     /**
      * Remove agreement
      *
-     * @param \AppBundle\Entity\Agreement $agreement
+     * @param Agreement $agreement
      */
-    public function removeAgreement(\AppBundle\Entity\Agreement $agreement)
+    public function removeAgreement(Agreement $agreement)
     {
         $this->agreements->removeElement($agreement);
     }
@@ -160,7 +163,7 @@ class Student
     /**
      * Get agreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAgreements()
     {

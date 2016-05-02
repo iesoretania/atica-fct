@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -86,7 +87,7 @@ class Workcenter
 
     /**
      * @ORM\OneToMany(targetEntity="Agreement", mappedBy="workcenter")
-     * @var Agreement[]
+     * @var Collection
      */
     protected $agreements;
 
@@ -328,7 +329,7 @@ class Workcenter
     /**
      * Get agreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAgreements()
     {

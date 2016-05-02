@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -52,13 +53,13 @@ class Group
 
     /**
      * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="tutorizedGroups")
-     * @var Teacher[]
+     * @var Collection
      */
     protected $tutors;
 
     /**
      * @ORM\OneToMany(targetEntity="Student", mappedBy="group")
-     * @var Student[]
+     * @var Collection
      */
     protected $students;
     /**
@@ -107,11 +108,11 @@ class Group
     /**
      * Set training
      *
-     * @param \AppBundle\Entity\Training $training
+     * @param Training $training
      *
      * @return Group
      */
-    public function setTraining(\AppBundle\Entity\Training $training = null)
+    public function setTraining(Training $training = null)
     {
         $this->training = $training;
 
@@ -121,7 +122,7 @@ class Group
     /**
      * Get training
      *
-     * @return \AppBundle\Entity\Training
+     * @return Training
      */
     public function getTraining()
     {
@@ -131,11 +132,11 @@ class Group
     /**
      * Add tutor
      *
-     * @param \AppBundle\Entity\Teacher $tutor
+     * @param Teacher $tutor
      *
      * @return Group
      */
-    public function addTutor(\AppBundle\Entity\Teacher $tutor)
+    public function addTutor(Teacher $tutor)
     {
         $this->tutors[] = $tutor;
 
@@ -145,9 +146,9 @@ class Group
     /**
      * Remove tutor
      *
-     * @param \AppBundle\Entity\Teacher $tutor
+     * @param Teacher $tutor
      */
-    public function removeTutor(\AppBundle\Entity\Teacher $tutor)
+    public function removeTutor(Teacher $tutor)
     {
         $this->tutors->removeElement($tutor);
     }
@@ -165,11 +166,11 @@ class Group
     /**
      * Add student
      *
-     * @param \AppBundle\Entity\Student $student
+     * @param Student $student
      *
      * @return Group
      */
-    public function addStudent(\AppBundle\Entity\Student $student)
+    public function addStudent(Student $student)
     {
         $this->students[] = $student;
 
@@ -179,9 +180,9 @@ class Group
     /**
      * Remove student
      *
-     * @param \AppBundle\Entity\Student $student
+     * @param Student $student
      */
-    public function removeStudent(\AppBundle\Entity\Student $student)
+    public function removeStudent(Student $student)
     {
         $this->students->removeElement($student);
     }

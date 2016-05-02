@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -45,7 +46,7 @@ class Training
 
     /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="training")
-     * @var Group[]
+     * @var Collection
      */
     protected $groups;
 
@@ -58,9 +59,10 @@ class Training
 
     /**
      * @ORM\OneToMany(targetEntity="Activity", mappedBy="training")
-     * @var Activity[]
+     * @var Collection
      */
     protected $activities;
+
     /**
      * Constructor
      */
@@ -107,11 +109,11 @@ class Training
     /**
      * Add group
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param Group $group
      *
      * @return Training
      */
-    public function addGroup(\AppBundle\Entity\Group $group)
+    public function addGroup(Group $group)
     {
         $this->groups[] = $group;
 
@@ -121,9 +123,9 @@ class Training
     /**
      * Remove group
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param Group $group
      */
-    public function removeGroup(\AppBundle\Entity\Group $group)
+    public function removeGroup(Group $group)
     {
         $this->groups->removeElement($group);
     }
@@ -131,7 +133,7 @@ class Training
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getGroups()
     {
@@ -141,11 +143,11 @@ class Training
     /**
      * Set department
      *
-     * @param \AppBundle\Entity\Department $department
+     * @param Department $department
      *
      * @return Training
      */
-    public function setDepartment(\AppBundle\Entity\Department $department)
+    public function setDepartment(Department $department)
     {
         $this->department = $department;
 
@@ -155,7 +157,7 @@ class Training
     /**
      * Get department
      *
-     * @return \AppBundle\Entity\Department
+     * @return Department
      */
     public function getDepartment()
     {
@@ -165,11 +167,11 @@ class Training
     /**
      * Add activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      *
      * @return Training
      */
-    public function addActivity(\AppBundle\Entity\Activity $activity)
+    public function addActivity(Activity $activity)
     {
         $this->activities[] = $activity;
 
@@ -179,9 +181,9 @@ class Training
     /**
      * Remove activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      */
-    public function removeActivity(\AppBundle\Entity\Activity $activity)
+    public function removeActivity(Activity $activity)
     {
         $this->activities->removeElement($activity);
     }
@@ -189,7 +191,7 @@ class Training
     /**
      * Get activities
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getActivities()
     {

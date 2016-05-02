@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,21 +38,22 @@ class Teacher
 
     /**
      * @ORM\ManyToMany(targetEntity="Group", mappedBy="tutors")
-     * @var Group[]
+     * @var Collection
      */
     protected $tutorizedGroups;
 
     /**
      * @ORM\OneToMany(targetEntity="Department", mappedBy="head")
-     * @var Department[]
+     * @var Collection
      */
     protected $directs;
 
     /**
      * @ORM\OneToMany(targetEntity="Agreement", mappedBy="educationalTutor")
-     * @var Agreement[]
+     * @var Collection
      */
     protected $agreements;
+
     /**
      * Constructor
      */
@@ -65,11 +67,11 @@ class Teacher
     /**
      * Set id
      *
-     * @param \AppBundle\Entity\Person $id
+     * @param Person $id
      *
      * @return Teacher
      */
-    public function setId(\AppBundle\Entity\Person $id)
+    public function setId(Person $id)
     {
         $this->id = $id;
 
@@ -79,7 +81,7 @@ class Teacher
     /**
      * Get id
      *
-     * @return \AppBundle\Entity\Person
+     * @return Person
      */
     public function getId()
     {
@@ -89,11 +91,11 @@ class Teacher
     /**
      * Add tutorizedGroup
      *
-     * @param \AppBundle\Entity\Group $tutorizedGroup
+     * @param Group $tutorizedGroup
      *
      * @return Teacher
      */
-    public function addTutorizedGroup(\AppBundle\Entity\Group $tutorizedGroup)
+    public function addTutorizedGroup(Group $tutorizedGroup)
     {
         $this->tutorizedGroups[] = $tutorizedGroup;
 
@@ -103,9 +105,9 @@ class Teacher
     /**
      * Remove tutorizedGroup
      *
-     * @param \AppBundle\Entity\Group $tutorizedGroup
+     * @param Group $tutorizedGroup
      */
-    public function removeTutorizedGroup(\AppBundle\Entity\Group $tutorizedGroup)
+    public function removeTutorizedGroup(Group $tutorizedGroup)
     {
         $this->tutorizedGroups->removeElement($tutorizedGroup);
     }
@@ -113,7 +115,7 @@ class Teacher
     /**
      * Get tutorizedGroups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTutorizedGroups()
     {
@@ -123,11 +125,11 @@ class Teacher
     /**
      * Add direct
      *
-     * @param \AppBundle\Entity\Department $direct
+     * @param Department $direct
      *
      * @return Teacher
      */
-    public function addDirect(\AppBundle\Entity\Department $direct)
+    public function addDirect(Department $direct)
     {
         $this->directs[] = $direct;
 
@@ -137,9 +139,9 @@ class Teacher
     /**
      * Remove direct
      *
-     * @param \AppBundle\Entity\Department $direct
+     * @param Department $direct
      */
-    public function removeDirect(\AppBundle\Entity\Department $direct)
+    public function removeDirect(Department $direct)
     {
         $this->directs->removeElement($direct);
     }
@@ -147,7 +149,7 @@ class Teacher
     /**
      * Get directs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getDirects()
     {
@@ -157,11 +159,11 @@ class Teacher
     /**
      * Add agreement
      *
-     * @param \AppBundle\Entity\Agreement $agreement
+     * @param Agreement $agreement
      *
      * @return Teacher
      */
-    public function addAgreement(\AppBundle\Entity\Agreement $agreement)
+    public function addAgreement(Agreement $agreement)
     {
         $this->agreements[] = $agreement;
 
@@ -171,9 +173,9 @@ class Teacher
     /**
      * Remove agreement
      *
-     * @param \AppBundle\Entity\Agreement $agreement
+     * @param Agreement $agreement
      */
-    public function removeAgreement(\AppBundle\Entity\Agreement $agreement)
+    public function removeAgreement(Agreement $agreement)
     {
         $this->agreements->removeElement($agreement);
     }
@@ -181,7 +183,7 @@ class Teacher
     /**
      * Get agreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAgreements()
     {

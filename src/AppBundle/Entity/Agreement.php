@@ -20,6 +20,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,7 +51,7 @@ class Agreement
 
     /**
      * @ORM\Column(type="date")
-     * @var string
+     * @var \DateTime
      */
     protected $toDate;
 
@@ -83,19 +85,19 @@ class Agreement
 
     /**
      * @ORM\ManyToMany(targetEntity="Activity")
-     * @var Activity[]
+     * @var Collection
      */
     protected $activities;
 
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="agreement")
-     * @var Visit[]
+     * @var Collection
      */
     protected $visits;
 
     /**
      * @ORM\OneToMany(targetEntity="Workday", mappedBy="agreement")
-     * @var Workday[]
+     * @var Collection
      */
     protected $workdays;
 
@@ -109,9 +111,9 @@ class Agreement
      */
     public function __construct()
     {
-        $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->workdays = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->visits = new ArrayCollection();
+        $this->workdays = new ArrayCollection();
     }
 
     /**
@@ -295,11 +297,11 @@ class Agreement
     /**
      * Add activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      *
      * @return Agreement
      */
-    public function addActivity(\AppBundle\Entity\Activity $activity)
+    public function addActivity(Activity $activity)
     {
         $this->activities[] = $activity;
 
@@ -309,9 +311,9 @@ class Agreement
     /**
      * Remove activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      */
-    public function removeActivity(\AppBundle\Entity\Activity $activity)
+    public function removeActivity(Activity $activity)
     {
         $this->activities->removeElement($activity);
     }
@@ -319,7 +321,7 @@ class Agreement
     /**
      * Get activities
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getActivities()
     {
@@ -329,11 +331,11 @@ class Agreement
     /**
      * Add visit
      *
-     * @param \AppBundle\Entity\Visit $visit
+     * @param Visit $visit
      *
      * @return Agreement
      */
-    public function addVisit(\AppBundle\Entity\Visit $visit)
+    public function addVisit(Visit $visit)
     {
         $this->visits[] = $visit;
 
@@ -343,9 +345,9 @@ class Agreement
     /**
      * Remove visit
      *
-     * @param \AppBundle\Entity\Visit $visit
+     * @param Visit $visit
      */
-    public function removeVisit(\AppBundle\Entity\Visit $visit)
+    public function removeVisit(Visit $visit)
     {
         $this->visits->removeElement($visit);
     }
@@ -353,7 +355,7 @@ class Agreement
     /**
      * Get visits
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getVisits()
     {
@@ -363,11 +365,11 @@ class Agreement
     /**
      * Add workday
      *
-     * @param \AppBundle\Entity\Workday $workday
+     * @param Workday $workday
      *
      * @return Agreement
      */
-    public function addWorkday(\AppBundle\Entity\Workday $workday)
+    public function addWorkday(Workday $workday)
     {
         $this->workdays[] = $workday;
 
@@ -377,9 +379,9 @@ class Agreement
     /**
      * Remove workday
      *
-     * @param \AppBundle\Entity\Workday $workday
+     * @param Workday $workday
      */
-    public function removeWorkday(\AppBundle\Entity\Workday $workday)
+    public function removeWorkday(Workday $workday)
     {
         $this->workdays->removeElement($workday);
     }
@@ -387,7 +389,7 @@ class Agreement
     /**
      * Get workdays
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getWorkdays()
     {
@@ -397,11 +399,11 @@ class Agreement
     /**
      * Set report
      *
-     * @param \AppBundle\Entity\Report $report
+     * @param Report $report
      *
      * @return Agreement
      */
-    public function setReport(\AppBundle\Entity\Report $report = null)
+    public function setReport(Report $report = null)
     {
         $this->report = $report;
 
@@ -411,7 +413,7 @@ class Agreement
     /**
      * Get report
      *
-     * @return \AppBundle\Entity\Report
+     * @return Report
      */
     public function getReport()
     {
