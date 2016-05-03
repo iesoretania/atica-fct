@@ -103,6 +103,10 @@ class MenuBuilderChain
         $menu = $this->getMenu();
         $root = reset($menu);
 
+        if (false === $root) {
+            return null;
+        }
+
         return $this->getSubmenuItemByRouteName($root, $name);
     }
 
