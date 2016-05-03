@@ -1,0 +1,18 @@
+{% trans_default_domain 'department' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.start_button }}
+        {% if not new %}
+            {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+            {{ m.link_button(path('admin_department_delete', {'department': department.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
+        {% else %}
+            {{ m.submit_button('submit', 'check', 'btn-success', 'form.new'|trans) }}
+        {% endif %}
+        {{ m.end_button }}
+    {{ form_end(form) }}
+    {{ m.link_button(path('admin_departments'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+{% endblock %}

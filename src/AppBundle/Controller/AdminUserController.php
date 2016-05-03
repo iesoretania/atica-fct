@@ -66,7 +66,7 @@ class AdminUserController extends Controller
 
     /**
      * @Route("/nuevo", name="admin_user_new", methods={"GET", "POST"})
-     * @Route("/{user}", name="admin_user_form", methods={"GET", "POST"}, requirements={"profile": "\d+"})
+     * @Route("/{user}", name="admin_user_form", methods={"GET", "POST"}, requirements={"user": "\d+"})
      */
     public function formAction(User $user = null, Request $request)
     {

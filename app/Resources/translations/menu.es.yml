@@ -26,4 +26,19 @@ menu.admin.stats: Estadísticas y registros
 menu.admin.stats.detail: Muestra el estado global de la plataforma
 
 menu.admin.manage.users: Usuarios
-menu.admin.manage.users.detail: Permite invitar, modificar o desasociar usuarios
+menu.admin.manage.users.detail: Permite añadir, modificar o eliminar usuarios
+
+menu.admin.groups: Grupos
+menu.admin.groups.detail: Gestionar grupos del centro
+
+menu.admin.students: Alumnado
+menu.admin.students.detail: Gestionar el alumnado del centro
+
+menu.admin.teachers: Profesorado
+menu.admin.teachers.detail: Gestionar la plantilla docente del centro
+
+menu.admin.departments: Departamentos
+menu.admin.departments.detail: Gestionar los departamentos del centro
+
+menu.admin.calendar: Calendario escolar
+menu.admin.calendar.detail: Definir períodos lectivos y no lectivos

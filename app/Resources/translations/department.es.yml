@@ -1,0 +1,18 @@
+form.name: Nombre del departamento
+form.head: Jefe/a de departamento
+
+form.submit: Guardar cambios
+form.delete: Eliminar departamento
+form.new: Crear departamento
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Departamento eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el departamento. Compruebe que no hay elementos asociados al mismo.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El departamento sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

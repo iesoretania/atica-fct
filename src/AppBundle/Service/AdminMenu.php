@@ -60,8 +60,52 @@ class AdminMenu implements MenuBuilderInterface
             ->setRouteName('admin_users')
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
-            ->setColor('magenta')
+            ->setColor('yellow')
             ->setIcon('users');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.groups')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.groups')
+            ->setDescription('menu.admin.groups.detail')
+            ->setColor('amber')
+            ->setIcon('slideshare');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.students')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.students')
+            ->setDescription('menu.admin.students.detail')
+            ->setColor('orange')
+            ->setIcon('child');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.teachers')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.teachers')
+            ->setDescription('menu.admin.teachers.detail')
+            ->setColor('magenta')
+            ->setIcon('graduation-cap');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('edu.departments')
+            ->setRouteName('admin_departments')
+            ->setCaption('menu.admin.departments')
+            ->setDescription('menu.admin.departments.detail')
+            ->setColor('emerald')
+            ->setIcon('sitemap');
 
         $mainItem->addChild($item);
 

@@ -65,6 +65,16 @@ class Teacher
     }
 
     /**
+     * Returns the teachers's display name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->person;
+    }
+
+    /**
      * Set person
      *
      * @param Person $person
@@ -83,7 +93,7 @@ class Teacher
      *
      * @return Person
      */
-    public function getId()
+    public function getPerson()
     {
         return $this->person;
     }
