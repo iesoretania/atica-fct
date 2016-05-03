@@ -1,0 +1,10 @@
+{% trans_default_domain entity %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'browse.title'|trans }}</h2>
+    {% include ':admin:manage_generic_partial.html.twig' with {'elements': pagination } %}
+
+    {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('admin_' ~ entity ~ '_new'), 'plus', 'btn-success', 'form.new'|trans) }}
+{% endblock %}

@@ -1,9 +1,18 @@
+department.title: Departamentos del centro
+department.name: Nombre del departamento
+department.head: Jefe/a de departamento
+
+browse.title: Listado de departamentos del centro
+
+department.new: Nuevo departamento
+
 form.name: Nombre del departamento
 form.head: Jefe/a de departamento
 
 form.submit: Guardar cambios
-form.delete: Eliminar departamento
+form.delete: Eliminar
 form.new: Crear departamento
+form.view: Modificar
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios

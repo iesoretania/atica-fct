@@ -1,0 +1,36 @@
+{% trans_default_domain entity %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        {% for column in columns %}
+        {{ m.paginator_th(elements, 'col-md-' ~ column.size, column.sort_field, column.name|trans) }}
+        {% endfor %}
+        <th class="col-md-3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            {% for item in data_columns %}
+                <td>{{ attribute(element, item) }}</td>
+            {% endfor %}
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('admin_' ~ entity ~ '_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
+                    <a href="{{ path('admin_' ~ entity ~ '_delete', {'id': element.id}) }}" class="btn btn-danger col-xs-12 col-sm-6" ><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="{{ columns|length + 1 }}">{{ m.paginator_stats(elements) }}</th>
+    </tr>
+    </tfoot>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(elements) }}
+</div>

@@ -23,9 +23,3 @@ user.delete_failed: No se ha podido eliminar al usuario
 user.back: Volver al listado de usuario
 user.delete_confirm: >
     ¡ATENCIÓN! El usuario no podrá eliminarse con éxito si está asociado a algún acuerdo de colaboración.
-
-department.title: Departamentos del centro
-department.name: Nombre del departamento
-department.head: Jefe/a de departamento
-
-department.new: Nuevo departamento
