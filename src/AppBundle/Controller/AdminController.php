@@ -45,6 +45,19 @@ class AdminController extends Controller
             'data_columns' => ['name', 'head']
         ];
 
+    public static $COMPANY_ENTITY_DATA = [
+        'entity' => 'company',
+        'entityClassName' => 'AppBundle\Entity\Company',
+        'entityFormType' => 'AppBundle\Form\Type\CompanyType',
+        'query' => 'SELECT c FROM AppBundle:Company c',
+        'defaultSortFieldName' => 'c.name',
+        'columns' => [
+            ['size' => '2', 'sort_field' => 'c.code', 'name' => 'company.code'],
+            ['size' => '7', 'sort_field' => 'c.name', 'name' => 'company.name'],
+        ],
+        'data_columns' => ['code', 'name']
+    ];
+
     /**
      * @Route("/", name="admin_menu", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
@@ -162,6 +175,7 @@ class AdminController extends Controller
             'entity' => $entityData['entity']
         ]);
     }
+
     /**
      * @Route("/departamentos", name="admin_department", methods={"GET"})
      */
@@ -185,5 +199,30 @@ class AdminController extends Controller
     public function deleteElementAction(Department $element, Request $request)
     {
         return $this->genericDeleteAction(self::$DEPARTMENT_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/empresas", name="admin_company", methods={"GET"})
+     */
+    public function companiesIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$COMPANY_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/empresas/nueva", name="admin_company_new", methods={"GET", "POST"})
+     * @Route("/empresas/{id}", name="admin_company_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     */
+    public function companyFormAction(Department $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$COMPANY_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/empresas/eliminar/{id}", name="admin_company_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     */
+    public function companyDeleteAction(Department $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$COMPANY_ENTITY_DATA, $element, $request);
     }
 }

@@ -41,6 +41,12 @@ class Company
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $code;
 
     /**
@@ -84,6 +90,11 @@ class Company
      * @ORM\JoinColumn(nullable=false)
      */
     protected $manager;
+
+    public function __toString()
+    {
+        return $this->getName() ? $this->getName() : '';
+    }
 
     /**
      * Get id
@@ -285,5 +296,29 @@ class Company
     public function getManager()
     {
         return $this->manager;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Company
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

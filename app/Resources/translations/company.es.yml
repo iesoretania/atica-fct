@@ -1,0 +1,31 @@
+company.name: Nombre de la empresa
+company.code: CIF
+
+browse.title: Listado de empresas
+
+form.name: Nombre de la empresa
+form.code: CIF
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nueva empresa
+form.view: Modificar
+form.address: Dirección postal
+form.city: Ciudad
+form.province: Provincia
+form.zip_code: Código postal
+form.phone_number: Número de teléfono
+form.email: Correo electrónico
+form.manager: Gerente
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Empresa eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la empresa. Compruebe que no hay elementos asociados a la misma.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La empresa sólo podrá ser eliminada si no existen datos asociados a la misma.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar
