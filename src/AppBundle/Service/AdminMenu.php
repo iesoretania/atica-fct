@@ -60,25 +60,14 @@ class AdminMenu implements MenuBuilderInterface
             ->setRouteName('admin_users')
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
-            ->setColor('yellow')
+            ->setColor('amber')
             ->setIcon('users');
 
         $mainItem->addChild($item);
 
         $item = new MenuItem();
         $item
-            ->setName('edu.groups')
-            ->setRouteName('frontpage')
-            ->setCaption('menu.admin.groups')
-            ->setDescription('menu.admin.groups.detail')
-            ->setColor('amber')
-            ->setIcon('slideshare');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('edu.students')
+            ->setName('admin.students')
             ->setRouteName('frontpage')
             ->setCaption('menu.admin.students')
             ->setDescription('menu.admin.students.detail')
@@ -89,7 +78,7 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('edu.teachers')
+            ->setName('admin.teachers')
             ->setRouteName('frontpage')
             ->setCaption('menu.admin.teachers')
             ->setDescription('menu.admin.teachers.detail')
@@ -100,12 +89,34 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('edu.departments')
+            ->setName('admin.groups')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.groups')
+            ->setDescription('menu.admin.groups.detail')
+            ->setColor('green')
+            ->setIcon('slideshare');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.departments')
             ->setRouteName('admin_departments')
             ->setCaption('menu.admin.departments')
             ->setDescription('menu.admin.departments.detail')
             ->setColor('emerald')
             ->setIcon('sitemap');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.calendar')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.calendar')
+            ->setDescription('menu.admin.calendar.detail')
+            ->setColor('cyan')
+            ->setIcon('calendar');
 
         $mainItem->addChild($item);
 

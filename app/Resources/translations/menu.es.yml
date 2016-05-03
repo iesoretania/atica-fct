@@ -22,9 +22,6 @@ menu.impersonate.exit: Volver al usuario normal
 menu.admin: Administración
 menu.admin.detail: Permite realizar cambios en la configuración de la plataforma
 
-menu.admin.stats: Estadísticas y registros
-menu.admin.stats.detail: Muestra el estado global de la plataforma
-
 menu.admin.manage.users: Usuarios
 menu.admin.manage.users.detail: Permite añadir, modificar o eliminar usuarios
 
@@ -41,4 +38,4 @@ menu.admin.departments: Departamentos
 menu.admin.departments.detail: Gestionar los departamentos del centro
 
 menu.admin.calendar: Calendario escolar
-menu.admin.calendar.detail: Definir períodos lectivos y no lectivos
+menu.admin.calendar.detail: Definir periodos no lectivos
