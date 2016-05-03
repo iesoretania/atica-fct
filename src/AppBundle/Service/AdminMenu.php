@@ -61,7 +61,7 @@ class AdminMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
             ->setColor('amber')
-            ->setIcon('users');
+            ->setIcon('user');
 
         $mainItem->addChild($item);
 
@@ -94,7 +94,7 @@ class AdminMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.groups')
             ->setDescription('menu.admin.groups.detail')
             ->setColor('green')
-            ->setIcon('slideshare');
+            ->setIcon('users');
 
         $mainItem->addChild($item);
 
