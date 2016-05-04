@@ -46,6 +46,12 @@ class Workcenter
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $address;
 
     /**
@@ -98,6 +104,11 @@ class Workcenter
     public function __construct()
     {
         $this->agreements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ? $this->getName() . ' (' . $this->getCompany() . ')' : '';
     }
 
     /**
@@ -334,5 +345,29 @@ class Workcenter
     public function getAgreements()
     {
         return $this->agreements;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Workcenter
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -25,6 +25,7 @@ use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
 use AppBundle\Entity\Training;
+use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -60,6 +61,19 @@ class AdminController extends Controller
             ['size' => '7', 'sort_field' => 'c.name', 'name' => 'company.name'],
         ],
         'data_columns' => ['code', 'name']
+    ];
+
+    public static $WORKCENTER_ENTITY_DATA = [
+        'entity' => 'workcenter',
+        'entityClassName' => 'AppBundle\Entity\Workcenter',
+        'entityFormType' => 'AppBundle\Form\Type\WorkcenterType',
+        'query' => 'SELECT w FROM AppBundle:Workcenter w JOIN w.company c',
+        'defaultSortFieldName' => 'w.company.name',
+        'columns' => [
+            ['size' => '4', 'sort_field' => 'w.company.name', 'name' => 'form.company'],
+            ['size' => '5', 'sort_field' => 'w.name', 'name' => 'form.name'],
+        ],
+        'data_columns' => ['company', 'name']
     ];
 
     public static $GROUP_ENTITY_DATA = [
@@ -339,8 +353,33 @@ class AdminController extends Controller
     /**
      * @Route("/diasnolectivos/eliminar/{id}", name="admin_non_school_day_delete", methods={"GET", "POST"})
      */
-    public function nonSchoolDayDeleteAction(NonSchoolDay $element, Request $request)
+    public function workcenterDeleteAction(Workcenter $element, Request $request)
     {
-        return $this->genericDeleteAction(self::$NON_SCHOOL_DAY_ENTITY_DATA, $element, $request);
+        return $this->genericDeleteAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/centros", name="admin_workcenter", methods={"GET"})
+     */
+    public function workcenterIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$WORKCENTER_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/centros/nuevo", name="admin_workcenter_new", methods={"GET", "POST"})
+     * @Route("/centros/{id}", name="admin_workcenter_form", methods={"GET", "POST"})
+     */
+    public function workcenterFormAction(Workcenter $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/centros/eliminar/{id}", name="admin_workcenter_delete", methods={"GET", "POST"})
+     */
+    public function nonSchoolDayDeleteAction(Workcenter $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
     }
 }

@@ -134,7 +134,7 @@ class AdminMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.workcenter')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_workcenter')
             ->setCaption('menu.admin.workcenters')
             ->setDescription('menu.admin.workcenters.detail')
             ->setColor('dark-cyan')

@@ -1,0 +1,28 @@
+browse.title: Listado de centros de trabajo
+
+form.name: Denominación
+form.company: Empresa
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nuevo centro
+form.view: Modificar
+form.address: Dirección postal
+form.city: Ciudad
+form.province: Provincia
+form.zip_code: Código postal
+form.phone_number: Número de teléfono
+form.email: Correo electrónico
+form.manager: Gerente
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Centro eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el centro de trabajo. Compruebe que no hay elementos asociados al mismo.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El centro de trabajo sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar
