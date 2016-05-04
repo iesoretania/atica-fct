@@ -89,6 +89,17 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
+            ->setName('admin.trainings')
+            ->setRouteName('admin_training')
+            ->setCaption('menu.admin.trainings')
+            ->setDescription('menu.admin.trainings.detail')
+            ->setColor('olive')
+            ->setIcon('bank');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
             ->setName('admin.groups')
             ->setRouteName('admin_group')
             ->setCaption('menu.admin.groups')
@@ -111,12 +122,23 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('admin.trainings')
-            ->setRouteName('admin_training')
-            ->setCaption('menu.admin.trainings')
-            ->setDescription('menu.admin.trainings.detail')
-            ->setColor('olive')
-            ->setIcon('bank');
+            ->setName('admin.companies')
+            ->setRouteName('admin_company')
+            ->setCaption('menu.admin.companies')
+            ->setDescription('menu.admin.companies.detail')
+            ->setColor('cyan')
+            ->setIcon('industry');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.workcenter')
+            ->setRouteName('frontpage')
+            ->setCaption('menu.admin.workcenters')
+            ->setDescription('menu.admin.workcenters.detail')
+            ->setColor('dark-cyan')
+            ->setIcon('building');
 
         $mainItem->addChild($item);
 
@@ -126,7 +148,7 @@ class AdminMenu implements MenuBuilderInterface
             ->setRouteName('admin_non_school_day')
             ->setCaption('menu.admin.calendar')
             ->setDescription('menu.admin.calendar.detail')
-            ->setColor('cyan')
+            ->setColor('dark-blue')
             ->setIcon('calendar');
 
         $mainItem->addChild($item);
