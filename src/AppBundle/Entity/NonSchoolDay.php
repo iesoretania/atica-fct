@@ -21,14 +21,23 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"date"})
  */
 class NonSchoolDay
 {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    protected $id;
+
+    /**
      * @ORM\Column(type="date")
      * @var \DateTime
      */
@@ -39,6 +48,21 @@ class NonSchoolDay
      * @var string
      */
     protected $name;
+
+    public function __toString()
+    {
+        return $this->getName() ? $this->getName() . ' (' . $this->getDate()->format('d/m/Y') . ')' : '';
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set date

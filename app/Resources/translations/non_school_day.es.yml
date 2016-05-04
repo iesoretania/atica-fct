@@ -1,0 +1,21 @@
+browse.title: Listado de días no lectivos
+
+form.date: Fecha
+form.name: Motivo
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nuevo día no lectivo
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Día eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el día.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! Eliminar un día no lectivo no alterará los calendarios ya generados.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

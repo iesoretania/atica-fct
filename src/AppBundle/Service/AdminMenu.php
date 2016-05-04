@@ -123,7 +123,7 @@ class AdminMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.calendar')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_non_school_day')
             ->setCaption('menu.admin.calendar')
             ->setDescription('menu.admin.calendar.detail')
             ->setColor('cyan')

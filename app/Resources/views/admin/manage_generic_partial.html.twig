@@ -12,7 +12,8 @@
     {% for element in elements %}
         <tr>
             {% for item in data_columns %}
-                <td>{{ attribute(element, item) }}</td>
+                {% set e = attribute(element, item) %}
+                <td>{{ attribute(e, 'timestamp') is defined ? e|date('Y/m/d') : e }}</td>
             {% endfor %}
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">

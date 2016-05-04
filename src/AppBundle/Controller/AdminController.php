@@ -20,7 +20,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
+use AppBundle\Entity\Group;
+use AppBundle\Entity\NonSchoolDay;
+use AppBundle\Entity\Training;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -82,6 +86,19 @@ class AdminController extends Controller
             ['size' => '4', 'sort_field' => 't.department', 'name' => 'form.department']
         ],
         'data_columns' => ['name', 'department']
+    ];
+
+    public static $NON_SCHOOL_DAY_ENTITY_DATA = [
+        'entity' => 'non_school_day',
+        'entityClassName' => 'AppBundle\Entity\NonSchoolDay',
+        'entityFormType' => 'AppBundle\Form\Type\NonSchoolDayType',
+        'query' => 'SELECT n FROM AppBundle:NonSchoolDay n',
+        'defaultSortFieldName' => 'n.date',
+        'columns' => [
+            ['size' => '2', 'sort_field' => 'n.date', 'name' => 'form.date'],
+            ['size' => '7', 'sort_field' => 'n.name', 'name' => 'form.name']
+        ],
+        'data_columns' => ['date', 'name']
     ];
 
     /**
@@ -239,7 +256,7 @@ class AdminController extends Controller
      * @Route("/empresas/nueva", name="admin_company_new", methods={"GET", "POST"})
      * @Route("/empresas/{id}", name="admin_company_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
-    public function companyFormAction(Department $element = null, Request $request)
+    public function companyFormAction(Company $element = null, Request $request)
     {
         return $this->genericFormAction(self::$COMPANY_ENTITY_DATA, $element, $request);
     }
@@ -247,7 +264,7 @@ class AdminController extends Controller
     /**
      * @Route("/empresas/eliminar/{id}", name="admin_company_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
-    public function companyDeleteAction(Department $element, Request $request)
+    public function companyDeleteAction(Company $element, Request $request)
     {
         return $this->genericDeleteAction(self::$COMPANY_ENTITY_DATA, $element, $request);
     }
@@ -264,7 +281,7 @@ class AdminController extends Controller
      * @Route("/grupos/nuevo", name="admin_group_new", methods={"GET", "POST"})
      * @Route("/grupos/{id}", name="admin_group_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
-    public function groupFormAction(Department $element = null, Request $request)
+    public function groupFormAction(Group $element = null, Request $request)
     {
         return $this->genericFormAction(self::$GROUP_ENTITY_DATA, $element, $request);
     }
@@ -272,7 +289,7 @@ class AdminController extends Controller
     /**
      * @Route("/grupos/eliminar/{id}", name="admin_group_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
-    public function groupDeleteAction(Department $element, Request $request)
+    public function groupDeleteAction(Group $element, Request $request)
     {
         return $this->genericDeleteAction(self::$GROUP_ENTITY_DATA, $element, $request);
     }
@@ -289,7 +306,7 @@ class AdminController extends Controller
      * @Route("/ensenanzas/nueva", name="admin_training_new", methods={"GET", "POST"})
      * @Route("/ensenanzas/{id}", name="admin_training_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
-    public function trainingFormAction(Department $element = null, Request $request)
+    public function trainingFormAction(Training $element = null, Request $request)
     {
         return $this->genericFormAction(self::$TRAINING_ENTITY_DATA, $element, $request);
     }
@@ -297,8 +314,33 @@ class AdminController extends Controller
     /**
      * @Route("/ensenanzas/eliminar/{id}", name="admin_training_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
-    public function trainingDeleteAction(Department $element, Request $request)
+    public function trainingDeleteAction(Training $element, Request $request)
     {
         return $this->genericDeleteAction(self::$TRAINING_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/diasnolectivos", name="admin_non_school_day", methods={"GET"})
+     */
+    public function nonSchoolDayIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$NON_SCHOOL_DAY_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/diasnolectivos/nuevo", name="admin_non_school_day_new", methods={"GET", "POST"})
+     * @Route("/diasnolectivos/{id}", name="admin_non_school_day_form", methods={"GET", "POST"})
+     */
+    public function nonSchoolDayFormAction(NonSchoolDay $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$NON_SCHOOL_DAY_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/diasnolectivos/eliminar/{id}", name="admin_non_school_day_delete", methods={"GET", "POST"})
+     */
+    public function nonSchoolDayDeleteAction(NonSchoolDay $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$NON_SCHOOL_DAY_ENTITY_DATA, $element, $request);
     }
 }
