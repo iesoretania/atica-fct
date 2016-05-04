@@ -90,7 +90,7 @@ class AdminMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.groups')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_group')
             ->setCaption('menu.admin.groups')
             ->setDescription('menu.admin.groups.detail')
             ->setColor('green')
@@ -106,6 +106,17 @@ class AdminMenu implements MenuBuilderInterface
             ->setDescription('menu.admin.departments.detail')
             ->setColor('emerald')
             ->setIcon('sitemap');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.trainings')
+            ->setRouteName('admin_training')
+            ->setCaption('menu.admin.trainings')
+            ->setDescription('menu.admin.trainings.detail')
+            ->setColor('olive')
+            ->setIcon('bank');
 
         $mainItem->addChild($item);
 

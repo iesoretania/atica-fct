@@ -37,5 +37,8 @@ menu.admin.teachers.detail: Gestionar la plantilla docente del centro
 menu.admin.departments: Departamentos
 menu.admin.departments.detail: Gestionar los departamentos del centro
 
+menu.admin.trainings: Enseñanzas
+menu.admin.trainings.detail: Gestionar enseñanzas del centro
+
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos

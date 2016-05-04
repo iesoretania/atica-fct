@@ -1,0 +1,21 @@
+browse.title: Listado de enseñanzas
+
+form.name: Denominación
+form.department: Departamento
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nueva enseñanza
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Enseñanza eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la enseñanza. Compruebe que no hay elementos asociados a la misma.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La enseñanza sólo podrá ser eliminada si no existen datos asociados a la misma.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

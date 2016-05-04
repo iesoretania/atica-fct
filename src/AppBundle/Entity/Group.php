@@ -71,6 +71,11 @@ class Group
         $this->students = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getName() ? $this->getName() : '';
+    }
+
     /**
      * Get id
      *

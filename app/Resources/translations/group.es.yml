@@ -1,0 +1,22 @@
+browse.title: Listado de grupos
+
+form.name: Nombre
+form.training: Enseñanza
+form.tutors: Tutores/as
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nuevo grupo
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Grupo eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el grupo. Compruebe que no hay elementos asociados al mismo.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El grupo sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

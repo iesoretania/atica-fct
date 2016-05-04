@@ -58,6 +58,32 @@ class AdminController extends Controller
         'data_columns' => ['code', 'name']
     ];
 
+    public static $GROUP_ENTITY_DATA = [
+        'entity' => 'group',
+        'entityClassName' => 'AppBundle\Entity\Group',
+        'entityFormType' => 'AppBundle\Form\Type\GroupType',
+        'query' => 'SELECT g FROM AppBundle:Group g JOIN g.training t',
+        'defaultSortFieldName' => 'g.name',
+        'columns' => [
+            ['size' => '4', 'sort_field' => 'g.name', 'name' => 'form.name'],
+            ['size' => '5', 'sort_field' => 'g.training', 'name' => 'form.training']
+        ],
+        'data_columns' => ['name', 'training']
+    ];
+
+    public static $TRAINING_ENTITY_DATA = [
+        'entity' => 'training',
+        'entityClassName' => 'AppBundle\Entity\Training',
+        'entityFormType' => 'AppBundle\Form\Type\TrainingType',
+        'query' => 'SELECT t FROM AppBundle:Training t JOIN t.department d',
+        'defaultSortFieldName' => 't.name',
+        'columns' => [
+            ['size' => '5', 'sort_field' => 't.name', 'name' => 'form.name'],
+            ['size' => '4', 'sort_field' => 't.department', 'name' => 'form.department']
+        ],
+        'data_columns' => ['name', 'department']
+    ];
+
     /**
      * @Route("/", name="admin_menu", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
@@ -224,5 +250,55 @@ class AdminController extends Controller
     public function companyDeleteAction(Department $element, Request $request)
     {
         return $this->genericDeleteAction(self::$COMPANY_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/grupos", name="admin_group", methods={"GET"})
+     */
+    public function groupIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$GROUP_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/grupos/nuevo", name="admin_group_new", methods={"GET", "POST"})
+     * @Route("/grupos/{id}", name="admin_group_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     */
+    public function groupFormAction(Department $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$GROUP_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/grupos/eliminar/{id}", name="admin_group_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     */
+    public function groupDeleteAction(Department $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$GROUP_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/ensenanzas", name="admin_training", methods={"GET"})
+     */
+    public function trainingIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$TRAINING_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/ensenanzas/nueva", name="admin_training_new", methods={"GET", "POST"})
+     * @Route("/ensenanzas/{id}", name="admin_training_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     */
+    public function trainingFormAction(Department $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$TRAINING_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/ensenanzas/eliminar/{id}", name="admin_training_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     */
+    public function trainingDeleteAction(Department $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$TRAINING_ENTITY_DATA, $element, $request);
     }
 }
