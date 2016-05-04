@@ -50,12 +50,6 @@ class Workday
     protected $date;
 
     /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $name;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
@@ -100,31 +94,7 @@ class Workday
     {
         return $this->date;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Workday
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
+    
     /**
      * Set notes
      *
