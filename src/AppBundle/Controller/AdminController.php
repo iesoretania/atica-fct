@@ -24,6 +24,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
+use AppBundle\Entity\Person;
 use AppBundle\Entity\Training;
 use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
@@ -165,6 +166,11 @@ class AdminController extends Controller
         $new = (null === $element);
         if ($new) {
             $element = new $entityData['entityClassName'];
+            if (method_exists($element, 'setPerson')) {
+                $person = new Person();
+                $element->setPerson($person);
+                $em->persist($person);
+            }
             $em->persist($element);
         }
 
