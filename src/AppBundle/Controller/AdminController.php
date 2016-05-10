@@ -25,6 +25,7 @@ use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
 use AppBundle\Entity\Person;
+use AppBundle\Entity\Student;
 use AppBundle\Entity\Teacher;
 use AppBundle\Entity\Training;
 use AppBundle\Entity\Workcenter;
@@ -125,10 +126,24 @@ class AdminController extends Controller
         'query' => 'SELECT t FROM AppBundle:Teacher t JOIN t.person p',
         'defaultSortFieldName' => 'p.lastName',
         'columns' => [
-            ['size' => '2', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
-            ['size' => '7', 'sort_field' => 'p.firstName', 'name' => 'form.first_name']
+            ['size' => '5', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
+            ['size' => '4', 'sort_field' => 'p.firstName', 'name' => 'form.first_name']
         ],
         'data_columns' => ['lastName', 'firstName']
+    ];
+
+    public static $STUDENT_ENTITY_DATA = [
+        'entity' => 'student',
+        'entityClassName' => 'AppBundle\Entity\Student',
+        'entityFormType' => 'AppBundle\Form\Type\StudentType',
+        'query' => 'SELECT s FROM AppBundle:Student s JOIN s.person p',
+        'defaultSortFieldName' => 'p.lastName',
+        'columns' => [
+            ['size' => '4', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
+            ['size' => '3', 'sort_field' => 'p.firstName', 'name' => 'form.first_name'],
+            ['size' => '2', 'sort_field' => 's.group', 'name' => 'form.group']
+        ],
+        'data_columns' => ['lastName', 'firstName', 'group']
     ];
 
     /**
@@ -159,8 +174,7 @@ class AdminController extends Controller
             $this->getParameter('page.size'),
             [
                 'defaultSortFieldName' => $entityData['defaultSortFieldName'],
-                'defaultSortDirection' => 'asc',
-                'wrap-queries' => true
+                'defaultSortDirection' => 'asc'
             ]
         );
 
@@ -428,5 +442,30 @@ class AdminController extends Controller
     public function teacherDeleteAction(Teacher $element, Request $request)
     {
         return $this->genericDeleteAction(self::$TEACHER_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/alumnado", name="admin_student", methods={"GET"})
+     */
+    public function studentIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$STUDENT_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/alumnado/nuevo", name="admin_student_new", methods={"GET", "POST"})
+     * @Route("/alumnado/{id}", name="admin_student_form", methods={"GET", "POST"})
+     */
+    public function studentFormAction(Student $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$STUDENT_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/alumnado/eliminar/{id}", name="admin_student_delete", methods={"GET", "POST"})
+     */
+    public function studentDeleteAction(Student $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$STUDENT_ENTITY_DATA, $element, $request);
     }
 }

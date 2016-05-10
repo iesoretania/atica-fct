@@ -68,7 +68,7 @@ class AdminMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.students')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_student')
             ->setCaption('menu.admin.students')
             ->setDescription('menu.admin.students.detail')
             ->setColor('orange')

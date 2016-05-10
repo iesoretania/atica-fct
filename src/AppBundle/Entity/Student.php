@@ -32,8 +32,14 @@ class Student
 {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
      * @ORM\OneToOne(targetEntity="Person")
-     * @ORM\JoinColumn(name="id")
+     * @ORM\JoinColumn(nullable=false)
      * @var Person
      */
     protected $person;
@@ -65,6 +71,16 @@ class Student
     }
 
     /**
+     * Returns the student's display name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->person;
+    }
+
+    /**
      * Set code
      *
      * @param string $code
@@ -89,6 +105,16 @@ class Student
     }
 
     /**
+     * Get person
+     *
+     * @return Person
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
      * Set person
      *
      * @param Person $person
@@ -105,11 +131,31 @@ class Student
     /**
      * Get person
      *
-     * @return Person
+     * @return int
      */
     public function getId()
     {
-        return $this->person;
+        return $this->id;
+    }
+
+    /**
+     * Get person last name
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->person->getLastName();
+    }
+
+    /**
+     * Get person first name
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->person->getFirstName();
     }
 
     /**

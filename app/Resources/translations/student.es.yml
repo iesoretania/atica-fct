@@ -1,0 +1,32 @@
+browse.title: Alumnado del centro
+
+form.code: NIE
+form.reference: DNI/NIF
+form.first_name: Nombre
+form.last_name: Apellidos
+form.display_name: Nombre mostrado
+form.gender: Sexo
+form.gender_unknown: Desconocido
+form.gender_male: Hombre
+form.gender_female: Mujer
+form.initials: Iniciales
+form.email: Correo electrónico
+form.phone_number: Teléfono
+form.group: Grupo
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nuevo estudiante
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Estudiante eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el estudiante. Compruebe que no hay elementos asociados al mismo.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El estudiante sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar
