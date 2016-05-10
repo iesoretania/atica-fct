@@ -42,7 +42,7 @@ class AdminController extends Controller
             'entity' => 'department',
             'entityClassName' => 'AppBundle\Entity\Department',
             'entityFormType' => 'AppBundle\Form\Type\DepartmentType',
-            'query' => 'SELECT d FROM AppBundle:Department d JOIN d.head h JOIN h.person p',
+            'query' => 'SELECT d FROM AppBundle:Department d LEFT JOIN d.head h LEFT JOIN h.person p',
             'defaultSortFieldName' => 'd.name',
             'columns' => [
                 ['size' => '5', 'sort_field' => 'd.name', 'name' => 'department.name'],
