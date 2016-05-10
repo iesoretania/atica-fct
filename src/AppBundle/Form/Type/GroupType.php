@@ -42,7 +42,7 @@ class GroupType extends AbstractType
             ])
             ->add('tutors', null, [
                 'label' => 'form.tutors',
-                'required' => true
+                'required' => false
             ]);
     }
 
