@@ -97,10 +97,11 @@ class AdminController extends Controller
         'query' => 'SELECT t FROM AppBundle:Training t JOIN t.department d',
         'defaultSortFieldName' => 't.name',
         'columns' => [
-            ['size' => '5', 'sort_field' => 't.name', 'name' => 'form.name'],
-            ['size' => '4', 'sort_field' => 't.department', 'name' => 'form.department']
+            ['size' => '4', 'sort_field' => 't.name', 'name' => 'form.name'],
+            ['size' => '3', 'sort_field' => 't.department', 'name' => 'form.department'],
+            ['size' => '2', 'sort_field' => 't.programHours', 'name' => 'form.program_hours']
         ],
-        'data_columns' => ['name', 'department']
+        'data_columns' => ['name', 'department', 'programHours']
     ];
 
     public static $NON_SCHOOL_DAY_ENTITY_DATA = [

@@ -2,6 +2,7 @@ browse.title: Listado de enseñanzas
 
 form.name: Denominación
 form.department: Departamento
+form.program_hours: Número de horas de FCT
 
 form.submit: Guardar cambios
 form.delete: Eliminar

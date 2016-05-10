@@ -39,6 +39,10 @@ class TrainingType extends AbstractType
             ->add('department', null, [
                 'label' => 'form.department',
                 'required' => true
+            ])
+            ->add('programHours', null, [
+                'label' => 'form.program_hours',
+                'required' => true
             ]);
     }
 
