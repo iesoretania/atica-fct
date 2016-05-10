@@ -152,7 +152,7 @@ class Person
      */
     public function __toString()
     {
-        return $this->getDisplayName();
+        return $this->getLastName() ? ($this->getDisplayName() ? $this->getDisplayName() : $this->getFirstName() . ' ' . $this->getLastName()) : '';
     }
 
     /**

@@ -30,8 +30,14 @@ class Teacher
 {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
      * @ORM\OneToOne(targetEntity="Person")
-     * @ORM\JoinColumn(name="id")
+     * @ORM\JoinColumn(nullable=false)
      * @var Person
      */
     protected $person;
@@ -75,6 +81,16 @@ class Teacher
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set person
      *
      * @param Person $person
@@ -96,6 +112,26 @@ class Teacher
     public function getPerson()
     {
         return $this->person;
+    }
+
+    /**
+     * Get person last name
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->person->getLastName();
+    }
+
+    /**
+     * Get person first name
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->person->getFirstName();
     }
 
     /**
