@@ -1,0 +1,27 @@
+browse.title: Acuerdos de colaboración vigentes
+
+form.sign_date: Fecha de la firma
+form.from_date: Fecha de inicio
+form.to_date: Fecha de finalización
+form.student: Estudiante
+form.work_tutor: Tutor laboral
+form.educational_tutor: Tutor docente
+form.workcenter: Centro de trabajo
+form.activities: Actividades programadas
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nuevo acuerdo
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Acuerdo eliminado con éxito
+alert.not_deleted: No se ha podido eliminar el acuerdo. Compruebe que no hay elementos asociados al mismo.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El acuerdo sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

@@ -20,6 +20,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
@@ -71,9 +72,9 @@ class AdminController extends Controller
         'entityClassName' => 'AppBundle\Entity\Workcenter',
         'entityFormType' => 'AppBundle\Form\Type\WorkcenterType',
         'query' => 'SELECT w FROM AppBundle:Workcenter w JOIN w.company c',
-        'defaultSortFieldName' => 'w.company.name',
+        'defaultSortFieldName' => 'c.name',
         'columns' => [
-            ['size' => '4', 'sort_field' => 'w.company.name', 'name' => 'form.company'],
+            ['size' => '4', 'sort_field' => 'c.name', 'name' => 'form.company'],
             ['size' => '5', 'sort_field' => 'w.name', 'name' => 'form.name'],
         ],
         'data_columns' => ['company', 'name']
@@ -144,6 +145,19 @@ class AdminController extends Controller
             ['size' => '2', 'sort_field' => 's.group', 'name' => 'form.group']
         ],
         'data_columns' => ['lastName', 'firstName', 'group']
+    ];
+
+    public static $AGREEMENT_ENTITY_DATA = [
+        'entity' => 'agreement',
+        'entityClassName' => 'AppBundle\Entity\Agreement',
+        'entityFormType' => 'AppBundle\Form\Type\AgreementType',
+        'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s JOIN s.person p',
+        'defaultSortFieldName' => 'p.displayName',
+        'columns' => [
+            ['size' => '4', 'sort_field' => 'p.displayName', 'name' => 'form.student'],
+            ['size' => '5', 'sort_field' => 'a.workcenter', 'name' => 'form.workcenter']
+        ],
+        'data_columns' => ['student', 'workcenter']
     ];
 
     /**
@@ -467,5 +481,30 @@ class AdminController extends Controller
     public function studentDeleteAction(Student $element, Request $request)
     {
         return $this->genericDeleteAction(self::$STUDENT_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/acuerdos", name="admin_agreement", methods={"GET"})
+     */
+    public function agreementIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$AGREEMENT_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/acuerdos/nuevo", name="admin_agreement_new", methods={"GET", "POST"})
+     * @Route("/acuerdos/{id}", name="admin_agreement_form", methods={"GET", "POST"})
+     */
+    public function agreementFormAction(Agreement $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/acuerdos/eliminar/{id}", name="admin_agreement_delete", methods={"GET", "POST"})
+     */
+    public function agreementDeleteAction(Agreement $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
     }
 }

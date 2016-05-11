@@ -63,7 +63,7 @@ class Agreement
     protected $student;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Person")
+     * @ORM\ManyToOne(targetEntity="WorkTutor", inversedBy="agreements")
      * @ORM\JoinColumn(nullable=false)
      * @var Person
      */
@@ -106,6 +106,7 @@ class Agreement
      * @var Report
      */
     protected $report;
+
     /**
      * Constructor
      */
@@ -114,6 +115,14 @@ class Agreement
         $this->activities = new ArrayCollection();
         $this->visits = new ArrayCollection();
         $this->workdays = new ArrayCollection();
+
+        $this->fromDate = new \DateTime();
+        $this->toDate = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->getStudent() ? $this->getStudent() . ' - ' . $this->getWorkcenter() : '';
     }
 
     /**

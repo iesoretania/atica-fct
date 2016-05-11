@@ -48,7 +48,7 @@ class FctAdminMenu implements MenuBuilderInterface
         $mainItem = new MenuItem();
         $mainItem
             ->setName('fct_agreement')
-            ->setRouteName('frontpage')
+            ->setRouteName('admin_agreement')
             ->setCaption('menu.fct_agreement')
             ->setDescription('menu.fct_agreement.detail')
             ->setColor('blue')
