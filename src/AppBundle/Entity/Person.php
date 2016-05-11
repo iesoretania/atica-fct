@@ -135,6 +135,11 @@ class Person
      */
     protected $tokenValidity;
 
+    public function __construct()
+    {
+        $this->gender = self::GENDER_UNKNOWN;
+    }
+
     /**
      * Get id
      *
