@@ -24,3 +24,15 @@ services:
         autowire: true
         tags:
             -  { name: atica_core.menu_builder }
+
+    app.fct_admin.menu:
+        class: AppBundle\Service\FctAdminMenu
+        autowire: true
+        tags:
+            -  { name: atica_core.menu_builder }
+
+    app.group_admin.menu:
+        class: AppBundle\Service\GroupAdminMenu
+        autowire: true
+        tags:
+            -  { name: atica_core.menu_builder }

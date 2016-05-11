@@ -153,7 +153,7 @@ class AdminMenu implements MenuBuilderInterface
 
         $mainItem->addChild($item);
 
-        $root->addChild($mainItem, MenuItem::AT_THE_BEGINNING);
+        $root->addChild($mainItem, MenuItem::AT_THE_END);
     }
 
     public function getMenuPriority()

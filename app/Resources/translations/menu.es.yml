@@ -20,10 +20,10 @@ menu.impersonate: Acceder como el usuario
 menu.impersonate.exit: Volver al usuario normal
 
 menu.admin: Administración
-menu.admin.detail: Permite realizar cambios en la configuración de la plataforma
+menu.admin.detail: Realizar cambios en la configuración de la plataforma
 
 menu.admin.manage.users: Usuarios
-menu.admin.manage.users.detail: Permite añadir, modificar o eliminar usuarios
+menu.admin.manage.users.detail: Gestionar los usuarios de la aplicación
 
 menu.admin.groups: Grupos
 menu.admin.groups.detail: Gestionar grupos del centro
@@ -48,3 +48,9 @@ menu.admin.workcenters.detail: Gestionar centros de trabajo
 
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos
+
+menu.fct_agreement: Acuerdos de colaboración
+menu.fct_agreement.detail: Crear o modificar los acuerdos de colaboración
+
+menu.group_admin: Gestión de la tutoría
+menu.group_admin.detail: Actividades relacionadas con la tutoría de grupo
