@@ -89,11 +89,22 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
+            ->setName('admin.departments')
+            ->setRouteName('admin_department')
+            ->setCaption('menu.admin.departments')
+            ->setDescription('menu.admin.departments.detail')
+            ->setColor('olive')
+            ->setIcon('sitemap');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
             ->setName('admin.trainings')
             ->setRouteName('admin_training')
             ->setCaption('menu.admin.trainings')
             ->setDescription('menu.admin.trainings.detail')
-            ->setColor('olive')
+            ->setColor('green')
             ->setIcon('bank');
 
         $mainItem->addChild($item);
@@ -104,19 +115,8 @@ class AdminMenu implements MenuBuilderInterface
             ->setRouteName('admin_group')
             ->setCaption('menu.admin.groups')
             ->setDescription('menu.admin.groups.detail')
-            ->setColor('green')
-            ->setIcon('users');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.departments')
-            ->setRouteName('admin_department')
-            ->setCaption('menu.admin.departments')
-            ->setDescription('menu.admin.departments.detail')
             ->setColor('emerald')
-            ->setIcon('sitemap');
+            ->setIcon('users');
 
         $mainItem->addChild($item);
 
@@ -144,11 +144,33 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
+            ->setName('admin.work_tutor')
+            ->setRouteName('admin_work_tutor')
+            ->setCaption('menu.admin.work_tutors')
+            ->setDescription('menu.admin.work_tutors.detail')
+            ->setColor('dark-blue')
+            ->setIcon('user-md');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
+            ->setName('admin.agreement')
+            ->setRouteName('admin_agreement')
+            ->setCaption('menu.admin.agreement')
+            ->setDescription('menu.admin.agreement.detail')
+            ->setColor('dark-cobalt')
+            ->setIcon('link');
+
+        $mainItem->addChild($item);
+
+        $item = new MenuItem();
+        $item
             ->setName('admin.calendar')
             ->setRouteName('admin_non_school_day')
             ->setCaption('menu.admin.calendar')
             ->setDescription('menu.admin.calendar.detail')
-            ->setColor('dark-blue')
+            ->setColor('dark-teal')
             ->setIcon('calendar');
 
         $mainItem->addChild($item);

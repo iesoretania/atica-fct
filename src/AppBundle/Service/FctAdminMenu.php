@@ -34,27 +34,11 @@ class FctAdminMenu implements MenuBuilderInterface
 
     public function updateMenu(&$menu)
     {
-        $isAdministrator = $this->authorizationChecker->isGranted("ROLE_DEPARTMENT_HEAD");
+        $isHeadOfDepartment = $this->authorizationChecker->isGranted("ROLE_DEPARTMENT_HEAD");
 
-        if (!$isAdministrator) {
+        if (!$isHeadOfDepartment) {
             return null;
         }
-
-        /**
-         * @var $root MenuItem
-         */
-        $root = reset($menu);
-
-        $mainItem = new MenuItem();
-        $mainItem
-            ->setName('fct_agreement')
-            ->setRouteName('admin_agreement')
-            ->setCaption('menu.fct_agreement')
-            ->setDescription('menu.fct_agreement.detail')
-            ->setColor('blue')
-            ->setIcon('link');
-
-        $root->addChild($mainItem, MenuItem::AT_THE_END);
     }
 
     public function getMenuPriority()

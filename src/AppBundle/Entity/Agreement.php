@@ -234,11 +234,11 @@ class Agreement
     /**
      * Set workTutor
      *
-     * @param \AppBundle\Entity\Person $workTutor
+     * @param WorkTutor $workTutor
      *
      * @return Agreement
      */
-    public function setWorkTutor(\AppBundle\Entity\Person $workTutor)
+    public function setWorkTutor(WorkTutor $workTutor)
     {
         $this->workTutor = $workTutor;
 
@@ -248,7 +248,7 @@ class Agreement
     /**
      * Get workTutor
      *
-     * @return \AppBundle\Entity\Person
+     * @return WorkTutor
      */
     public function getWorkTutor()
     {

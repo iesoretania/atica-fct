@@ -152,12 +152,25 @@ class AdminController extends Controller
         'entityClassName' => 'AppBundle\Entity\Agreement',
         'entityFormType' => 'AppBundle\Form\Type\AgreementType',
         'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s JOIN s.person p',
-        'defaultSortFieldName' => 'p.displayName',
+        'defaultSortFieldName' => 'p.lastName',
         'columns' => [
             ['size' => '4', 'sort_field' => 'p.displayName', 'name' => 'form.student'],
             ['size' => '5', 'sort_field' => 'a.workcenter', 'name' => 'form.workcenter']
         ],
         'data_columns' => ['student', 'workcenter']
+    ];
+
+    public static $WORKTUTOR_ENTITY_DATA = [
+        'entity' => 'work_tutor',
+        'entityClassName' => 'AppBundle\Entity\WorkTutor',
+        'entityFormType' => 'AppBundle\Form\Type\WorkTutorType',
+        'query' => 'SELECT w FROM AppBundle:WorkTutor w JOIN w.person p',
+        'defaultSortFieldName' => 'p.lastName',
+        'columns' => [
+            ['size' => '4', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
+            ['size' => '5', 'sort_field' => 'w.company', 'name' => 'form.company']
+        ],
+        'data_columns' => ['person', 'company',]
     ];
 
     /**
@@ -506,5 +519,30 @@ class AdminController extends Controller
     public function agreementDeleteAction(Agreement $element, Request $request)
     {
         return $this->genericDeleteAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/tutorialaboral", name="admin_work_tutor", methods={"GET"})
+     */
+    public function workTutorIndexAction(Request $request)
+    {
+        return $this->genericIndexAction(self::$WORKTUTOR_ENTITY_DATA, $request);
+    }
+
+    /**
+     * @Route("/tutorialaboral/nuevo", name="admin_work_tutor_new", methods={"GET", "POST"})
+     * @Route("/tutorialaboral/{id}", name="admin_work_tutor_form", methods={"GET", "POST"})
+     */
+    public function workTutorFormAction(Agreement $element = null, Request $request)
+    {
+        return $this->genericFormAction(self::$WORKTUTOR_ENTITY_DATA, $element, $request);
+    }
+
+    /**
+     * @Route("/tutorialaboral/eliminar/{id}", name="admin_work_tutor_delete", methods={"GET", "POST"})
+     */
+    public function workTutorDeleteAction(Agreement $element, Request $request)
+    {
+        return $this->genericDeleteAction(self::$WORKTUTOR_ENTITY_DATA, $element, $request);
     }
 }

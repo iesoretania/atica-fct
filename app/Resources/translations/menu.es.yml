@@ -49,8 +49,11 @@ menu.admin.workcenters.detail: Gestionar centros de trabajo
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos
 
-menu.fct_agreement: Acuerdos de colaboración
-menu.fct_agreement.detail: Crear o modificar los acuerdos de colaboración
+menu.admin.agreement: Acuerdos de colaboración
+menu.admin.agreement.detail: Crear o modificar los acuerdos de colaboración
 
 menu.group_admin: Gestión de la tutoría
 menu.group_admin.detail: Actividades relacionadas con la tutoría de grupo
+
+menu.admin.work_tutors: Tutoría laboral
+menu.admin.work_tutors.detail: Gestionar las tutorías laborales

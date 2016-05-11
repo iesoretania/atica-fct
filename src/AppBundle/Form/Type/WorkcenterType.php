@@ -24,7 +24,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WorkcenterType extends AbstractType
+class WorkCenterType extends AbstractType
 {
     /**
      * {@inheritdoc}
