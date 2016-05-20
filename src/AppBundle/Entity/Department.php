@@ -51,8 +51,8 @@ class Department
     protected $trainings;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="directs")
-     * @var Teacher
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="directs")
+     * @var User
      */
     protected $head;
 
@@ -145,11 +145,11 @@ class Department
     /**
      * Set head
      *
-     * @param Teacher $head
+     * @param User $head
      *
      * @return Department
      */
-    public function setHead(Teacher $head = null)
+    public function setHead(User $head = null)
     {
         $this->head = $head;
 
@@ -159,7 +159,7 @@ class Department
     /**
      * Get head
      *
-     * @return Teacher
+     * @return User
      */
     public function getHead()
     {

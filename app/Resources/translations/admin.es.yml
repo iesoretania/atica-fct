@@ -9,17 +9,3 @@ form.new: Nuevo elemento
 form.create: Crear elemento
 form.up: Subir
 form.down: Bajar
-
-user.lastName: Apellidos
-user.firstName: Nombre
-user.email: Correo-e
-user.invite: Invitar a un usuario
-user.new: Nuevo usuario
-user.title: Usuarios de la organización
-user.title_pending: Usuarios con invitaciones pendientes
-user.delete: Eliminar de la aplicación
-user.deleted: Usuario eliminado con éxito
-user.delete_failed: No se ha podido eliminar al usuario
-user.back: Volver al listado de usuario
-user.delete_confirm: >
-    ¡ATENCIÓN! El usuario no podrá eliminarse con éxito si está asociado a algún acuerdo de colaboración.

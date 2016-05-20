@@ -1,5 +1,5 @@
-form.username: Nombre de usuario
-form.reference: Referencia
+form.login_username: Nombre de usuario
+form.reference: NIF/NIE
 form.first_name: Nombre
 form.last_name: Apellidos
 form.display_name: Nombre mostrado
@@ -11,7 +11,10 @@ form.initials: Iniciales
 form.email: Correo electrónico
 form.enabled: El usuario está activo
 form.global_administrator: Es administrador global
-form.profiles: Perfiles activos
+form.tutorized_groups: Es tutor de los grupos
+form.student_group: Es un estudiante del grupo
+form.student_group.placeholder: No es estudiante
+
 form.old_password: Contraseña antigua
 form.new_password: Nueva contraseña
 form.new_password_repeat: Repita nueva contraseña
@@ -23,4 +26,17 @@ alert.password_changed: Datos guardados correctamente y contraseña cambiada
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
+form.view: Detalles
+form.delete: Eliminar
 form.back: Volver
+
+user.invite: Invitar a un usuario
+user.new: Nuevo usuario
+user.title: Usuarios de la organización
+user.title_pending: Usuarios con invitaciones pendientes
+user.delete: Eliminar de la aplicación
+user.deleted: Usuario eliminado con éxito
+user.delete_failed: No se ha podido eliminar al usuario
+user.back: Volver al listado de usuario
+user.delete_confirm: >
+    ¡ATENCIÓN! El usuario no podrá eliminarse con éxito si está asociado a algún acuerdo de colaboración.

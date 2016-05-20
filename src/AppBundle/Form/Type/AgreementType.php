@@ -26,10 +26,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgreementType extends AbstractType
 {
-    public function additionalForm(FormBuilderInterface $builder, array $options)
-    {
-    }
-
     /**
      * {@inheritdoc}
      */

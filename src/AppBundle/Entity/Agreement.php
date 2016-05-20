@@ -56,23 +56,23 @@ class Agreement
     protected $toDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Student", inversedBy="agreements")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @var Student
+     * @var User
      */
     protected $student;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WorkTutor", inversedBy="agreements")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @var Person
+     * @var User
      */
     protected $workTutor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="agreements")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @var Teacher
+     * @var User
      */
     protected $educationalTutor;
 
@@ -210,11 +210,11 @@ class Agreement
     /**
      * Set student
      *
-     * @param \AppBundle\Entity\Student $student
+     * @param User $student
      *
      * @return Agreement
      */
-    public function setStudent(\AppBundle\Entity\Student $student)
+    public function setStudent(User $student)
     {
         $this->student = $student;
 
@@ -224,7 +224,7 @@ class Agreement
     /**
      * Get student
      *
-     * @return \AppBundle\Entity\Student
+     * @return User
      */
     public function getStudent()
     {
@@ -234,11 +234,11 @@ class Agreement
     /**
      * Set workTutor
      *
-     * @param WorkTutor $workTutor
+     * @param User $workTutor
      *
      * @return Agreement
      */
-    public function setWorkTutor(WorkTutor $workTutor)
+    public function setWorkTutor(User $workTutor)
     {
         $this->workTutor = $workTutor;
 
@@ -248,7 +248,7 @@ class Agreement
     /**
      * Get workTutor
      *
-     * @return WorkTutor
+     * @return User
      */
     public function getWorkTutor()
     {
@@ -258,11 +258,11 @@ class Agreement
     /**
      * Set educationalTutor
      *
-     * @param \AppBundle\Entity\Teacher $educationalTutor
+     * @param User $educationalTutor
      *
      * @return Agreement
      */
-    public function setEducationalTutor(\AppBundle\Entity\Teacher $educationalTutor)
+    public function setEducationalTutor(User $educationalTutor)
     {
         $this->educationalTutor = $educationalTutor;
 
@@ -272,7 +272,7 @@ class Agreement
     /**
      * Get educationalTutor
      *
-     * @return \AppBundle\Entity\Teacher
+     * @return User
      */
     public function getEducationalTutor()
     {
@@ -282,11 +282,11 @@ class Agreement
     /**
      * Set workcenter
      *
-     * @param \AppBundle\Entity\Workcenter $workcenter
+     * @param Workcenter $workcenter
      *
      * @return Agreement
      */
-    public function setWorkcenter(\AppBundle\Entity\Workcenter $workcenter)
+    public function setWorkcenter(Workcenter $workcenter)
     {
         $this->workcenter = $workcenter;
 
@@ -296,7 +296,7 @@ class Agreement
     /**
      * Get workcenter
      *
-     * @return \AppBundle\Entity\Workcenter
+     * @return Workcenter
      */
     public function getWorkcenter()
     {

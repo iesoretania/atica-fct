@@ -64,7 +64,7 @@ class CompanyType extends AbstractType
                 'label' => 'form.email',
                 'required' => false
             ])
-            ->add('manager', "AppBundle\Form\Type\PersonType", [
+            ->add('manager', null, [
                 'label' => 'form.manager',
                 'required' => true
             ]);

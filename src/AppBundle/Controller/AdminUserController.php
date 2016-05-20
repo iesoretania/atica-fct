@@ -43,7 +43,7 @@ class AdminUserController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $usersQuery = $em->createQuery('SELECT u FROM AppBundle:User u JOIN AppBundle:Person p WITH u.person = p');
+        $usersQuery = $em->createQuery('SELECT u FROM AppBundle:User u');
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -51,7 +51,7 @@ class AdminUserController extends Controller
             $request->query->getInt('page', 1),
             $this->getParameter('page.size'),
             [
-                'defaultSortFieldName' => 'p.lastName',
+                'defaultSortFieldName' => 'u.lastName',
                 'defaultSortDirection' => 'asc'
             ]
         );

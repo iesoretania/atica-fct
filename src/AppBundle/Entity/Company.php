@@ -86,7 +86,7 @@ class Company
     protected $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Person", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $manager;
@@ -277,7 +277,7 @@ class Company
     /**
      * Set manager
      *
-     * @param Person $manager
+     * @param User $manager
      *
      * @return Company
      */
@@ -291,33 +291,9 @@ class Company
     /**
      * Get manager
      *
-     * @return Person
+     * @return User
      */
     public function getManager()
-    {
-        return $this->manager;
-    }
-
-    /**
-     * Set manager
-     *
-     * @param Person $manager
-     *
-     * @return Company
-     */
-    public function setPerson(Person $manager)
-    {
-        $this->manager = $manager;
-
-        return $this;
-    }
-
-    /**
-     * Get manager
-     *
-     * @return Person
-     */
-    public function getPerson()
     {
         return $this->manager;
     }

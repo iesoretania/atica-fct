@@ -61,7 +61,7 @@ class MailerService
         // convertir array de usuarios en lista de correos
         $to = [];
         foreach ($users as $user) {
-            $to[$user->getPerson()->getEmail()] = (string) $user;
+            $to[$user->getEmail()] = (string) $user;
         }
 
         /**

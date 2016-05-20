@@ -20,17 +20,19 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="UserRepository")
- * @UniqueEntity("username")
+ * @UniqueEntity("loginUsername")
  */
-class User implements UserInterface, \Serializable
+class User extends Person implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -41,21 +43,15 @@ class User implements UserInterface, \Serializable
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="user",fetch="EAGER")
-     * @ORM\JoinColumn(unique=true, nullable=false)
-     * @var Person
-     */
-    protected $person;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex(pattern="/[@ ]{1,}/", match=false, message="login_username.invalid_chars", htmlPattern=false)
+     * @Assert\Length(min=5)
      * @var string
      */
-    protected $username;
+    protected $loginUsername;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(min=7)
      * @var string
      */
@@ -92,20 +88,35 @@ class User implements UserInterface, \Serializable
     protected $lastLogin;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="students")
+     *
+     * @var Group
+     */
+    protected $studentGroup;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Group", mappedBy="tutors")
+     * @ORM\JoinTable(name="tutorized_groups")
+     *
+     * @var Collection
+     */
+    protected $tutorizedGroups;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Department", mappedBy="head")
+     *
+     * @var Collection
+     */
+    protected $directs;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-    }
+        parent::__construct();
 
-    /**
-     * Returns the user's display name
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->getPerson();
+        $this->tutorizedGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -119,25 +130,25 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get username
+     * Get login username
      *
      * @return string
      */
-    public function getUsername()
+    public function getLoginUsername()
     {
-        return $this->username;
+        return $this->loginUsername;
     }
 
     /**
-     * Set username
+     * Set login username
      *
-     * @param string $username
+     * @param string $loginUsername
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setLoginUsername($loginUsername)
     {
-        $this->username = $username;
+        $this->loginUsername = $loginUsername;
 
         return $this;
     }
@@ -263,28 +274,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get person
-     *
-     * @return Person
-     */
-    public function getPerson()
-    {
-        return $this->person;
-    }
-
-    /**
-     * Set person
-     *
-     * @param Person $person
-     *
-     * @return User
-     */
-    public function setPerson(Person $person)
-    {
-        $this->person = $person;
-    }
-
-    /**
      * String representation of object
      * @link http://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
@@ -294,7 +283,8 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->email,
+            $this->loginUsername,
             $this->password
         ));
     }
@@ -312,7 +302,8 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->email,
+            $this->loginUsername,
             $this->password
         ) = unserialize($serialized);
     }
@@ -378,5 +369,129 @@ class User implements UserInterface, \Serializable
     public function getLastLogin()
     {
         return $this->lastLogin;
+    }
+
+    /**
+     * Set group
+     *
+     * @param Group $group
+     *
+     * @return User
+     */
+    public function setStudentGroup(Group $group = null)
+    {
+        $this->studentGroup = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return Group
+     */
+    public function getStudentGroup()
+    {
+        return $this->studentGroup;
+    }
+
+    /**
+     * Add tutorizedGroup
+     *
+     * @param Group $tutorizedGroup
+     *
+     * @return User
+     */
+    public function addTutorizedGroup(Group $tutorizedGroup)
+    {
+        if (false === $this->tutorizedGroups->contains($tutorizedGroup)) {
+            $this->tutorizedGroups[] = $tutorizedGroup;
+            $tutorizedGroup->addTutor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove tutorizedGroup
+     *
+     * @param Group $tutorizedGroup
+     */
+    public function removeTutorizedGroup(Group $tutorizedGroup)
+    {
+        if (true === $this->tutorizedGroups->contains($tutorizedGroup)) {
+            $this->tutorizedGroups->removeElement($tutorizedGroup);
+            $tutorizedGroup->removeTutor($this);
+        }
+    }
+
+    /**
+     * Get tutorizedGroups
+     *
+     * @return Collection
+     */
+    public function getTutorizedGroups()
+    {
+        return $this->tutorizedGroups;
+    }
+
+    /**
+     * Add direct
+     *
+     * @param Department $direct
+     *
+     * @return User
+     */
+    public function addDirect(Department $direct)
+    {
+        $this->directs[] = $direct;
+
+        return $this;
+    }
+
+    /**
+     * Remove direct
+     *
+     * @param Department $direct
+     */
+    public function removeDirect(Department $direct)
+    {
+        $this->directs->removeElement($direct);
+    }
+
+    /**
+     * Get directs
+     *
+     * @return Collection
+     */
+    public function getDirects()
+    {
+        return $this->directs;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        // comprobar si se ha especificado al menos el nombre de usuario o el correo electrónico
+        if (!$this->getLoginUsername() && !$this->getEmail()) {
+            $context->buildViolation('user.id.not_found')
+                ->atPath('loginUsername')
+                ->addViolation();
+            $context->buildViolation('user.id.not_found')
+                ->atPath('email')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getLoginUsername() ?: $this->getEmail();
     }
 }

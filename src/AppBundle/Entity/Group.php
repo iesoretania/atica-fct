@@ -52,13 +52,14 @@ class Group
     protected $training;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="tutorizedGroups")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="tutorizedGroups")
+     * @ORM\JoinTable(name="tutorized_groups")
      * @var Collection
      */
     protected $tutors;
 
     /**
-     * @ORM\OneToMany(targetEntity="Student", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="studentGroup")
      * @var Collection
      */
     protected $students;
@@ -137,11 +138,11 @@ class Group
     /**
      * Add tutor
      *
-     * @param Teacher $tutor
+     * @param User $tutor
      *
      * @return Group
      */
-    public function addTutor(Teacher $tutor)
+    public function addTutor(User $tutor)
     {
         $this->tutors[] = $tutor;
 
@@ -151,9 +152,9 @@ class Group
     /**
      * Remove tutor
      *
-     * @param Teacher $tutor
+     * @param User $tutor
      */
-    public function removeTutor(Teacher $tutor)
+    public function removeTutor(User $tutor)
     {
         $this->tutors->removeElement($tutor);
     }
@@ -171,11 +172,11 @@ class Group
     /**
      * Add student
      *
-     * @param Student $student
+     * @param User $student
      *
      * @return Group
      */
-    public function addStudent(Student $student)
+    public function addStudent(User $student)
     {
         $this->students[] = $student;
 
@@ -185,9 +186,9 @@ class Group
     /**
      * Remove student
      *
-     * @param Student $student
+     * @param User $student
      */
-    public function removeStudent(Student $student)
+    public function removeStudent(User $student)
     {
         $this->students->removeElement($student);
     }

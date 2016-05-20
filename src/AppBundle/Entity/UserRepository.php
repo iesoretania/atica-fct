@@ -32,9 +32,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             return null;
         }
         return $this->getEntityManager()
-            ->createQuery('SELECT u FROM AppBundle:User u JOIN u.person p
-                           WHERE u.username = :username
-                           OR p.email = :username')
+            ->createQuery('SELECT u FROM AppBundle:User u 
+                           WHERE u.loginUsername = :username
+                           OR u.email = :username')
             ->setParameters([
                 'username' => $username
             ])
@@ -49,19 +49,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $class === 'AppBundle\Entity\User';
     }
 
-    /**
-     * Crea un nuevo usuario y su persona asociada
-     *
-     * @return User
-     */
     public function createNewUser()
     {
         $user = new User();
-        $person = new Person();
-        $person->setDisplayName('');
-        $user->setPerson($person);
-
-        $this->getEntityManager()->persist($user->getPerson());
         $this->getEntityManager()->persist($user);
 
         return $user;

@@ -25,9 +25,6 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
-use AppBundle\Entity\Person;
-use AppBundle\Entity\Student;
-use AppBundle\Entity\Teacher;
 use AppBundle\Entity\Training;
 use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
@@ -45,11 +42,11 @@ class AdminController extends Controller
             'entity' => 'department',
             'entityClassName' => 'AppBundle\Entity\Department',
             'entityFormType' => 'AppBundle\Form\Type\DepartmentType',
-            'query' => 'SELECT d FROM AppBundle:Department d LEFT JOIN d.head h LEFT JOIN h.person p',
+            'query' => 'SELECT d FROM AppBundle:Department d LEFT JOIN d.head h',
             'defaultSortFieldName' => 'd.name',
             'columns' => [
                 ['size' => '5', 'sort_field' => 'd.name', 'name' => 'department.name'],
-                ['size' => '4', 'sort_field' => 'p.displayName', 'name' => 'department.head'],
+                ['size' => '4', 'sort_field' => 'h.displayName', 'name' => 'department.head'],
             ],
             'data_columns' => ['name', 'head']
         ];
@@ -120,57 +117,17 @@ class AdminController extends Controller
         'data_columns' => ['date', 'name']
     ];
 
-    public static $TEACHER_ENTITY_DATA = [
-        'entity' => 'teacher',
-        'entityClassName' => 'AppBundle\Entity\Teacher',
-        'entityFormType' => 'AppBundle\Form\Type\TeacherType',
-        'query' => 'SELECT t FROM AppBundle:Teacher t JOIN t.person p',
-        'defaultSortFieldName' => 'p.lastName',
-        'columns' => [
-            ['size' => '5', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
-            ['size' => '4', 'sort_field' => 'p.firstName', 'name' => 'form.first_name']
-        ],
-        'data_columns' => ['lastName', 'firstName']
-    ];
-
-    public static $STUDENT_ENTITY_DATA = [
-        'entity' => 'student',
-        'entityClassName' => 'AppBundle\Entity\Student',
-        'entityFormType' => 'AppBundle\Form\Type\StudentType',
-        'query' => 'SELECT s FROM AppBundle:Student s JOIN s.person p',
-        'defaultSortFieldName' => 'p.lastName',
-        'columns' => [
-            ['size' => '4', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
-            ['size' => '3', 'sort_field' => 'p.firstName', 'name' => 'form.first_name'],
-            ['size' => '2', 'sort_field' => 's.group', 'name' => 'form.group']
-        ],
-        'data_columns' => ['lastName', 'firstName', 'group']
-    ];
-
     public static $AGREEMENT_ENTITY_DATA = [
         'entity' => 'agreement',
         'entityClassName' => 'AppBundle\Entity\Agreement',
         'entityFormType' => 'AppBundle\Form\Type\AgreementType',
-        'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s JOIN s.person p',
-        'defaultSortFieldName' => 'p.lastName',
+        'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s',
+        'defaultSortFieldName' => 's.lastName',
         'columns' => [
-            ['size' => '4', 'sort_field' => 'p.displayName', 'name' => 'form.student'],
+            ['size' => '4', 'sort_field' => 's.displayName', 'name' => 'form.student'],
             ['size' => '5', 'sort_field' => 'a.workcenter', 'name' => 'form.workcenter']
         ],
         'data_columns' => ['student', 'workcenter']
-    ];
-
-    public static $WORKTUTOR_ENTITY_DATA = [
-        'entity' => 'work_tutor',
-        'entityClassName' => 'AppBundle\Entity\WorkTutor',
-        'entityFormType' => 'AppBundle\Form\Type\WorkTutorType',
-        'query' => 'SELECT w FROM AppBundle:WorkTutor w JOIN w.person p',
-        'defaultSortFieldName' => 'p.lastName',
-        'columns' => [
-            ['size' => '4', 'sort_field' => 'p.lastName', 'name' => 'form.last_name'],
-            ['size' => '5', 'sort_field' => 'w.company', 'name' => 'form.company']
-        ],
-        'data_columns' => ['person', 'company',]
     ];
 
     /**
@@ -223,11 +180,6 @@ class AdminController extends Controller
         $new = (null === $element);
         if ($new) {
             $element = new $entityData['entityClassName'];
-            if (method_exists($element, 'setPerson')) {
-                $person = new Person();
-                $element->setPerson($person);
-                $em->persist($person);
-            }
             $em->persist($element);
         }
 
@@ -273,8 +225,7 @@ class AdminController extends Controller
             try {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], $entityData['entity']));
-            }
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], $entityData['entity']));
             }
             return $this->redirectToRoute('admin_' . $entityData['entity']);
@@ -447,56 +398,6 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/profesorado", name="admin_teacher", methods={"GET"})
-     */
-    public function teacherIndexAction(Request $request)
-    {
-        return $this->genericIndexAction(self::$TEACHER_ENTITY_DATA, $request);
-    }
-
-    /**
-     * @Route("/profesorado/nuevo", name="admin_teacher_new", methods={"GET", "POST"})
-     * @Route("/profesorado/{id}", name="admin_teacher_form", methods={"GET", "POST"})
-     */
-    public function teacherFormAction(Teacher $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$TEACHER_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/profesorado/eliminar/{id}", name="admin_teacher_delete", methods={"GET", "POST"})
-     */
-    public function teacherDeleteAction(Teacher $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$TEACHER_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/alumnado", name="admin_student", methods={"GET"})
-     */
-    public function studentIndexAction(Request $request)
-    {
-        return $this->genericIndexAction(self::$STUDENT_ENTITY_DATA, $request);
-    }
-
-    /**
-     * @Route("/alumnado/nuevo", name="admin_student_new", methods={"GET", "POST"})
-     * @Route("/alumnado/{id}", name="admin_student_form", methods={"GET", "POST"})
-     */
-    public function studentFormAction(Student $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$STUDENT_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/alumnado/eliminar/{id}", name="admin_student_delete", methods={"GET", "POST"})
-     */
-    public function studentDeleteAction(Student $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$STUDENT_ENTITY_DATA, $element, $request);
-    }
-
-    /**
      * @Route("/acuerdos", name="admin_agreement", methods={"GET"})
      */
     public function agreementIndexAction(Request $request)
@@ -519,30 +420,5 @@ class AdminController extends Controller
     public function agreementDeleteAction(Agreement $element, Request $request)
     {
         return $this->genericDeleteAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/tutorialaboral", name="admin_work_tutor", methods={"GET"})
-     */
-    public function workTutorIndexAction(Request $request)
-    {
-        return $this->genericIndexAction(self::$WORKTUTOR_ENTITY_DATA, $request);
-    }
-
-    /**
-     * @Route("/tutorialaboral/nuevo", name="admin_work_tutor_new", methods={"GET", "POST"})
-     * @Route("/tutorialaboral/{id}", name="admin_work_tutor_form", methods={"GET", "POST"})
-     */
-    public function workTutorFormAction(Agreement $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$WORKTUTOR_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/tutorialaboral/eliminar/{id}", name="admin_work_tutor_delete", methods={"GET", "POST"})
-     */
-    public function workTutorDeleteAction(Agreement $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$WORKTUTOR_ENTITY_DATA, $element, $request);
     }
 }

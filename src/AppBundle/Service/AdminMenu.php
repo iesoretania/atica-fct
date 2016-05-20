@@ -67,33 +67,11 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('admin.students')
-            ->setRouteName('admin_student')
-            ->setCaption('menu.admin.students')
-            ->setDescription('menu.admin.students.detail')
-            ->setColor('orange')
-            ->setIcon('child');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.teachers')
-            ->setRouteName('admin_teacher')
-            ->setCaption('menu.admin.teachers')
-            ->setDescription('menu.admin.teachers.detail')
-            ->setColor('magenta')
-            ->setIcon('graduation-cap');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
             ->setName('admin.departments')
             ->setRouteName('admin_department')
             ->setCaption('menu.admin.departments')
             ->setDescription('menu.admin.departments.detail')
-            ->setColor('olive')
+            ->setColor('yellow')
             ->setIcon('sitemap');
 
         $mainItem->addChild($item);
@@ -144,22 +122,11 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('admin.work_tutor')
-            ->setRouteName('admin_work_tutor')
-            ->setCaption('menu.admin.work_tutors')
-            ->setDescription('menu.admin.work_tutors.detail')
-            ->setColor('dark-blue')
-            ->setIcon('user-md');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
             ->setName('admin.agreement')
             ->setRouteName('admin_agreement')
             ->setCaption('menu.admin.agreement')
             ->setDescription('menu.admin.agreement.detail')
-            ->setColor('dark-cobalt')
+            ->setColor('dark-blue')
             ->setIcon('link');
 
         $mainItem->addChild($item);

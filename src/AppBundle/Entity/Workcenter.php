@@ -85,9 +85,9 @@ class Workcenter
     protected $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Person", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @var Person
+     * @var User
      */
     protected $manager;
 
@@ -292,11 +292,11 @@ class Workcenter
     /**
      * Set manager
      *
-     * @param Person $manager
+     * @param User $manager
      *
      * @return Workcenter
      */
-    public function setManager(Person $manager)
+    public function setManager(User $manager)
     {
         $this->manager = $manager;
 
@@ -306,33 +306,9 @@ class Workcenter
     /**
      * Get manager
      *
-     * @return Person
+     * @return User
      */
     public function getManager()
-    {
-        return $this->manager;
-    }
-
-    /**
-     * Set manager
-     *
-     * @param Person $manager
-     *
-     * @return Workcenter
-     */
-    public function setPerson(Person $manager)
-    {
-        $this->manager = $manager;
-
-        return $this;
-    }
-
-    /**
-     * Get manager
-     *
-     * @return Person
-     */
-    public function getPerson()
     {
         return $this->manager;
     }

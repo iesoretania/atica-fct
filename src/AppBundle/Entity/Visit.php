@@ -42,9 +42,9 @@ class Visit
     protected $when;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @var Teacher
+     * @var User
      */
     protected $teacher;
 
@@ -98,11 +98,11 @@ class Visit
     /**
      * Set teacher
      *
-     * @param \AppBundle\Entity\Teacher $teacher
+     * @param User $teacher
      *
      * @return Visit
      */
-    public function setTeacher(\AppBundle\Entity\Teacher $teacher)
+    public function setTeacher(User $teacher)
     {
         $this->teacher = $teacher;
 
@@ -112,7 +112,7 @@ class Visit
     /**
      * Get teacher
      *
-     * @return \AppBundle\Entity\Teacher
+     * @return User
      */
     public function getTeacher()
     {

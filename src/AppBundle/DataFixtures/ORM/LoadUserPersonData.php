@@ -20,11 +20,11 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Person;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Person;
-use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,23 +37,17 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
 
     public function load(ObjectManager $manager)
     {
-        $personAdmin = new Person();
-        $personAdmin
+        $userAdmin = new User();
+        $userAdmin
             ->setDisplayName('Admin')
             ->setFirstName('Admin')
             ->setLastName('Admin')
             ->setGender(Person::GENDER_UNKNOWN)
-            ->setReference('admin');
-
-        $manager->persist($personAdmin);
-
-        $userAdmin = new User();
-        $userAdmin
+            ->setReference('admin')
             ->setEnabled(true)
             ->setGlobalAdministrator(true)
             ->setPassword($this->container->get('security.password_encoder')->encodePassword($userAdmin, 'admin'))
-            ->setUsername('admin')
-            ->setPerson($personAdmin);
+            ->setLoginUsername('admin');
 
         $manager->persist($userAdmin);
 

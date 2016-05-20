@@ -1,19 +1,21 @@
-{% trans_default_domain 'admin' %}
+{% trans_default_domain 'user' %}
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        {{ m.paginator_th(elements, 'col-md-4', 'p.lastName', 'user.lastName'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-2', 'p.firstName', 'user.firstName'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-3', 'p.email', 'user.email'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-3', 'u.lastName', 'form.last_name'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.firstName', 'form.first_name'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.loginUsername', 'form.login_username'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.email', 'form.email'|trans) }}
         <th class="col-md-3"></th>
     </tr>
     </thead>
     <tbody>
     {% for user in elements %}
         <tr>
-            <td>{{ user.person.lastName }}</td>
-            <td>{{ user.person.firstName }}</td>
-            <td>{{ user.person.email }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.loginUsername }}</td>
+            <td>{{ user.email }}</td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
@@ -27,7 +29,7 @@
     </tbody>
     <tfoot>
     <tr>
-        <th colspan="5">{{ m.paginator_stats(elements) }}</th>
+        <th colspan="6">{{ m.paginator_stats(elements) }}</th>
     </tr>
     </tfoot>
 </table>

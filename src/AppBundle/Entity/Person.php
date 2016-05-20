@@ -25,7 +25,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  * @UniqueEntity("email")
  */
 class Person
@@ -33,14 +33,6 @@ class Person
     const GENDER_UNKNOWN = 0;
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @var int
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
@@ -81,12 +73,6 @@ class Person
     protected $initials;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="person")
-     * @var User
-     */
-    protected $user;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
@@ -123,31 +109,9 @@ class Person
      */
     protected $email;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     */
-    protected $token;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     */
-    protected $tokenValidity;
-
     public function __construct()
     {
         $this->gender = self::GENDER_UNKNOWN;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -167,7 +131,7 @@ class Person
      *
      * @param string $reference
      *
-     * @return Person
+     * @return User
      */
     public function setReference($reference)
     {
@@ -191,7 +155,7 @@ class Person
      *
      * @param string $firstName
      *
-     * @return Person
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -215,7 +179,7 @@ class Person
      *
      * @param string $lastName
      *
-     * @return Person
+     * @return User
      */
     public function setLastName($lastName)
     {
@@ -239,7 +203,7 @@ class Person
      *
      * @param integer $gender
      *
-     * @return Person
+     * @return User
      */
     public function setGender($gender)
     {
@@ -263,7 +227,7 @@ class Person
      *
      * @param string $displayName
      *
-     * @return Person
+     * @return User
      */
     public function setDisplayName($displayName)
     {
@@ -287,7 +251,7 @@ class Person
      *
      * @param string $initials
      *
-     * @return Person
+     * @return User
      */
     public function setInitials($initials)
     {
@@ -307,35 +271,11 @@ class Person
     }
 
     /**
-     * Set user
-     *
-     * @param User $user
-     *
-     * @return Person
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set address
      *
      * @param string $address
      *
-     * @return Person
+     * @return User
      */
     public function setAddress($address)
     {
@@ -359,7 +299,7 @@ class Person
      *
      * @param string $city
      *
-     * @return Person
+     * @return User
      */
     public function setCity($city)
     {
@@ -383,7 +323,7 @@ class Person
      *
      * @param string $province
      *
-     * @return Person
+     * @return User
      */
     public function setProvince($province)
     {
@@ -407,7 +347,7 @@ class Person
      *
      * @param string $zipCode
      *
-     * @return Person
+     * @return User
      */
     public function setZipCode($zipCode)
     {
@@ -431,7 +371,7 @@ class Person
      *
      * @param string $phoneNumber
      *
-     * @return Person
+     * @return User
      */
     public function setPhoneNumber($phoneNumber)
     {
@@ -466,60 +406,12 @@ class Person
      *
      * @param string $email
      *
-     * @return Person
+     * @return User
      */
     public function setEmail($email)
     {
         $this->email = $email;
 
         return $this;
-    }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return Person
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * Set tokenValidity
-     *
-     * @param \DateTime $tokenValidity
-     *
-     * @return Person
-     */
-    public function setTokenValidity($tokenValidity)
-    {
-        $this->tokenValidity = $tokenValidity;
-
-        return $this;
-    }
-
-    /**
-     * Get tokenValidity
-     *
-     * @return \DateTime
-     */
-    public function getTokenValidity()
-    {
-        return $this->tokenValidity;
     }
 }

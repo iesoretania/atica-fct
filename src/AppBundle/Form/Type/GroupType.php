@@ -42,6 +42,9 @@ class GroupType extends AbstractType
             ])
             ->add('tutors', null, [
                 'label' => 'form.tutors',
+                'attr' => [
+                    'class' => 'autocomplete'
+                ],
                 'required' => false
             ]);
     }
