@@ -55,6 +55,7 @@ class AdminController extends Controller
         'entity' => 'company',
         'entityClassName' => 'AppBundle\Entity\Company',
         'entityFormType' => 'AppBundle\Form\Type\CompanyType',
+        'form_template' => 'admin/form_company.html.twig',
         'query' => 'SELECT c FROM AppBundle:Company c',
         'defaultSortFieldName' => 'c.name',
         'columns' => [
@@ -144,12 +145,16 @@ class AdminController extends Controller
             ]);
     }
 
-    public function genericIndexAction($entityData, Request $request)
+    public function genericIndexAction($entityData, Request $request, $items = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery($entityData['query']);
+
+        if (null !== $items) {
+            $query->setParameters($items);
+        }
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -162,15 +167,33 @@ class AdminController extends Controller
             ]
         );
 
-        return $this->render('admin/manage_generic.html.twig',
-            [
-                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName($request->get('_route')),
-                'title' => null,
-                'pagination' => $pagination,
-                'entity' => $entityData['entity'],
-                'columns' => $entityData['columns'],
-                'data_columns' => $entityData['data_columns']
-            ]);
+        $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName(isset($entityData['parent'])
+            ? $entityData['parent']
+            : $request->get('_route'));
+
+        $options = [
+            'menu_item' => $menuItem,
+            'title' => isset($entityData['title'])? $entityData['title'] : null,
+            'pagination' => $pagination,
+            'entity' => $entityData['entity'],
+            'columns' => $entityData['columns'],
+            'data_columns' => $entityData['data_columns']
+        ];
+
+        if (isset($entityData['breadcrumb'])) {
+            $options['breadcrumb'] = $entityData['breadcrumb'];
+        }
+
+        if (isset($entityData['back_path'])) {
+            $options['back_path'] = $entityData['back_path'];
+        }
+
+        if (isset($entityData['path_options'])) {
+            $options['path_options'] = $entityData['path_options'];
+        }
+
+        return $this->render(isset($entityData['manage_template']) ? $entityData['manage_template']
+            : 'admin/manage_generic.html.twig', $options);
     }
 
     public function genericFormAction($entityData, $element, Request $request)
@@ -203,7 +226,7 @@ class AdminController extends Controller
 
         $title = ((string) $element) ?: $this->get('translator')->trans('form.new', [], $entityData['entity']);
 
-        return $this->render('admin/form_generic.html.twig', [
+        return $this->render(isset($entityData['form_template']) ? $entityData['form_template'] : 'admin/form_generic.html.twig', [
             'form' => $form->createView(),
             'new' => $new,
             'menu_item' => $menuItem,

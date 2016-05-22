@@ -6,7 +6,7 @@
     {% if title is defined and title is not empty %}
         {{ title }} -
     {% elseif breadcrumb is defined %}
-        {{ ((breadcrumb|last).caption)|trans }} -
+        {{ (breadcrumb|last).fixed is defined ? (breadcrumb|last).fixed : ((breadcrumb|last).caption)|trans }} -
     {% endif %}
     {{- app_organization }}
 {%- endblock %}

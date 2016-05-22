@@ -38,6 +38,7 @@ class WorkcenterType extends AbstractType
             ])
             ->add('company', null, [
                 'label' => 'form.company',
+                'disabled' => $options['locked'],
                 'required' => true
             ])
             ->add('address', null, [
@@ -77,6 +78,7 @@ class WorkcenterType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Workcenter',
+            'locked' => false,
             'translation_domain' => 'workcenter'
         ]);
     }
