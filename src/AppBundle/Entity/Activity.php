@@ -49,10 +49,16 @@ class Activity
 
     /**
      * @ORM\ManyToOne(targetEntity="Training", inversedBy="activities")
+     * @ORM\JoinColumn(nullable=false)
      * @var Training
      */
     protected $training;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $orderNr;
 
     /**
      * Get id
@@ -115,11 +121,11 @@ class Activity
     /**
      * Set training
      *
-     * @param \AppBundle\Entity\Training $training
+     * @param Training $training
      *
      * @return Activity
      */
-    public function setTraining(\AppBundle\Entity\Training $training = null)
+    public function setTraining(Training $training = null)
     {
         $this->training = $training;
 
@@ -129,10 +135,34 @@ class Activity
     /**
      * Get training
      *
-     * @return \AppBundle\Entity\Training
+     * @return Training
      */
     public function getTraining()
     {
         return $this->training;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $orderNr
+     *
+     * @return Activity
+     */
+    public function setOrderNr($orderNr)
+    {
+        $this->orderNr = $orderNr;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrderNr()
+    {
+        return $this->orderNr;
     }
 }
