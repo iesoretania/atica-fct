@@ -100,39 +100,6 @@ class AdminMenu implements MenuBuilderInterface
 
         $item = new MenuItem();
         $item
-            ->setName('admin.companies')
-            ->setRouteName('admin_company')
-            ->setCaption('menu.admin.companies')
-            ->setDescription('menu.admin.companies.detail')
-            ->setColor('cyan')
-            ->setIcon('industry');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.workcenter')
-            ->setRouteName('admin_workcenter')
-            ->setCaption('menu.admin.workcenters')
-            ->setDescription('menu.admin.workcenters.detail')
-            ->setColor('dark-cyan')
-            ->setIcon('building');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.agreement')
-            ->setRouteName('admin_agreement')
-            ->setCaption('menu.admin.agreement')
-            ->setDescription('menu.admin.agreement.detail')
-            ->setColor('dark-blue')
-            ->setIcon('link');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
             ->setName('admin.calendar')
             ->setRouteName('admin_non_school_day')
             ->setCaption('menu.admin.calendar')
