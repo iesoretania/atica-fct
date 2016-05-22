@@ -1,6 +1,8 @@
 browse.title: Listado de grupos
 
 form.name: Nombre
+form.last_name: Apellidos
+form.first_name: Nombre
 form.training: Enseñanza
 form.tutors: Tutores/as
 
@@ -8,6 +10,12 @@ form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Nuevo grupo
 form.view: Modificar
+
+student.detail: Gestionar
+student.agreements: Acuerdos
+student.tracking: Seguimiento
+
+student.browse.title: Listado de alumnado
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios

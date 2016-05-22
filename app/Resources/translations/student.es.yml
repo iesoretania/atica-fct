@@ -1,0 +1,23 @@
+browse.title: Datos del estudiante
+
+form.login_username: Nombre de usuario
+form.reference: NIF/NIE
+form.first_name: Nombre
+form.last_name: Apellidos
+form.display_name: Nombre mostrado
+form.gender: Sexo
+form.gender_unknown: Desconocido
+form.gender_male: Hombre
+form.gender_female: Mujer
+form.initials: Iniciales
+form.email: Correo electrónico
+
+form.submit: Guardar cambios
+
+form.agreements: Acuerdos de colaboración
+form.tracking: Seguimiento
+
+form.back: Volver
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
