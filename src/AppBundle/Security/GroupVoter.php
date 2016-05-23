@@ -22,7 +22,6 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\Group;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -31,11 +30,9 @@ class GroupVoter extends Voter
 {
     const MANAGE = 'ROLE_GROUP_ADMIN';
 
-    private $em;
     private $decisionManager;
 
-    public function __construct(EntityManager $em, AccessDecisionManagerInterface $decisionManager) {
-        $this->em = $em;
+    public function __construct(AccessDecisionManagerInterface $decisionManager) {
         $this->decisionManager = $decisionManager;
     }
 
