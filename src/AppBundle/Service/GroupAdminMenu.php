@@ -34,7 +34,7 @@ class GroupAdminMenu implements MenuBuilderInterface
 
     public function updateMenu(&$menu)
     {
-        $isAdministrator = $this->authorizationChecker->isGranted("ROLE_TUTOR");
+        $isAdministrator = $this->authorizationChecker->isGranted("ROLE_GROUP_TUTOR");
 
         if (!$isAdministrator) {
             return null;

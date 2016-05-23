@@ -131,7 +131,7 @@ class User extends Person implements UserInterface, \Serializable
         if (null !== $this->getStudentGroup()) {
             $displayName .= ' (' . (string) $this->getStudentGroup() . ')';
         }
-        
+
         return $displayName;
     }
 
@@ -358,6 +358,14 @@ class User extends Person implements UserInterface, \Serializable
 
         if ($this->isGlobalAdministrator()) {
             $roles[] = new Role('ROLE_ADMIN');
+        }
+
+        if ($this->tutorizedGroups->count()) {
+            $roles[] = new Role('ROLE_GROUP_TUTOR');
+        }
+
+        if ($this->directs->count()) {
+            $roles[] = new Role('ROLE_DEPARTMENT_HEAD');
         }
 
         return $roles;
