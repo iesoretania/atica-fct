@@ -24,6 +24,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -32,7 +33,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Entity(repositoryClass="UserRepository")
  * @UniqueEntity("loginUsername")
  */
-class User extends Person implements UserInterface, \Serializable
+class User extends Person implements UserInterface, \Serializable, EquatableInterface
 {
     /**
      * @ORM\Id
@@ -117,6 +118,7 @@ class User extends Person implements UserInterface, \Serializable
         parent::__construct();
 
         $this->tutorizedGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->directs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -325,6 +327,25 @@ class User extends Person implements UserInterface, \Serializable
     }
 
     /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * Also implementation should consider that $user instance may implement
+     * the extended user interface `AdvancedUserInterface`.
+     *
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        return ($this->getRoles() === $user->getRoles());
+    }
+
+    /**
      * Returns the salt that was originally used to encode the password.
      *
      * This can return null if the password was not encoded using a salt.
@@ -360,11 +381,11 @@ class User extends Person implements UserInterface, \Serializable
             $roles[] = new Role('ROLE_ADMIN');
         }
 
-        if ($this->tutorizedGroups->count()) {
+        if ($this->tutorizedGroups && $this->tutorizedGroups->count()) {
             $roles[] = new Role('ROLE_GROUP_TUTOR');
         }
 
-        if ($this->directs->count()) {
+        if ($this->directs && $this->directs->count()) {
             $roles[] = new Role('ROLE_DEPARTMENT_HEAD');
         }
 
@@ -518,4 +539,5 @@ class User extends Person implements UserInterface, \Serializable
     {
         return $this->getLoginUsername() ?: $this->getEmail();
     }
+
 }
