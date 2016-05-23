@@ -54,7 +54,7 @@ class AgreementType extends AbstractType
                 'label' => 'form.student',
                 'placeholder' => 'form.select_student',
                 'choice_label' => 'fullDisplayName',
-                'query_builder' => function (EntityRepository $er) use ($user) {
+                'query_builder' => function(EntityRepository $er) use ($user) {
                     $qb = $er->createQueryBuilder('u')
                         ->orderBy('u.lastName', 'ASC')
                         ->addOrderBy('u.firstName', 'ASC')
@@ -101,7 +101,7 @@ class AgreementType extends AbstractType
                 'required' => true
             ]);
 
-        $formModifier = function (FormInterface $form, User $student = null) {
+        $formModifier = function(FormInterface $form, User $student = null) {
             $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
 
             $form->add('activities', null, [
@@ -112,11 +112,11 @@ class AgreementType extends AbstractType
             ]);
         };
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($formModifier) {
             $formModifier($event->getForm(), $event->getData()->getStudent());
         });
 
-        $builder->get('student')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($formModifier) {
+        $builder->get('student')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($formModifier) {
             $formModifier($event->getForm()->getParent(), $event->getForm()->getData());
         });
     }
