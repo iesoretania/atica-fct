@@ -26,8 +26,10 @@ use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
 use AppBundle\Entity\Training;
+use AppBundle\Entity\User;
 use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -122,7 +124,7 @@ class AdminController extends Controller
         'entityClassName' => 'AppBundle\Entity\Agreement',
         'entityFormType' => 'AppBundle\Form\Type\AgreementType',
         'form_template' => 'agreement/form_agreement.html.twig',
-        'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s',
+        'query' => null,
         'defaultSortFieldName' => 's.lastName',
         'columns' => [
             ['size' => '4', 'sort_field' => 's.displayName', 'name' => 'form.student'],
@@ -145,15 +147,17 @@ class AdminController extends Controller
             ]);
     }
 
-    public function genericIndexAction($entityData, Request $request, $items = null)
+    public function genericIndexAction($entityData, Request $request, $items = null, Query $query = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery($entityData['query']);
+        if (null === $query) {
+            $query = $em->createQuery($entityData['query']);
 
-        if (null !== $items) {
-            $query->setParameters($items);
+            if (null !== $items) {
+                $query->setParameters($items);
+            }
         }
 
         $paginator  = $this->get('knp_paginator');
@@ -425,7 +429,32 @@ class AdminController extends Controller
      */
     public function agreementIndexAction(Request $request)
     {
-        return $this->genericIndexAction(self::$AGREEMENT_ENTITY_DATA, $request);
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        // Obtener:
+        // - todos los acuerdos si es administrador
+        // - los de los alumnos de mi(s) tutoría(s) si soy tutor de un grupo
+        // - los de el departamento si soy jefe de departamentp
+
+            /** @var User $user */
+        $user = $this->getUser();
+
+        $qb = $em->getRepository('AppBundle:Agreement')
+            ->createQueryBuilder('a')
+            ->innerJoin('a.student', 's')
+            ->innerJoin('s.studentGroup', 'g');
+
+        if (!$user->isGlobalAdministrator()) {
+            $qb = $qb
+                ->innerJoin('g.training', 't')
+                ->innerJoin('t.department', 'd')
+                ->where('g.id IN (:groups)')
+                ->orWhere('d.head = :user')
+                ->setParameter('groups', $user->getTutorizedGroups()->toArray())
+                ->setParameter('user', $user);
+        }
+        return $this->genericIndexAction(self::$AGREEMENT_ENTITY_DATA, $request, null, $qb->getQuery());
     }
 
     /**

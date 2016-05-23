@@ -36,3 +36,9 @@ services:
         autowire: true
         tags:
             -  { name: atica_core.menu_builder }
+
+    AppBundle\Form\Type\AgreementType:
+        class: AppBundle\Form\Type\AgreementType
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: form.type }

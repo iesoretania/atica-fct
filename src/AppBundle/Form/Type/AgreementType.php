@@ -28,24 +28,48 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AgreementType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /**
+         * @var User $user
+         */
+        $user = $this->tokenStorage->getToken()->getUser();
+
         $builder
             ->add('student', null, [
                 'label' => 'form.student',
                 'placeholder' => 'form.select_student',
                 'choice_label' => 'fullDisplayName',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
+                'query_builder' => function (EntityRepository $er) use ($user) {
+                    $qb = $er->createQueryBuilder('u')
                         ->orderBy('u.lastName', 'ASC')
                         ->addOrderBy('u.firstName', 'ASC')
                         ->innerJoin('u.studentGroup', 'g');
+
+                    if (!$user->isGlobalAdministrator()) {
+                        $qb = $qb
+                            ->innerJoin('g.training', 't')
+                            ->innerJoin('t.department', 'd')
+                            ->where('g.id IN (:groups)')
+                            ->orWhere('d.head = :user')
+                            ->setParameter('groups', $user->getTutorizedGroups()->toArray())
+                            ->setParameter('user', $user);
+                    }
+                    return $qb;
                 },
                 'required' => true
             ])
