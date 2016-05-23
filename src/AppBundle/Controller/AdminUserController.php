@@ -113,7 +113,7 @@ class AdminUserController extends Controller
             }
         }
 
-        $titulo = ((string) $user) ?: $this->get('translator')->trans('user.new', [], 'admin');
+        $titulo = ((string) $user) ?: $this->get('translator')->trans('user.new', [], 'user');
 
         return $this->render('admin/form_user.html.twig', [
             'form' => $form->createView(),
