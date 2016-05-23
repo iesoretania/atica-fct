@@ -87,14 +87,17 @@ class AgreementType extends AbstractType
             ])
             ->add('signDate', null, [
                 'label' => 'form.sign_date',
+                'widget' => 'single_text',
                 'required' => false
             ])
             ->add('fromDate', null, [
                 'label' => 'form.from_date',
+                'widget' => 'single_text',
                 'required' => true
             ])
             ->add('toDate', null, [
                 'label' => 'form.to_date',
+                'widget' => 'single_text',
                 'required' => true
             ]);
 
