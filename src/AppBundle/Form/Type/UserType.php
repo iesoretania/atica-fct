@@ -99,17 +99,11 @@ class UserType extends AbstractType
             ->add('tutorizedGroups', null, [
                 'label' => 'form.tutorized_groups',
                 'by_reference' => false,
-                'attr' => [
-                    'class' => 'autocomplete'
-                ],
                 'required' => false
             ])
             ->add('studentGroup', null, [
                 'label' => 'form.student_group',
                 'placeholder' => 'form.student_group.placeholder',
-                'attr' => [
-                    'class' => 'autocomplete'
-                ],
                 'required' => false
             ]);
 
