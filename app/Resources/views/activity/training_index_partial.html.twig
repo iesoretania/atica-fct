@@ -18,6 +18,10 @@
                 </div>
             </td>
         </tr>
+    {% else %}
+        <tr>
+            <td colspan="2">{{ 'form.no_trainings'|trans }}</td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>

@@ -7,6 +7,7 @@ form.detail: Modificar
 
 form.training: Enseñanza
 form.training.select: Seleccionar
+form.no_trainings: No hay enseñanzas definidas.
 
 form.submit: Guardar cambios
 form.new: Nueva actividad
