@@ -13,5 +13,5 @@
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
         {{ m.end_button }}
     {{ form_end(form) }}
-    {{ m.link_button(path('group_students', {'id': user.studentGroup.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('admin_group_students', {'id': user.studentGroup.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 {% endblock %}

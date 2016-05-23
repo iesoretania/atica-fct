@@ -5,5 +5,9 @@
     <h2>{{ 'student.browse.title'|trans }}</h2>
     {% include 'group/manage_students_partial.html.twig' with {'elements': pagination } %}
 
-    {{ m.link_button(path('frontpage'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if is_granted('ROLE_GROUP_TUTOR') and not is_granted('ROLE_DEPARTMENT_HEAD') and user.tutorizedGroups.count() == 1 %}
+        {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% else %}
+        {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% endif %}
 {% endblock %}

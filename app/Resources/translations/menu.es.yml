@@ -19,6 +19,21 @@ navbar.logged.as: Conectado como {{ user }}
 menu.impersonate: Acceder como el usuario
 menu.impersonate.exit: Volver al usuario normal
 
+menu.group_admin: Alumnado del grupo
+menu.group_admin.detail: Gestionar el alumnado del grupo
+
+menu.admin.companies: Empresas
+menu.admin.companies.detail: Gestionar empresas de la FCT
+
+menu.admin.workcenters: Centros de trabajo
+menu.admin.workcenters.detail: Gestionar centros de trabajo
+
+menu.admin.calendar: Calendario escolar
+menu.admin.calendar.detail: Definir periodos no lectivos
+
+menu.admin.agreement: Acuerdos de colaboración
+menu.admin.agreement.detail: Crear o modificar los acuerdos de colaboración
+
 menu.admin: Administración
 menu.admin.detail: Realizar cambios en la configuración de la plataforma
 
@@ -40,23 +55,8 @@ menu.admin.departments.detail: Gestionar los departamentos del centro
 menu.admin.trainings: Enseñanzas
 menu.admin.trainings.detail: Gestionar enseñanzas del centro
 
-menu.admin.companies: Empresas
-menu.admin.companies.detail: Gestionar empresas de la FCT
-
-menu.admin.workcenters: Centros de trabajo
-menu.admin.workcenters.detail: Gestionar centros de trabajo
-
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos
 
-menu.admin.agreement: Acuerdos de colaboración
-menu.admin.agreement.detail: Crear o modificar los acuerdos de colaboración
-
-menu.group_admin: Gestión de la tutoría
-menu.group_admin.detail: Actividades relacionadas con la tutoría de grupo
-
 menu.admin.programs: Programas formativos
 menu.admin.programs.detail: Gestionar los programas formativos de las enseñanzas
-
-menu.admin.work_tutors: Tutoría laboral
-menu.admin.work_tutors.detail: Gestionar las tutorías laborales

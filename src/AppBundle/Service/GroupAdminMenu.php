@@ -47,8 +47,8 @@ class GroupAdminMenu implements MenuBuilderInterface
 
         $mainItem = new MenuItem();
         $mainItem
-            ->setName('group_admin')
-            ->setRouteName('frontpage')
+            ->setName('group_tutor_admin')
+            ->setRouteName('admin_tutor_group')
             ->setCaption('menu.group_admin')
             ->setDescription('menu.group_admin.detail')
             ->setColor('dark-green')

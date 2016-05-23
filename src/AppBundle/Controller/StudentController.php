@@ -28,21 +28,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/estudiante/{id}")
- * @Security("is_granted('ROLE_TUTOR')")
+ * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
  */
 class StudentController extends Controller
 {
     /**
      * @Route("", name="student_detail", methods={"GET", "POST"})
      */
-    public function studentIndexAction(User $user, Request $request)
+    public function studentIndexAction(User $student, Request $request)
     {
-        // Si el alumno no es un estudiante, denegar acceso
-        if (null === $user->getStudentGroup()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $user, [
+        $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $student, [
             'admin' => !$this->isGranted('ROLE_ADMIN')
         ]);
 
@@ -56,20 +51,20 @@ class StudentController extends Controller
             try {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
-                return $this->redirectToRoute('group_students', ['id' => $user->getStudentGroup()->getId()]);
+                return $this->redirectToRoute('admin_group_students', ['id' => $student->getStudentGroup()->getId()]);
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'student'));
             }
         }
         return $this->render('group/form_student.html.twig',
             [
-                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('frontpage'),
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
                 'breadcrumb' => [
-                    ['fixed' => $user->getStudentGroup()->getName(), 'path' => 'group_students', 'options' => ['id' => $user->getStudentGroup()->getId()]],
-                    ['fixed' => (string) $user],
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student],
                 ],
-                'title' => (string) $user,
-                'user' => $user,
+                'title' => (string) $student,
+                'user' => $student,
                 'form' => $form->createView()
             ]);
     }

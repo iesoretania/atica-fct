@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Group;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -34,10 +35,51 @@ use Symfony\Component\HttpFoundation\Request;
 class GroupController extends Controller
 {
     /**
-     * @Route("/{id}", name="group_students", methods={"GET"})
+     * @Route("", name="admin_tutor_group", methods={"GET"})
+     */
+    public function groupIndexAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $qb = $em->getRepository('AppBundle:Group')
+            ->createQueryBuilder('g')
+            ->innerJoin('g.training', 't')
+            ->innerJoin('t.department', 'd')
+            ->orderBy('d.name')
+            ->addOrderBy('t.name')
+            ->addOrderBy('g.name');
+
+        if (!$user->isGlobalAdministrator()) {
+            $qb = $qb
+                ->where('g.id IN (:groups)')
+                ->orWhere('d.head = :user')
+                ->setParameter('groups', $user->getTutorizedGroups()->toArray())
+                ->setParameter('user', $user);
+        }
+
+        $items = $qb->getQuery()->getResult();
+
+        if (count($items) == 1) {
+            return $this->groupDetailIndexAction($items[0], $request);
+        }
+
+        return $this->render('group/group_index.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'title' => null,
+                'elements' => $items
+            ]);
+    }
+
+    /**
+     * @Route("/{id}", name="admin_group_students", methods={"GET"})
      * @Security("is_granted('ROLE_GROUP_ADMIN', group)")
      */
-    public function groupIndexAction(Group $group, Request $request)
+    public function groupDetailIndexAction(Group $group, Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -58,12 +100,13 @@ class GroupController extends Controller
 
         return $this->render('group/manage_students.html.twig',
             [
-                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('frontpage'),
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
                 'breadcrumb' => [
-                    ['fixed' => $group->getName(), 'path' => 'group_students', 'options' => ['id' => $group->getId()]],
+                    ['fixed' => $group->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $group->getId()]],
                 ],
                 'title' => $group->getName(),
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'user' => $this->getUser()
             ]);
     }
 }
