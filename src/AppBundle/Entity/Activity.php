@@ -71,6 +71,14 @@ class Activity
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Set name
      *
      * @param string $name
