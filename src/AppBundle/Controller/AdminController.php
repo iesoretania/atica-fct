@@ -35,9 +35,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/admin")
- */
 class AdminController extends Controller
 {
     public static $DEPARTMENT_ENTITY_DATA = [
@@ -134,7 +131,7 @@ class AdminController extends Controller
     ];
 
     /**
-     * @Route("/", name="admin_menu", methods={"GET"})
+     * @Route("/admin", name="admin_menu", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function indexAction()
@@ -275,7 +272,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/departamentos", name="admin_department", methods={"GET"})
+     * @Route("/admin/departamentos", name="admin_department", methods={"GET"})
      */
     public function departmentsIndexAction(Request $request)
     {
@@ -283,8 +280,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/departamentos/nuevo", name="admin_department_new", methods={"GET", "POST"})
-     * @Route("/departamentos/{id}", name="admin_department_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Route("/admin/departamentos/nuevo", name="admin_department_new", methods={"GET", "POST"})
+     * @Route("/admin/departamentos/{id}", name="admin_department_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
     public function departmentsFormAction(Department $element = null, Request $request)
     {
@@ -292,7 +289,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/departamentos/eliminar/{id}", name="admin_department_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Route("/admin/departamentos/eliminar/{id}", name="admin_department_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
     public function deleteElementAction(Department $element, Request $request)
     {
@@ -325,7 +322,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/grupos", name="admin_group", methods={"GET"})
+     * @Route("/admin/grupos", name="admin_group", methods={"GET"})
      */
     public function groupIndexAction(Request $request)
     {
@@ -333,8 +330,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/grupos/nuevo", name="admin_group_new", methods={"GET", "POST"})
-     * @Route("/grupos/{id}", name="admin_group_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Route("/admin/grupos/nuevo", name="admin_group_new", methods={"GET", "POST"})
+     * @Route("/admin/grupos/{id}", name="admin_group_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
     public function groupFormAction(Group $element = null, Request $request)
     {
@@ -342,7 +339,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/grupos/eliminar/{id}", name="admin_group_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Route("/admin/grupos/eliminar/{id}", name="admin_group_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
     public function groupDeleteAction(Group $element, Request $request)
     {
@@ -350,7 +347,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/ensenanzas", name="admin_training", methods={"GET"})
+     * @Route("/admin/ensenanzas", name="admin_training", methods={"GET"})
      */
     public function trainingIndexAction(Request $request)
     {
@@ -358,8 +355,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/ensenanzas/nueva", name="admin_training_new", methods={"GET", "POST"})
-     * @Route("/ensenanzas/{id}", name="admin_training_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Route("/admin/ensenanzas/nueva", name="admin_training_new", methods={"GET", "POST"})
+     * @Route("/admin/ensenanzas/{id}", name="admin_training_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
     public function trainingFormAction(Training $element = null, Request $request)
     {
@@ -367,7 +364,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/ensenanzas/eliminar/{id}", name="admin_training_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Route("/admin/ensenanzas/eliminar/{id}", name="admin_training_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
      */
     public function trainingDeleteAction(Training $element, Request $request)
     {
@@ -375,7 +372,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/diasnolectivos", name="admin_non_school_day", methods={"GET"})
+     * @Route("/admin/diasnolectivos", name="admin_non_school_day", methods={"GET"})
      */
     public function nonSchoolDayIndexAction(Request $request)
     {
@@ -383,8 +380,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/diasnolectivos/nuevo", name="admin_non_school_day_new", methods={"GET", "POST"})
-     * @Route("/diasnolectivos/{id}", name="admin_non_school_day_form", methods={"GET", "POST"})
+     * @Route("/admin/diasnolectivos/nuevo", name="admin_non_school_day_new", methods={"GET", "POST"})
+     * @Route("/admin/diasnolectivos/{id}", name="admin_non_school_day_form", methods={"GET", "POST"})
      */
     public function nonSchoolDayFormAction(NonSchoolDay $element = null, Request $request)
     {
@@ -392,7 +389,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/diasnolectivos/eliminar/{id}", name="admin_non_school_day_delete", methods={"GET", "POST"})
+     * @Route("/admin/diasnolectivos/eliminar/{id}", name="admin_non_school_day_delete", methods={"GET", "POST"})
      */
     public function workcenterDeleteAction(Workcenter $element, Request $request)
     {
