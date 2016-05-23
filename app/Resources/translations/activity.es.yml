@@ -1,0 +1,25 @@
+activity.training.title: Seleccione enseñanza
+browse.title: Actividades del programa
+
+form.name: Actividad
+form.description: Descripción
+form.detail: Modificar
+
+form.training: Enseñanza
+form.training.select: Seleccionar
+
+form.submit: Guardar cambios
+form.new: Nueva actividad
+form.delete: Eliminar
+form.back: Volver
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Actividad eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la actividad. Compruebe que no hay elementos asociados a la misma.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La actividad sólo podrá ser eliminada si no existen datos asociados a la misma.
+
+form.delete_back: Volver sin eliminar

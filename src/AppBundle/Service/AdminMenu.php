@@ -97,6 +97,17 @@ class AdminMenu implements MenuBuilderInterface
             ->setIcon('users');
 
         $mainItem->addChild($item);
+        
+        $item = new MenuItem();
+        $item
+            ->setName('admin.programs')
+            ->setRouteName('admin_program')
+            ->setCaption('menu.admin.programs')
+            ->setDescription('menu.admin.programs.detail')
+            ->setColor('red')
+            ->setIcon('book');
+
+        $mainItem->addChild($item);
 
         $item = new MenuItem();
         $item

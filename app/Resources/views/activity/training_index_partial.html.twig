@@ -1,0 +1,23 @@
+{% trans_default_domain 'activity' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th class="col-md-10">{{ 'form.training'|trans }}</th>
+        <th class="col-md-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element.name }}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('admin_program_training', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.training.select' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

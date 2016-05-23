@@ -55,5 +55,8 @@ menu.admin.agreement.detail: Crear o modificar los acuerdos de colaboración
 menu.group_admin: Gestión de la tutoría
 menu.group_admin.detail: Actividades relacionadas con la tutoría de grupo
 
+menu.admin.programs: Programas formativos
+menu.admin.programs.detail: Gestionar los programas formativos de las enseñanzas
+
 menu.admin.work_tutors: Tutoría laboral
 menu.admin.work_tutors.detail: Gestionar las tutorías laborales
