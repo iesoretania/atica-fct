@@ -238,7 +238,7 @@ class Agreement
      *
      * @return Agreement
      */
-    public function setWorkTutor(User $workTutor)
+    public function setWorkTutor(User $workTutor = null)
     {
         $this->workTutor = $workTutor;
 
@@ -262,7 +262,7 @@ class Agreement
      *
      * @return Agreement
      */
-    public function setEducationalTutor(User $educationalTutor)
+    public function setEducationalTutor(User $educationalTutor = null)
     {
         $this->educationalTutor = $educationalTutor;
 

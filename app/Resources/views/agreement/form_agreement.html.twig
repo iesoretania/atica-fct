@@ -22,7 +22,7 @@
         var form = $(this).closest('form');
         var data = {};
         data[student.attr('name')] = student.val();
-
+        $('#agreement_activities').replaceWith('<div id="agreement_activities"><span class="text-info"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span></div>');
         $.ajax({
             url: form.attr('action'),
             type: form.attr('method'),
@@ -31,6 +31,9 @@
                 $('#agreement_activities').replaceWith(
                         $(html).find('#agreement_activities')
                 )
+            },
+            error: function() {
+                $('#agreement_activities').replaceWith('<div id="agreement_activities"><span class="text-danger"><i class="fa fa-times-circle fa-3x"></i></span></div>')
             }
         });
     });

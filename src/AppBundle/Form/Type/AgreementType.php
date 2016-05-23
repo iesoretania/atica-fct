@@ -45,7 +45,7 @@ class AgreementType extends AbstractType
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.lastName', 'ASC')
                         ->addOrderBy('u.firstName', 'ASC')
-                        ->where('u.studentGroup IS NOT NULL');
+                        ->innerJoin('u.studentGroup', 'g');
                 },
                 'required' => true
             ])
