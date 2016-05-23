@@ -99,12 +99,14 @@ class UserType extends AbstractType
             ->add('tutorizedGroups', null, [
                 'label' => 'form.tutorized_groups',
                 'by_reference' => false,
-                'required' => false
+                'required' => false,
+                'disabled' => !$options['admin']
             ])
             ->add('studentGroup', null, [
                 'label' => 'form.student_group',
                 'placeholder' => 'form.student_group.placeholder',
-                'required' => false
+                'required' => false,
+                'disabled' => !$options['admin']
             ]);
 
         $this->additionalForm($builder, $options);
