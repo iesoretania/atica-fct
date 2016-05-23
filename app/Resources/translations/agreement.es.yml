@@ -8,7 +8,7 @@ form.select_student: Seleccione un estudiante
 form.work_tutor: Tutor laboral
 form.educational_tutor: Tutor docente
 form.workcenter: Centro de trabajo
-form.activities: Actividades programadas
+form.activities: Programa formativo
 
 form.submit: Guardar cambios
 form.delete: Eliminar
@@ -23,6 +23,9 @@ alert.not_deleted: No se ha podido eliminar el acuerdo. Compruebe que no hay ele
 
 prompt.delete_confirm: >
     ¡ATENCIÓN! El acuerdo sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+prompt.activity_deletion_warning: >
+    ¡ATENCIÓN! No se podrá eliminar una actividad del programa formativo si el estudiante la ha incluido en alguna de sus fichas de seguimiento.
 
 form.back: Volver
 form.delete_back: Volver sin eliminar

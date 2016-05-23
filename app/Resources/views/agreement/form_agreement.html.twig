@@ -13,6 +13,10 @@
         {{ m.end_button }}
     {{ form_end(form) }}
     {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if not new %}
+        <p></p>
+        <div class="alert alert-warning">{{ 'prompt.activity_deletion_warning'|trans|nl2br }}</div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
