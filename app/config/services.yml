@@ -42,3 +42,10 @@ services:
         arguments: ['@security.token_storage']
         tags:
             - { name: form.type }
+
+    app.entity.group_voter:
+        class: AppBundle\Security\GroupVoter
+        autowire: true
+        public: false
+        tags:
+            - { name: security.voter }

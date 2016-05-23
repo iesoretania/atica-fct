@@ -28,13 +28,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/grupo/{id}")
- * @Security("is_granted('ROLE_TUTOR')")
+ * @Route("/grupo")
+ * @Security("is_granted('ROLE_GROUP_TUTOR')")
  */
 class GroupController extends Controller
 {
     /**
-     * @Route("", name="group_students", methods={"GET"})
+     * @Route("/{id}", name="group_students", methods={"GET"})
+     * @Security("is_granted('ROLE_GROUP_ADMIN', group)")
      */
     public function groupIndexAction(Group $group, Request $request)
     {
