@@ -99,7 +99,7 @@ class AdminController extends Controller
         'defaultSortFieldName' => 't.name',
         'columns' => [
             ['size' => '4', 'sort_field' => 't.name', 'name' => 'form.name'],
-            ['size' => '3', 'sort_field' => 't.department', 'name' => 'form.department'],
+            ['size' => '3', 'sort_field' => 'd.name', 'name' => 'form.department'],
             ['size' => '2', 'sort_field' => 't.programHours', 'name' => 'form.program_hours']
         ],
         'data_columns' => ['name', 'department', 'programHours']
