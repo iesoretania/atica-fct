@@ -55,7 +55,6 @@ class AdminController extends Controller
         'entity' => 'company',
         'entityClassName' => 'AppBundle\Entity\Company',
         'entityFormType' => 'AppBundle\Form\Type\CompanyType',
-        'form_template' => 'admin/form_company.html.twig',
         'query' => 'SELECT c FROM AppBundle:Company c',
         'defaultSortFieldName' => 'c.name',
         'columns' => [
@@ -122,6 +121,7 @@ class AdminController extends Controller
         'entity' => 'agreement',
         'entityClassName' => 'AppBundle\Entity\Agreement',
         'entityFormType' => 'AppBundle\Form\Type\AgreementType',
+        'form_template' => 'agreement/form_agreement.html.twig',
         'query' => 'SELECT a FROM AppBundle:Agreement a JOIN a.student s',
         'defaultSortFieldName' => 's.lastName',
         'columns' => [

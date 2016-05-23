@@ -4,6 +4,7 @@ form.sign_date: Fecha de la firma
 form.from_date: Fecha de inicio
 form.to_date: Fecha de finalización
 form.student: Estudiante
+form.select_student: Seleccione un estudiante
 form.work_tutor: Tutor laboral
 form.educational_tutor: Tutor docente
 form.workcenter: Centro de trabajo

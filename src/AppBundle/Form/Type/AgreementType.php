@@ -20,8 +20,13 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgreementType extends AbstractType
@@ -34,6 +39,14 @@ class AgreementType extends AbstractType
         $builder
             ->add('student', null, [
                 'label' => 'form.student',
+                'placeholder' => 'form.select_student',
+                'choice_label' => 'fullDisplayName',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.lastName', 'ASC')
+                        ->addOrderBy('u.firstName', 'ASC')
+                        ->where('u.studentGroup IS NOT NULL');
+                },
                 'required' => true
             ])
             ->add('workcenter', null, [
@@ -59,12 +72,26 @@ class AgreementType extends AbstractType
             ->add('toDate', null, [
                 'label' => 'form.to_date',
                 'required' => true
-            ])
-            ->add('activities', null, [
+            ]);
+
+        $formModifier = function (FormInterface $form, User $student = null) {
+            $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
+
+            $form->add('activities', null, [
                 'label' => 'form.activities',
                 'expanded' => true,
-                'required' => false
+                'required' => false,
+                'choices' => $activities
             ]);
+        };
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier) {
+            $formModifier($event->getForm(), $event->getData()->getStudent());
+        });
+
+        $builder->get('student')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($formModifier) {
+            $formModifier($event->getForm()->getParent(), $event->getForm()->getData());
+        });
     }
 
     /**

@@ -286,7 +286,7 @@ class Agreement
      *
      * @return Agreement
      */
-    public function setWorkcenter(Workcenter $workcenter)
+    public function setWorkcenter(Workcenter $workcenter = null)
     {
         $this->workcenter = $workcenter;
 

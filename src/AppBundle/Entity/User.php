@@ -120,6 +120,22 @@ class User extends Person implements UserInterface, \Serializable
     }
 
     /**
+     * Returns the person's display name
+     *
+     * @return string
+     */
+    public function getFullDisplayName()
+    {
+        $displayName = (string) $this;
+
+        if (null !== $this->getStudentGroup()) {
+            $displayName .= ' (' . (string) $this->getStudentGroup() . ')';
+        }
+        
+        return $displayName;
+    }
+
+    /**
      * Get id
      *
      * @return integer
