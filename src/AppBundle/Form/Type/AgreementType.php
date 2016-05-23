@@ -62,6 +62,7 @@ class AgreementType extends AbstractType
             ])
             ->add('activities', null, [
                 'label' => 'form.activities',
+                'expanded' => true,
                 'required' => false
             ]);
     }
