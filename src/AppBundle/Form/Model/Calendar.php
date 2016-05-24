@@ -66,17 +66,17 @@ class Calendar
      */
     protected $hoursFri;
 
-    public function __construct($total = 0)
+    public function __construct($total = 0.0)
     {
         $this->startDate = new \DateTime();
 
         $this->totalHours = $total;
 
-        $this->hoursMon = 0;
-        $this->hoursTue = 0;
-        $this->hoursWed = 0;
-        $this->hoursThu = 0;
-        $this->hoursFri = 0;
+        $this->hoursMon = 0.0;
+        $this->hoursTue = 0.0;
+        $this->hoursWed = 0.0;
+        $this->hoursThu = 0.0;
+        $this->hoursFri = 0.0;
     }
 
     /**
