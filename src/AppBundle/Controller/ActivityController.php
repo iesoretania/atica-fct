@@ -71,7 +71,7 @@ class ActivityController extends Controller
             $request->query->getInt('page', 1),
             $this->getParameter('page.size'),
             [
-                'defaultSortFieldName' => 'a.name',
+                'defaultSortFieldName' => 'a.code',
                 'defaultSortDirection' => 'asc'
             ]
         );

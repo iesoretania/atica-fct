@@ -36,6 +36,12 @@ class Activity
     protected $id;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $code;
+
+    /**
      * @ORM\Column(type="string")
      * @var string
      */
@@ -75,7 +81,7 @@ class Activity
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getCode() ? $this->getCode() . ': ' . $this->getName() : $this->getName();
     }
 
     /**
@@ -172,5 +178,29 @@ class Activity
     public function getOrderNr()
     {
         return $this->orderNr;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Activity
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

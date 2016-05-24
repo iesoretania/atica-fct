@@ -2,16 +2,16 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        {{ m.paginator_th(elements, 'col-md-5', 'a.name', 'form.name'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-5', 'a.description', 'form.description'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-1', 'a.code', 'form.code'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-9', 'a.name', 'form.name'|trans) }}
         <th class="col-md-2"></th>
     </tr>
     </thead>
     <tbody>
     {% for element in elements %}
         <tr>
+            <td>{{ element.code }}</td>
             <td>{{ element.name }}</td>
-            <td>{{ element.description|nl2br }}</td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}

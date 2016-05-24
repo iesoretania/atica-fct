@@ -1,6 +1,8 @@
 activity.training.title: Seleccione enseñanza
 browse.title: Actividades del programa
 
+form.order_nr: Orden
+form.code: Código
 form.name: Actividad
 form.description: Descripción
 form.detail: Modificar

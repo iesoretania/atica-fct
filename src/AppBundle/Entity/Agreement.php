@@ -78,6 +78,7 @@ class Agreement
 
     /**
      * @ORM\ManyToOne(targetEntity="Workcenter", inversedBy="agreements")
+     * @ORM\OrderBy({"name"="ASC"})
      * @ORM\JoinColumn(nullable=false)
      * @var Workcenter
      */
@@ -85,18 +86,21 @@ class Agreement
 
     /**
      * @ORM\ManyToMany(targetEntity="Activity")
+     * @ORM\OrderBy({"code"="ASC", "name"="ASC"})
      * @var Collection
      */
     protected $activities;
 
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="agreement")
+     * @ORM\OrderBy({"when"="ASC"})
      * @var Collection
      */
     protected $visits;
 
     /**
      * @ORM\OneToMany(targetEntity="Workday", mappedBy="agreement")
+     * @ORM\OrderBy({"date"="ASC"})
      * @var Collection
      */
     protected $workdays;

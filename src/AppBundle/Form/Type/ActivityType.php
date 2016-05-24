@@ -37,6 +37,10 @@ class ActivityType extends AbstractType
                 'required' => true,
                 'disabled' => $options['fixed']
             ])
+            ->add('code', null, [
+                'label' => 'form.code',
+                'required' => false
+            ])
             ->add('name', null, [
                 'label' => 'form.name',
                 'required' => true
