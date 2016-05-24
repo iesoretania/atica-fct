@@ -20,7 +20,8 @@ form.no_sessions: No hay sesiones
 form.notes: Anotaciones
 
 form.edit: Modificar
-form.delete: Eliminar
+form.delete_item: Eliminar
+form.delete: Eliminar seleccionadas
 
 form.submit: Guardar cambios
 form.calculate: Calcular
@@ -29,3 +30,5 @@ form.add: Añadir sesiones
 form.back: Volver
 
 alert.saved: Fechas añadidas al calendario del acuerdo
+alert.deleted: Fechas eliminadas del calendario
+alert.not_deleted: Ha ocurrido un error al eliminar las fechas. Compruebe que el estudiante no las ha cumplimentado.

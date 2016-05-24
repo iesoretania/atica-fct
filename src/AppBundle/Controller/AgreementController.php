@@ -80,6 +80,38 @@ class AgreementController extends Controller
     }
 
     /**
+     * @Route("/acuerdos/{id}/calendario/eliminar", name="agreement_calendar_delete", methods={"POST"})
+     */
+    public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->request->has('ids')) {
+            try {
+                $ids = $request->request->get('ids');
+                $dates = $em->getRepository('AppBundle:Workday')->createQueryBuilder('w')
+                    ->where('w.id IN (:ids)')
+                    ->andWhere('w.agreement = :agreement')
+                    ->setParameter('ids', $ids)
+                    ->setParameter('agreement', $agreement)
+                    ->getQuery()
+                    ->getResult();
+
+                /** @var Workday $date */
+                foreach($dates as $date) {
+                    $em->remove($date);
+                }
+
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'calendar'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'calendar'));
+            }
+        }
+        return $this->redirectToRoute('agreement_calendar', ['id' => $agreement->getId()]);
+    }
+
+    /**
      * @Route("/sesion/{id}", name="agreement_calendar_form", methods={"GET", "POST"})
      */
     public function agreementCalendarFormAction(Workday $workday, Request $request)

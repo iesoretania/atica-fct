@@ -10,14 +10,13 @@
     <tbody>
     {% for element in elements %}
         <tr>
-            <td>{{ element.date|date('d/m/Y') }}</td>
+            <td>{% if buttons %}<input type="checkbox" name="ids[]" value="{{ element.id }}" title="{{ 'form.delete_item'|trans }}"> {% endif %}{{ element.date|date('d/m/Y') }}</td>
             <td>{{ element.hours|number_format(2, ',', '.') }}</td>
             {% if buttons %}
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('agreement_calendar_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
-                    <a href="" class="btn btn-danger col-xs-12 col-sm-6"><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                    <a href="{{ path('agreement_calendar_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>
