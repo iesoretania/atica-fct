@@ -196,7 +196,7 @@ class Calendar
     }
 
     /**
-     * @param int $hoursFri
+     * @param float $hoursFri
      * @return Calendar
      */
     public function setHoursFri($hoursFri)
