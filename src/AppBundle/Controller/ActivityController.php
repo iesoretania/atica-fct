@@ -160,7 +160,7 @@ class ActivityController extends Controller
             return $this->redirectToRoute('admin_program_training', ['id' => $activity->getTraining()->getId()]);
         }
 
-        $title = (string)$activity->getName();
+        $title = (string) $activity->getName();
 
         $breadcrumb = [
             [

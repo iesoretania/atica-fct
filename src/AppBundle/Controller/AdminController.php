@@ -177,7 +177,7 @@ class AdminController extends Controller
 
         $options = [
             'menu_item' => $menuItem,
-            'title' => isset($entityData['title'])? $entityData['title'] : null,
+            'title' => isset($entityData['title']) ? $entityData['title'] : null,
             'pagination' => $pagination,
             'entity' => $entityData['entity'],
             'columns' => $entityData['columns'],

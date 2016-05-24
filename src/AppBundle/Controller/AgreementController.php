@@ -42,7 +42,7 @@ class AgreementController extends Controller
         $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
         $studentHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
 
-        $calendar = new Calendar(max(0, $totalHours-$studentHours));
+        $calendar = new Calendar(max(0, $totalHours - $studentHours));
 
         $form = $this->createForm('AppBundle\Form\Type\CalendarType', $calendar, [
             'program_hours' => $totalHours
@@ -100,7 +100,7 @@ class AgreementController extends Controller
                     ->getResult();
 
                 /** @var Workday $date */
-                foreach($dates as $date) {
+                foreach ($dates as $date) {
                     $em->remove($date);
                 }
 
