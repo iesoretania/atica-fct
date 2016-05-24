@@ -8,6 +8,7 @@ form.start_date: Fecha de inicio
 form.total_hours: Horas enseñanza
 form.agreement_hours: Horas del acuerdo
 form.student_hours: Horas asignadas
+form.pending_hours: Horas a asignar
 form.hours_mon: Horas lunes
 form.hours_tue: Horas martes
 form.hours_wed: Horas miércoles

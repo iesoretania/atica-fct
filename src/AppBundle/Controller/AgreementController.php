@@ -39,14 +39,13 @@ class AgreementController extends Controller
     public function addAgreementCalendarAction(Agreement $agreement, Request $request)
     {
         $totalHours = $agreement->getStudent()->getStudentGroup()->getTraining()->getProgramHours();
-        $programHours = $agreement->getStudent()->getStudentGroup()->getTraining()->getProgramHours();
         $agreementHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
         $studentHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
 
-        $calendar = new Calendar($programHours);
+        $calendar = new Calendar(max(0, $totalHours-$studentHours));
 
         $form = $this->createForm('AppBundle\Form\Type\CalendarType', $calendar, [
-            'program_hours' => $programHours
+            'program_hours' => $totalHours
         ]);
 
         $form->handleRequest($request);

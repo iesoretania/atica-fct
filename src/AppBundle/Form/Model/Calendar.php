@@ -21,6 +21,7 @@
 namespace AppBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class Calendar
 {
@@ -203,4 +204,19 @@ class Calendar
         $this->hoursFri = $hoursFri;
         return $this;
     }
+    
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->getHoursMon() + $this->getHoursTue() + $this->getHoursWed()
+            + $this->getHoursThu() + $this->getHoursFri() <= 0) {
+        
+            $context->buildViolation('calendar.no_hours')
+                ->atPath('hoursMon')
+                ->addViolation();
+        }
+    }
+
 }

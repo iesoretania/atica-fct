@@ -42,7 +42,7 @@ class CalendarType extends AbstractType
                     'min' => 0,
                     'max' => $options['program_hours']
                 ],
-                'label' => 'form.total_hours',
+                'label' => 'form.pending_hours',
                 'required' => true
             ])
             ->add('hours_mon', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
