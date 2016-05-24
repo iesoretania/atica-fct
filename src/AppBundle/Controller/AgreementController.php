@@ -17,8 +17,8 @@ class AgreementController extends Controller
     public function agreementCalendarAction(Agreement $agreement)
     {
         $totalHours = $agreement->getStudent()->getStudentGroup()->getTraining()->getProgramHours();
-        $agreementHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
-        $studentHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
+        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
+        $studentHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
         return $this->render('calendar/agreement_calendar.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_agreement'),
             'breadcrumb' => [
@@ -39,8 +39,8 @@ class AgreementController extends Controller
     public function addAgreementCalendarAction(Agreement $agreement, Request $request)
     {
         $totalHours = $agreement->getStudent()->getStudentGroup()->getTraining()->getProgramHours();
-        $agreementHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
-        $studentHours = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
+        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
+        $studentHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
 
         $calendar = new Calendar(max(0, $totalHours-$studentHours));
 
