@@ -1,0 +1,14 @@
+{% trans_default_domain 'calendar' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'browse.title'|trans }}</h2>
+
+    {% include 'calendar/agreement_calendar_stats_partial.html.twig' %}
+
+    {% set buttons = true %}
+    {% include 'calendar/agreement_calendar_partial.html.twig' %}
+
+    {{ m.link_button(path('admin_agreement_form', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('agreement_calendar_add', {'id': agreement.id}), 'plus', 'btn-info', 'form.add'|trans) }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% trans_default_domain 'calendar' %}
+<dl class="dl-horizontal">
+    <dt>{{ 'form.group'|trans }}</dt>
+    <dd>{{ agreement.student.studentGroup }}</dd>
+    <dt>{{ 'form.total_hours'|trans }}</dt>
+    <dd>{{ total_hours }}</dd>
+    <dt>{{ 'form.student_hours'|trans }}</dt>
+    <dd>{{ student_hours|default('0') }} ({{ 100*student_hours/total_hours | number_format(2) }}%)</dd>
+    <dt>{{ 'form.agreement_hours'|trans }}</dt>
+    <dd>{{ agreement_hours|default('0') }} ({{ 100*agreement_hours/total_hours | number_format(2) }}%)</dd>
+</dl>

@@ -56,4 +56,12 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         return $user;
     }
+
+    public function countAgreementHours(User $user)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT SUM(w.hours) FROM AppBundle:Workday w INNER JOIN w.agreement a WHERE a.student = :user')
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
 }

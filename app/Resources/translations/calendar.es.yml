@@ -1,0 +1,31 @@
+browse.title: Calendario del acuerdo
+form.title: Modificar sesión
+
+form.group: Grupo
+form.training: Enseñanza
+
+form.start_date: Fecha de inicio
+form.total_hours: Horas enseñanza
+form.agreement_hours: Horas del acuerdo
+form.student_hours: Horas asignadas
+form.hours_mon: Horas lunes
+form.hours_tue: Horas martes
+form.hours_wed: Horas miércoles
+form.hours_thu: Horas jueves
+form.hours_fri: Horas viernes
+
+form.date: Fecha
+form.hours: Horas
+form.no_sessions: No hay sesiones
+form.notes: Anotaciones
+
+form.edit: Modificar
+form.delete: Eliminar
+
+form.submit: Guardar cambios
+form.calculate: Calcular
+form.add: Añadir sesiones
+
+form.back: Volver
+
+alert.saved: Fechas añadidas al calendario del acuerdo

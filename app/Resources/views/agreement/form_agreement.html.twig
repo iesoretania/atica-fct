@@ -9,6 +9,7 @@
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
         {% if not new %}
             {{ m.link_button(path('admin_agreement_delete', {'id': element.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
+            {{ m.link_button(path('agreement_calendar', {'id': element.id}), 'calendar', 'btn-info', 'form.calendar'|trans) }}
         {% endif %}
         {{ m.end_button }}
     {{ form_end(form) }}

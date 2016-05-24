@@ -12,6 +12,7 @@ form.activities: Programa formativo
 
 form.submit: Guardar cambios
 form.delete: Eliminar
+form.calendar: Calendario
 form.new: Nuevo acuerdo
 form.view: Modificar
 

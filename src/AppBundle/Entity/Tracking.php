@@ -48,8 +48,8 @@ class Tracking
     protected $notes;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
+     * @ORM\Column(type="float")
+     * @var float
      */
     protected $hours;
 
@@ -80,7 +80,7 @@ class Tracking
     /**
      * Set hours
      *
-     * @param integer $hours
+     * @param float $hours
      *
      * @return Tracking
      */
@@ -94,7 +94,7 @@ class Tracking
     /**
      * Get hours
      *
-     * @return integer
+     * @return float
      */
     public function getHours()
     {

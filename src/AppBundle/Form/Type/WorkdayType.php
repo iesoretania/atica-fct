@@ -24,7 +24,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TrainingType extends AbstractType
+class WorkdayType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -37,13 +37,13 @@ class TrainingType extends AbstractType
                 'widget' => 'single_text',
                 'required' => true
             ])
-            ->add('department', null, [
-                'label' => 'form.department',
+            ->add('hours', null, [
+                'label' => 'form.hours',
                 'required' => true
             ])
-            ->add('programHours', null, [
-                'label' => 'form.program_hours',
-                'required' => true
+            ->add('notes', null, [
+                'label' => 'form.notes',
+                'required' => false
             ]);
     }
 
@@ -53,8 +53,8 @@ class TrainingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Training',
-            'translation_domain' => 'training'
+            'data_class' => 'AppBundle\Entity\Workday',
+            'translation_domain' => 'calendar'
         ]);
     }
 }

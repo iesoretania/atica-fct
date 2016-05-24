@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WorkdayRepository")
  * @UniqueEntity(fields={"agreement", "date"})
  */
 class Workday
@@ -56,8 +56,8 @@ class Workday
     protected $notes;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
+     * @ORM\Column(type="float")
+     * @var float
      */
     protected $hours;
 
@@ -122,7 +122,7 @@ class Workday
     /**
      * Set hours
      *
-     * @param integer $hours
+     * @param float $hours
      *
      * @return Workday
      */
@@ -136,7 +136,7 @@ class Workday
     /**
      * Get hours
      *
-     * @return integer
+     * @return float
      */
     public function getHours()
     {

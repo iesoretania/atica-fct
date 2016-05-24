@@ -1,0 +1,32 @@
+{% trans_default_domain 'calendar' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th class="col-md-5">{{ 'form.date'|trans }}</th>
+        <th class="col-md-5">{{ 'form.hours'|trans }}</th>
+        {% if buttons %}<th class="col-md-2"></th>{% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element.date|date('d/m/Y') }}</td>
+            <td>{{ element.hours|number_format(2, ',', '.') }}</td>
+            {% if buttons %}
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('agreement_calendar_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.edit' | trans }}</a>
+                    <a href="" class="btn btn-danger col-xs-12 col-sm-6"><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+            {% endif %}
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="{{ buttons ? 3 : 2 }}">{{ 'form.no_sessions'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
