@@ -58,6 +58,9 @@ class AgreementController extends Controller
 
             if ($request->request->has('submit')) {
                 $this->getDoctrine()->getManager()->flush();
+                $agreement->setFromDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealFromDate($agreement));
+                $agreement->setToDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealToDate($agreement));
+                $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'calendar'));
                 return $this->redirectToRoute('agreement_calendar', ['id' => $agreement->getId()]);
             }

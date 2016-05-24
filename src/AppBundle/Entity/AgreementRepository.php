@@ -13,4 +13,24 @@ class AgreementRepository extends EntityRepository
             ->setParameter('agreement', $agreement)
             ->getSingleScalarResult();
     }
+
+    public function getRealFromDate(Agreement $agreement)
+    {
+        $date = $this->getEntityManager()
+            ->createQuery('SELECT MIN(w.date) FROM AppBundle:Workday w INNER JOIN w.agreement a WHERE w.agreement = :agreement')
+            ->setParameter('agreement', $agreement)
+            ->getSingleScalarResult();
+
+        return null === $date ?: new \DateTime($date);
+    }
+
+    public function getRealToDate(Agreement $agreement)
+    {
+        $date = $this->getEntityManager()
+            ->createQuery('SELECT MAX(w.date) FROM AppBundle:Workday w INNER JOIN w.agreement a WHERE w.agreement = :agreement')
+            ->setParameter('agreement', $agreement)
+            ->getSingleScalarResult();
+
+        return null === $date ?: new \DateTime($date);
+    }
 }

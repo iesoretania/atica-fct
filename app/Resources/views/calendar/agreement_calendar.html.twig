@@ -12,6 +12,11 @@
 
         {{ m.link_button(path('admin_agreement_form', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
         {{ m.link_button(path('agreement_calendar_add', {'id': agreement.id}), 'plus', 'btn-info', 'form.add'|trans) }}
-        {{ m.submit_button('submit', 'trash', 'btn-danger', 'form.delete'|trans) }}
+
+        {% if elements %}
+            {{ m.submit_button('submit', 'trash', 'btn-danger', 'form.delete'|trans) }}
+            <p></p>
+            <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>
+        {% endif %}
     </form>
 {% endblock %}

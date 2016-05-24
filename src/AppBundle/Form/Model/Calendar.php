@@ -30,7 +30,7 @@ class Calendar
     protected $startDate;
 
     /**
-     * @Assert\GreaterThan(value="1")
+     * @Assert\GreaterThanOrEqual(value="1")
      * @var float
      */
     protected $totalHours;
