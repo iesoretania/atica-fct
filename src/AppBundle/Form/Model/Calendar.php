@@ -98,7 +98,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getTotalHours()
     {
@@ -106,7 +106,7 @@ class Calendar
     }
 
     /**
-     * @param int $totalHours
+     * @param float $totalHours
      * @return Calendar
      */
     public function setTotalHours($totalHours)
@@ -116,7 +116,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getHoursMon()
     {
@@ -124,7 +124,7 @@ class Calendar
     }
 
     /**
-     * @param int $hoursMon
+     * @param float $hoursMon
      * @return Calendar
      */
     public function setHoursMon($hoursMon)
@@ -134,7 +134,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getHoursTue()
     {
@@ -142,7 +142,7 @@ class Calendar
     }
 
     /**
-     * @param int $hoursTue
+     * @param float $hoursTue
      * @return Calendar
      */
     public function setHoursTue($hoursTue)
@@ -152,7 +152,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getHoursWed()
     {
@@ -160,7 +160,7 @@ class Calendar
     }
 
     /**
-     * @param int $hoursWed
+     * @param float $hoursWed
      * @return Calendar
      */
     public function setHoursWed($hoursWed)
@@ -170,7 +170,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getHoursThu()
     {
@@ -178,7 +178,7 @@ class Calendar
     }
 
     /**
-     * @param int $hoursThu
+     * @param float $hoursThu
      * @return Calendar
      */
     public function setHoursThu($hoursThu)
@@ -188,7 +188,7 @@ class Calendar
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getHoursFri()
     {
