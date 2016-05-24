@@ -1,5 +1,10 @@
 browse.title: Acuerdos de colaboración registrados
 
+form.first_name: Nombre
+form.last_name: Apellidos
+form.group: Grupo
+form.hours: Horas
+
 form.sign_date: Fecha de la firma
 form.from_date: Fecha de inicio
 form.to_date: Fecha de finalización

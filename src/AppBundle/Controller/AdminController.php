@@ -120,14 +120,17 @@ class AdminController extends Controller
         'entity' => 'agreement',
         'entityClassName' => 'AppBundle\Entity\Agreement',
         'entityFormType' => 'AppBundle\Form\Type\AgreementType',
+        'manage_template' => 'agreement/manage_agreement.html.twig',
         'form_template' => 'agreement/form_agreement.html.twig',
         'query' => null,
         'defaultSortFieldName' => 's.lastName',
         'columns' => [
-            ['size' => '4', 'sort_field' => 's.displayName', 'name' => 'form.student'],
-            ['size' => '5', 'sort_field' => 'a.workcenter', 'name' => 'form.workcenter']
+            ['size' => '2', 'sort_field' => 's.lastName', 'name' => 'form.last_name'],
+            ['size' => '2', 'sort_field' => 's.firstName', 'name' => 'form.first_name'],
+            ['size' => '1', 'sort_field' => 'g.name', 'name' => 'form.group'],
+            ['size' => '4', 'sort_field' => 'w.name', 'name' => 'form.workcenter']
         ],
-        'data_columns' => ['student', 'workcenter']
+        'data_columns' => []
     ];
 
     /**
@@ -439,6 +442,7 @@ class AdminController extends Controller
 
         $qb = $em->getRepository('AppBundle:Agreement')
             ->createQueryBuilder('a')
+            ->innerJoin('a.workcenter', 'w')
             ->innerJoin('a.student', 's')
             ->innerJoin('s.studentGroup', 'g');
 
