@@ -37,6 +37,12 @@ services:
         tags:
             -  { name: atica_core.menu_builder }
 
+    app.student.menu:
+        class: AppBundle\Service\StudentMenu
+        arguments: ['@security.token_storage']
+        tags:
+            -  { name: atica_core.menu_builder }
+
     AppBundle\Form\Type\AgreementType:
         class: AppBundle\Form\Type\AgreementType
         arguments: ['@security.token_storage']

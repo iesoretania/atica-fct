@@ -26,14 +26,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/estudiante/{id}")
- * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
- */
 class StudentController extends Controller
 {
     /**
-     * @Route("", name="student_detail", methods={"GET", "POST"})
+     * @Route("/estudiante/{id}", name="student_detail", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
      */
     public function studentIndexAction(User $student, Request $request)
     {
@@ -66,6 +63,18 @@ class StudentController extends Controller
                 'title' => (string) $student,
                 'user' => $student,
                 'form' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/calendario", name="student_calendar", methods={"GET"})
+     */
+    public function studentCalendarIndexAction()
+    {
+        return $this->render('student/calendar.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
+                'user' => $this->getUser()
             ]);
     }
 }

@@ -60,3 +60,6 @@ menu.admin.calendar.detail: Definir periodos no lectivos
 
 menu.admin.programs: Programas formativos
 menu.admin.programs.detail: Gestionar los programas formativos de las enseñanzas
+
+menu.student_calendar: Fichas de seguimiento
+menu.student_calendar.detail: Gestionar las fichas de seguimiento
