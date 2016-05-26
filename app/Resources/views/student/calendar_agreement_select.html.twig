@@ -1,0 +1,8 @@
+{% trans_default_domain 'student' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'calendar_select.title'|trans }}</h2>
+    {% include 'student/calendar_agreement_select_partial.html.twig' %}
+    {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+{% endblock %}

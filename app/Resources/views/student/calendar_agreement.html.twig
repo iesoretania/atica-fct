@@ -2,7 +2,12 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
-    <h2>{{ 'calendar_select.title'|trans }}</h2>
-    {% include 'student/calendar_agreement_partial.html.twig' %}
-    {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    <h2>{{ 'calendar.title'|trans }}</h2>
+    {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
+
+    {% if user.studentAgreements.count() == 1 %}
+        {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% else %}
+        {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% endif %}
 {% endblock %}

@@ -20,6 +20,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -71,13 +72,39 @@ class StudentController extends Controller
      */
     public function studentCalendarIndexAction()
     {
-        /** @var User $agreements */
         $agreements = $this->getUser()->getStudentAgreements();
-        return $this->render('student/calendar_agreement.html.twig',
+
+        if (count($agreements) == 1) {
+            return $this->studentCalendarAgreementIndexAction($agreements[0]);
+        }
+
+        return $this->render('student/calendar_agreement_select.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
                 'user' => $this->getUser(),
                 'elements' => $agreements
+            ]);
+    }
+
+    /**
+     * @Route("/calendario/{id}", name="student_calendar_agreement", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function studentCalendarAgreementIndexAction(Agreement $agreement)
+    {
+        $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
+        $title = (string) $agreement->getWorkcenter();
+
+        return $this->render('student/calendar_agreement.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
+                'breadcrumb' => [
+                    ['fixed' => $title],
+                ],
+                'title' => $title,
+                'user' => $this->getUser(),
+                'calendar' => $calendar,
+                'agreement' => $agreement
             ]);
     }
 }
