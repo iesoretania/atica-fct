@@ -49,3 +49,10 @@ services:
         public: false
         tags:
             - { name: security.voter }
+
+    app.entity.agreement_voter:
+        class: AppBundle\Security\AgreementVoter
+        autowire: true
+        public: false
+        tags:
+            - { name: security.voter }

@@ -276,6 +276,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/departamentos", name="admin_department", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function departmentsIndexAction(Request $request)
     {
@@ -285,6 +286,7 @@ class AdminController extends Controller
     /**
      * @Route("/admin/departamentos/nuevo", name="admin_department_new", methods={"GET", "POST"})
      * @Route("/admin/departamentos/{id}", name="admin_department_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function departmentsFormAction(Department $element = null, Request $request)
     {
@@ -293,6 +295,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/departamentos/eliminar/{id}", name="admin_department_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function deleteElementAction(Department $element, Request $request)
     {
@@ -301,6 +304,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/empresas", name="admin_company", methods={"GET"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function companiesIndexAction(Request $request)
     {
@@ -310,6 +314,7 @@ class AdminController extends Controller
     /**
      * @Route("/empresas/nueva", name="admin_company_new", methods={"GET", "POST"})
      * @Route("/empresas/{id}", name="admin_company_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function companyFormAction(Company $element = null, Request $request)
     {
@@ -318,6 +323,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/empresas/eliminar/{id}", name="admin_company_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function companyDeleteAction(Company $element, Request $request)
     {
@@ -326,6 +332,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/grupos", name="admin_group", methods={"GET"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function groupIndexAction(Request $request)
     {
@@ -335,6 +342,7 @@ class AdminController extends Controller
     /**
      * @Route("/admin/grupos/nuevo", name="admin_group_new", methods={"GET", "POST"})
      * @Route("/admin/grupos/{id}", name="admin_group_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function groupFormAction(Group $element = null, Request $request)
     {
@@ -343,6 +351,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/grupos/eliminar/{id}", name="admin_group_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function groupDeleteAction(Group $element, Request $request)
     {
@@ -351,6 +360,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/ensenanzas", name="admin_training", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function trainingIndexAction(Request $request)
     {
@@ -360,6 +370,7 @@ class AdminController extends Controller
     /**
      * @Route("/admin/ensenanzas/nueva", name="admin_training_new", methods={"GET", "POST"})
      * @Route("/admin/ensenanzas/{id}", name="admin_training_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function trainingFormAction(Training $element = null, Request $request)
     {
@@ -368,6 +379,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/ensenanzas/eliminar/{id}", name="admin_training_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function trainingDeleteAction(Training $element, Request $request)
     {
@@ -376,6 +388,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/diasnolectivos", name="admin_non_school_day", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function nonSchoolDayIndexAction(Request $request)
     {
@@ -385,6 +398,7 @@ class AdminController extends Controller
     /**
      * @Route("/admin/diasnolectivos/nuevo", name="admin_non_school_day_new", methods={"GET", "POST"})
      * @Route("/admin/diasnolectivos/{id}", name="admin_non_school_day_form", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function nonSchoolDayFormAction(NonSchoolDay $element = null, Request $request)
     {
@@ -393,6 +407,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/diasnolectivos/eliminar/{id}", name="admin_non_school_day_delete", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function workcenterDeleteAction(Workcenter $element, Request $request)
     {
@@ -401,6 +416,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/centros", name="admin_workcenter", methods={"GET"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function workcenterIndexAction(Request $request)
     {
@@ -410,6 +426,7 @@ class AdminController extends Controller
     /**
      * @Route("/centros/nuevo", name="admin_workcenter_new", methods={"GET", "POST"})
      * @Route("/centros/{id}", name="admin_workcenter_form", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function workcenterFormAction(Workcenter $element = null, Request $request)
     {
@@ -418,6 +435,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/centros/eliminar/{id}", name="admin_workcenter_delete", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
      */
     public function nonSchoolDayDeleteAction(Workcenter $element, Request $request)
     {
@@ -426,6 +444,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/acuerdos", name="admin_agreement", methods={"GET"})
+     * @Security("is_granted('ROLE_GROUP_TUTOR')")
      */
     public function agreementIndexAction(Request $request)
     {
@@ -461,6 +480,7 @@ class AdminController extends Controller
     /**
      * @Route("/acuerdos/nuevo", name="admin_agreement_new", methods={"GET", "POST"})
      * @Route("/acuerdos/{id}", name="admin_agreement_form", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_GROUP_TUTOR')")
      */
     public function agreementFormAction(Agreement $element = null, Request $request)
     {
@@ -469,6 +489,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/acuerdos/eliminar/{id}", name="admin_agreement_delete", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_GROUP_TUTOR')")
      */
     public function agreementDeleteAction(Agreement $element, Request $request)
     {

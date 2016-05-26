@@ -7,6 +7,7 @@ use AppBundle\Entity\Workday;
 use AppBundle\Form\Model\Calendar;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,6 +15,7 @@ class AgreementController extends Controller
 {
     /**
      * @Route("/acuerdos/{id}/calendario", name="agreement_calendar", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function agreementGraphicCalendarAction(Agreement $agreement)
     {
@@ -37,6 +39,7 @@ class AgreementController extends Controller
 
     /**
      * @Route("/acuerdos/{id}/calendario/incorporar", name="agreement_calendar_add", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function addAgreementCalendarAction(Agreement $agreement, Request $request)
     {
@@ -66,7 +69,7 @@ class AgreementController extends Controller
                 return $this->redirectToRoute('agreement_calendar', ['id' => $agreement->getId()]);
             }
         }
-        dump($workdays);
+
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($workdays);
 
         return $this->render('calendar/agreement_calendar_add.html.twig', [
@@ -87,6 +90,7 @@ class AgreementController extends Controller
 
     /**
      * @Route("/acuerdos/{id}/calendario/eliminar", name="agreement_calendar_delete", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)
     {
@@ -118,7 +122,8 @@ class AgreementController extends Controller
     }
 
     /**
-     * @Route("/sesion/{id}", name="agreement_calendar_form", methods={"GET", "POST"})
+     * @Route("/jornada/{id}", name="agreement_calendar_form", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function agreementCalendarFormAction(Workday $workday, Request $request)
     {
