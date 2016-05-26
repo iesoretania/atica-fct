@@ -25,8 +25,8 @@ services:
         tags:
             -  { name: atica_core.menu_builder }
 
-    app.fct_admin.menu:
-        class: AppBundle\Service\FctAdminMenu
+    app.head_department.menu:
+        class: AppBundle\Service\HeadDepartmentMenu
         autowire: true
         tags:
             -  { name: atica_core.menu_builder }

@@ -23,7 +23,7 @@ namespace AppBundle\Service;
 use AppBundle\Menu\MenuItem;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-class FctAdminMenu implements MenuBuilderInterface
+class HeadDepartmentMenu implements MenuBuilderInterface
 {
     private $authorizationChecker;
 
