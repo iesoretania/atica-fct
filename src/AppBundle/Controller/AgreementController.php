@@ -109,7 +109,9 @@ class AgreementController extends Controller
 
                 /** @var Workday $date */
                 foreach ($dates as $date) {
-                    $em->remove($date);
+                    if ($date->getTrackedHours() === 0) {
+                        $em->remove($date);
+                    }
                 }
 
                 $em->flush();
@@ -123,7 +125,7 @@ class AgreementController extends Controller
 
     /**
      * @Route("/jornada/{id}", name="agreement_calendar_form", methods={"GET", "POST"})
-     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     * @Security("is_granted('AGREEMENT_MANAGE', workday.getAgreement())")
      */
     public function agreementCalendarFormAction(Workday $workday, Request $request)
     {

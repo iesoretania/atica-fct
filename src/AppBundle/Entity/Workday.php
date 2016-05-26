@@ -64,7 +64,7 @@ class Workday
     protected $hours;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tracking", mappedBy="workday")
+     * @ORM\OneToMany(targetEntity="Tracking", mappedBy="workday", fetch="EAGER")
      * @var Collection
      */
     protected $trackingActivities;
