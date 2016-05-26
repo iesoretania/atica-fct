@@ -1,0 +1,31 @@
+{% trans_default_domain 'student' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th class="col-md-2">{{ 'form.from_date'|trans }}</th>
+        <th class="col-md-2">{{ 'form.to_date'|trans }}</th>
+        <th class="col-md-6">{{ 'form.workcenter'|trans }}</th>
+        <th class="col-md-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element.fromDate|date('d/m/Y') }}</td>
+            <td>{{ element.toDate|date('d/m/Y') }}</td>
+            <td>{{ element.workcenter }}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.workcenter_select' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">{{ 'form.no_workcenters'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

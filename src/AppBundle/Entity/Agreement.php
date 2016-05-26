@@ -56,7 +56,7 @@ class Agreement
     protected $toDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="studentAgreements")
      * @ORM\JoinColumn(nullable=false)
      * @var User
      */

@@ -1,5 +1,5 @@
 browse.title: Datos del estudiante
-calendar.title: Fichas de seguimiento
+calendar_select.title: Seleccione un centro de trabajo
 
 form.login_username: Nombre de usuario
 form.reference: NIF/NIE
@@ -13,6 +13,12 @@ form.gender_female: Mujer
 form.initials: Iniciales
 form.email: Correo electrónico
 
+form.from_date: Desde
+form.to_date: Hasta
+form.workcenter: Centro de trabajo
+form.workcenter_select: Seleccionar
+form.no_workcenters: No hay centros de trabajo asociados
+
 form.submit: Guardar cambios
 
 form.agreements: Acuerdos de colaboración
@@ -22,3 +28,4 @@ form.back: Volver
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
+

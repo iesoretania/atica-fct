@@ -71,10 +71,13 @@ class StudentController extends Controller
      */
     public function studentCalendarIndexAction()
     {
-        return $this->render('student/calendar.html.twig',
+        /** @var User $agreements */
+        $agreements = $this->getUser()->getStudentAgreements();
+        return $this->render('student/calendar_agreement.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
-                'user' => $this->getUser()
+                'user' => $this->getUser(),
+                'elements' => $agreements
             ]);
     }
 }

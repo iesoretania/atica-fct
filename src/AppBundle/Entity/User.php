@@ -111,6 +111,14 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $directs;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Agreement", mappedBy="student")
+     * @ORM\OrderBy({"fromDate": "ASC"})
+     *
+     * @var Collection
+     */
+    protected $studentAgreements;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -119,6 +127,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
 
         $this->tutorizedGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->directs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->studentAgreements = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -540,4 +549,37 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
         return $this->getLoginUsername() ?: $this->getEmail();
     }
 
+    /**
+     * Add studentAgreement
+     *
+     * @param Agreement $studentAgreement
+     *
+     * @return User
+     */
+    public function addStudentAgreement(Agreement $studentAgreement)
+    {
+        $this->studentAgreements[] = $studentAgreement;
+
+        return $this;
+    }
+
+    /**
+     * Remove studentAgreement
+     *
+     * @param Agreement $studentAgreement
+     */
+    public function removeStudentAgreement(Agreement $studentAgreement)
+    {
+        $this->studentAgreements->removeElement($studentAgreement);
+    }
+
+    /**
+     * Get studentAgreements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudentAgreements()
+    {
+        return $this->studentAgreements;
+    }
 }
