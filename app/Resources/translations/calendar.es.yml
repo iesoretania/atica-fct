@@ -7,13 +7,15 @@ form.training: Enseñanza
 form.start_date: Fecha de inicio
 form.total_hours: Horas enseñanza
 form.agreement_hours: Horas del acuerdo
-form.student_hours: Horas asignadas
+form.student_hours: Totales ya asignadas
 form.pending_hours: Horas a asignar
 form.hours_mon: Horas lunes
 form.hours_tue: Horas martes
 form.hours_wed: Horas miércoles
 form.hours_thu: Horas jueves
 form.hours_fri: Horas viernes
+form.hours_sat: Horas sábado
+form.hours_sun: Horas domingo
 
 form.date: Fecha
 form.hours: Horas
@@ -36,3 +38,26 @@ alert.not_deleted: Ha ocurrido un error al eliminar las fechas. Compruebe que el
 
 prompt.session_deletion_warning: >
     ¡ATENCIÓN! No se podrá eliminar una fecha del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento.
+
+month0: Enero
+month1: Febrero
+month2: Marzo
+month3: Abril
+month4: Mayo
+month5: Junio
+month6: Julio
+month7: Agosto
+month8: Septiembre
+month9: Octubre
+month10: Noviembre
+month11: Diciembre
+
+dow0: Lunes
+dow1: Martes
+dow2: Miércoles
+dow3: Jueves
+dow4: Viernes
+dow5: Sábado
+dow6: Domingo
+
+caption.hours: h.

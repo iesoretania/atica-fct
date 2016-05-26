@@ -6,17 +6,18 @@
 
     {% include 'calendar/agreement_calendar_stats_partial.html.twig' %}
 
-    {% set buttons = true %}
     <form method="post" action="{{ path('agreement_calendar_delete', {'id': agreement.id}) }}">
-        {% include 'calendar/agreement_calendar_partial.html.twig' %}
-
+        {% if calendar is not empty %}
+            {% set buttons = true %}
+            {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
+        {% endif %}
         {{ m.link_button(path('admin_agreement_form', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
         {{ m.link_button(path('agreement_calendar_add', {'id': agreement.id}), 'plus', 'btn-info', 'form.add'|trans) }}
-
-        {% if elements is not empty %}
+        {% if calendar is not empty %}
             {{ m.submit_button('submit', 'trash', 'btn-danger', 'form.delete'|trans) }}
             <p></p>
             <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>
         {% endif %}
     </form>
+
 {% endblock %}

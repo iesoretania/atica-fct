@@ -16,10 +16,9 @@
 
     {{ m.link_button(path('agreement_calendar', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 
-    {% if elements %}
+    {% if calendar %}
         <p></p>
-        {% set buttons = false %}
-        {% include 'calendar/agreement_calendar_partial.html.twig' %}
+        {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
     {% endif %}
 
 {% endblock %}

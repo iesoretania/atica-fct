@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Workday;
 use AppBundle\Form\Model\Calendar;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,18 +15,19 @@ class AgreementController extends Controller
     /**
      * @Route("/acuerdos/{id}/calendario", name="agreement_calendar", methods={"GET"})
      */
-    public function agreementCalendarAction(Agreement $agreement)
+    public function agreementGraphicCalendarAction(Agreement $agreement)
     {
         $totalHours = $agreement->getStudent()->getStudentGroup()->getTraining()->getProgramHours();
         $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
         $studentHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
-        return $this->render('calendar/agreement_calendar.html.twig', [
+        $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
+        return $this->render('calendar/agreement_calendar_graphic.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_agreement'),
             'breadcrumb' => [
                 ['fixed' => (string) $agreement, 'path' => 'admin_agreement_form', 'options' => ['id' => $agreement->getId()]],
                 ['fixed' => $this->get('translator')->trans('browse.title', [], 'calendar')]
             ],
-            'elements' => $agreement->getWorkdays(),
+            'calendar' => $calendar,
             'agreement' => $agreement,
             'total_hours' => $totalHours,
             'agreement_hours' => $agreementHours,
@@ -50,7 +52,7 @@ class AgreementController extends Controller
 
         $form->handleRequest($request);
 
-        $workdays = [];
+        $workdays = new ArrayCollection();
 
         if ($form->isValid() && $form->isSubmitted()) {
             $workdays = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->createCalendar($calendar, $agreement);
@@ -64,6 +66,8 @@ class AgreementController extends Controller
                 return $this->redirectToRoute('agreement_calendar', ['id' => $agreement->getId()]);
             }
         }
+        dump($workdays);
+        $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($workdays);
 
         return $this->render('calendar/agreement_calendar_add.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_agreement'),
@@ -77,7 +81,7 @@ class AgreementController extends Controller
             'agreement_hours' => $agreementHours,
             'student_hours' => $studentHours,
             'form' => $form->createView(),
-            'elements' => $workdays
+            'calendar' => $calendar
         ]);
     }
 

@@ -46,43 +46,31 @@ class CalendarType extends AbstractType
                 'required' => true
             ])
             ->add('hours_mon', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 24
-                ],
                 'label' => 'form.hours_mon',
                 'required' => true
             ])
             ->add('hours_tue', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 24
-                ],
                 'label' => 'form.hours_tue',
                 'required' => true
             ])
             ->add('hours_wed', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 24
-                ],
                 'label' => 'form.hours_wed',
                 'required' => true
             ])
             ->add('hours_thu', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 24
-                ],
                 'label' => 'form.hours_thu',
                 'required' => true
             ])
             ->add('hours_fri', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 24
-                ],
                 'label' => 'form.hours_fri',
+                'required' => true
+            ])
+            ->add('hours_sat', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
+                'label' => 'form.hours_sat',
+                'required' => true
+            ])
+            ->add('hours_sun', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
+                'label' => 'form.hours_sun',
                 'required' => true
             ]);
     }

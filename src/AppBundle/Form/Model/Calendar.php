@@ -66,6 +66,18 @@ class Calendar
      */
     protected $hoursFri;
 
+    /**
+     * @Assert\Range(min="0", max="24")
+     * @var float
+     */
+    protected $hoursSat;
+
+    /**
+     * @Assert\Range(min="0", max="24")
+     * @var float
+     */
+    protected $hoursSun;
+
     public function __construct($total = 0.0)
     {
         $this->startDate = new \DateTime();
@@ -77,6 +89,8 @@ class Calendar
         $this->hoursWed = 0.0;
         $this->hoursThu = 0.0;
         $this->hoursFri = 0.0;
+        $this->hoursSat = 0.0;
+        $this->hoursSun = 0.0;
     }
 
     /**
@@ -204,6 +218,42 @@ class Calendar
         $this->hoursFri = $hoursFri;
         return $this;
     }
+
+    /**
+     * @return float
+     */
+    public function getHoursSat()
+    {
+        return $this->hoursSat;
+    }
+
+    /**
+     * @param float $hoursSat
+     * @return Calendar
+     */
+    public function setHoursSat($hoursSat)
+    {
+        $this->hoursSat = $hoursSat;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHoursSun()
+    {
+        return $this->hoursSun;
+    }
+
+    /**
+     * @param float $hoursSun
+     * @return Calendar
+     */
+    public function setHoursSun($hoursSun)
+    {
+        $this->hoursSun = $hoursSun;
+        return $this;
+    }
     
     /**
      * @Assert\Callback
@@ -211,7 +261,8 @@ class Calendar
     public function validate(ExecutionContextInterface $context)
     {
         if ($this->getHoursMon() + $this->getHoursTue() + $this->getHoursWed()
-            + $this->getHoursThu() + $this->getHoursFri() <= 0) {
+            + $this->getHoursThu() + $this->getHoursFri()
+            + $this->getHoursSat() + $this->getHoursSun() <= 0) {
         
             $context->buildViolation('calendar.no_hours')
                 ->atPath('hoursMon')
