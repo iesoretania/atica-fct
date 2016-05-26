@@ -20,6 +20,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -61,6 +63,11 @@ class Workday
      */
     protected $hours;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Tracking", mappedBy="workday")
+     * @var Collection
+     */
+    protected $trackingActivities;
     /**
      * Get id
      *
@@ -165,5 +172,57 @@ class Workday
     public function getAgreement()
     {
         return $this->agreement;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trackingActivities = new ArrayCollection();
+    }
+
+    /**
+     * Add trackingActivity
+     *
+     * @param Tracking $trackingActivity
+     *
+     * @return Workday
+     */
+    public function addTrackingActivity(Tracking $trackingActivity)
+    {
+        $this->trackingActivities[] = $trackingActivity;
+
+        return $this;
+    }
+
+    /**
+     * Remove trackingActivity
+     *
+     * @param Tracking $trackingActivity
+     */
+    public function removeTrackingActivity(Tracking $trackingActivity)
+    {
+        $this->trackingActivities->removeElement($trackingActivity);
+    }
+
+    /**
+     * Get trackingActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrackingActivities()
+    {
+        return $this->trackingActivities;
+    }
+
+    public function getTrackedHours()
+    {
+        $hours = 0;
+        /** @var Tracking $track */
+        foreach ($this->getTrackingActivities() as $track) {
+            $hours += $track->getHours();
+        }
+
+        return $hours;
     }
 }

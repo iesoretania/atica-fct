@@ -29,7 +29,7 @@ class Tracking
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Workday")
+     * @ORM\ManyToOne(targetEntity="Workday", inversedBy="trackingActivities")
      * @var Workday
      */
     protected $workday;
