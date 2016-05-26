@@ -24,34 +24,42 @@ class WorkdayRepository extends EntityRepository
 
         while ($hours > 0) {
             if (false === in_array($date, $nonSchoolDays, false)) {
-                $current = new Workday();
+                $current = $this->getEntityManager()->getRepository('AppBundle:Workday')->findOneBy([
+                    'date' => $date,
+                    'agreement' => $agreement
+                ]);
+                if (null === $current) {
+                    $current = new Workday();
+                }
                 $current->setDate(clone $date);
                 $current->setAgreement($agreement);
+                $assignedHours = 0;
                 switch ($date->format('w')) {
                     case 0:
-                        $current->setHours(min($hours, $calendar->getHoursSun()));
+                        $assignedHours = min($hours, $calendar->getHoursSun());
                         break;
                     case 1:
-                        $current->setHours(min($hours, $calendar->getHoursMon()));
+                        $assignedHours = min($hours, $calendar->getHoursMon());
                         break;
                     case 2:
-                        $current->setHours(min($hours, $calendar->getHoursTue()));
+                        $assignedHours = min($hours, $calendar->getHoursTue());
                         break;
                     case 3:
-                        $current->setHours(min($hours, $calendar->getHoursWed()));
+                        $assignedHours = min($hours, $calendar->getHoursWed());
                         break;
                     case 4:
-                        $current->setHours(min($hours, $calendar->getHoursThu()));
+                        $assignedHours = min($hours, $calendar->getHoursThu());
                         break;
                     case 5:
-                        $current->setHours(min($hours, $calendar->getHoursFri()));
+                        $assignedHours = min($hours, $calendar->getHoursFri());
                         break;
                     case 6:
-                        $current->setHours(min($hours, $calendar->getHoursSat()));
+                        $assignedHours = min($hours, $calendar->getHoursSat());
                         break;
                 }
+                $current->setHours($current->getHours() + $assignedHours);
 
-                $hours -= $current->getHours();
+                $hours -= $assignedHours;
 
                 if ($current->getHours()) {
                     $collection->add($current);

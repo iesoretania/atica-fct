@@ -25,9 +25,10 @@ form.notes: Anotaciones
 form.edit: Modificar
 form.delete_item: Eliminar
 form.delete: Eliminar jornadas seleccionadas
+form.select_deselect: Seleccionar/deseleccionar jornadas
 
 form.submit: Guardar cambios
-form.calculate: Calcular
+form.calculate: Vista previa
 form.add: Añadir jornadas
 
 form.back: Volver
@@ -60,4 +61,4 @@ dow4: Viernes
 dow5: Sábado
 dow6: Domingo
 
-caption.hours: h.
+caption.hours: horas
