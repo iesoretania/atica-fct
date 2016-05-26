@@ -76,7 +76,7 @@ class AgreementVoter extends Voter
         }
 
         // Si es el jefe de departamento, permitir
-        if ($user->getDirects()->contains($subject->getTraining()->getDepartment())) {
+        if ($user->getDirects()->contains($subject->getStudent()->getStudentGroup()->getTraining()->getDepartment())) {
             return true;
         }
 
