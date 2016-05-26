@@ -31,8 +31,8 @@ services:
         tags:
             -  { name: atica_core.menu_builder }
 
-    app.group_admin.menu:
-        class: AppBundle\Service\GroupAdminMenu
+    app.student_group.menu:
+        class: AppBundle\Service\StudentGroupMenu
         autowire: true
         tags:
             -  { name: atica_core.menu_builder }

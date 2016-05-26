@@ -23,7 +23,7 @@ namespace AppBundle\Service;
 use AppBundle\Menu\MenuItem;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-class GroupAdminMenu implements MenuBuilderInterface
+class StudentGroupMenu implements MenuBuilderInterface
 {
     private $authorizationChecker;
 
@@ -51,7 +51,7 @@ class GroupAdminMenu implements MenuBuilderInterface
             ->setRouteName('admin_tutor_group')
             ->setCaption('menu.group_admin')
             ->setDescription('menu.group_admin.detail')
-            ->setColor('dark-green')
+            ->setColor('red')
             ->setIcon('users');
 
         $root->addChild($mainItem, MenuItem::AT_THE_END);
