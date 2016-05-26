@@ -3,7 +3,7 @@
 {% import '::macros.html.twig' as m %}
 {% block content %}
     <h2>{{ 'calendar.title'|trans }}</h2>
-    {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
+    {% include 'student/calendar_agreement_partial.html.twig' %}
 
     {% if user.studentAgreements.count() == 1 %}
         {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}

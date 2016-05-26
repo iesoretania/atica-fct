@@ -23,9 +23,11 @@
                 <td {% if day.data is defined %}class="{{ day.data.trackedHours == 0 ? 'info' : (day.data.trackedHours == day.data.hours ? 'success' : 'danger') }}"{% endif %}>
                     <strong>{{ day.day }}</strong><br/>
                     {% if day.data is defined %}
+                        {% block detail %}
                         {% if buttons is defined and buttons %}<input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}" {% if day.data.trackedHours %}disabled="disabled"{% endif %}> <a href="{{ path('agreement_calendar_form', {'id': day.data.id}) }}">{% endif %}
                         {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
                         {% if buttons is defined and buttons %}</a>{% endif %}
+                        {% endblock %}
                     {% else %}
                         &nbsp;
                     {% endif %}

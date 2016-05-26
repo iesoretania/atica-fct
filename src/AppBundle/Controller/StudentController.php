@@ -22,6 +22,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,7 +88,7 @@ class StudentController extends Controller
     }
 
     /**
-     * @Route("/calendario/{id}", name="student_calendar_agreement", methods={"GET"})
+     * @Route("/seguimiento/{id}", name="student_calendar_agreement", methods={"GET"})
      * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
      */
     public function studentCalendarAgreementIndexAction(Agreement $agreement)
@@ -105,6 +106,29 @@ class StudentController extends Controller
                 'user' => $this->getUser(),
                 'calendar' => $calendar,
                 'agreement' => $agreement
+            ]);
+    }
+
+    /**
+     * @Route("/seguimiento/ficha/{id}", name="student_tracking", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")
+     */
+    public function studentWorkdayAction(Workday $workday)
+    {
+        $dow = ((6 + (int) $workday->getDate()->format('w')) % 7);
+        
+        $title = $this->get('translator')->trans('dow' . $dow, [], 'calendar') . ', ' . $workday->getDate()->format('d/m/Y');
+
+        return $this->render('student/tracking.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
+                'breadcrumb' => [
+                    ['fixed' => (string) $workday->getAgreement()->getWorkcenter(), 'path' => 'student_calendar_agreement', 'options' => ['id' => $workday->getAgreement()->getId()]],
+                    ['fixed' => $title],
+                ],
+                'title' => $title,
+                'user' => $this->getUser(),
+                'workday' => $workday
             ]);
     }
 }
