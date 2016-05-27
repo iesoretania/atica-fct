@@ -3,8 +3,8 @@
     <thead>
     <tr>
         {{ m.paginator_th(elements, 'col-md-5', 'u.lastName', 'form.last_name'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-5', 'u.firstName', 'form.first_name'|trans) }}
-        <th class="col-md-2"></th>
+        {{ m.paginator_th(elements, 'col-md-4', 'u.firstName', 'form.first_name'|trans) }}
+        <th class="col-md-3"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +15,8 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('student_detail', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'student.detail' | trans }}</a>
+                    <a href="{{ path('student_detail', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-6"><i class="fa fa-calendar"></i> {{ 'student.tracking' | trans }}</a>
+                    <a href="{{ path('student_detail', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'student.detail' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

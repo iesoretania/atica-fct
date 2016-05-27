@@ -3,10 +3,6 @@
 {% import '::macros.html.twig' as m %}
 
 {% block content %}
-    <div class="well well-sm">
-        {{ m.link_button('', 'eye', 'btn-info', 'form.tracking'|trans) }}
-        {{ m.link_button('', 'link', 'btn-info', 'form.agreements'|trans) }}
-    </div>
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ m.start_button }}
