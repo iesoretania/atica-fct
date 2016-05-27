@@ -8,15 +8,18 @@
         <dt>{{ 'form.agreement_hours'|trans }}</dt>
         <dd>{{ agreement_hours | number_format(2, ',', '.') | default('0') }}</dd>
         {% for activity in activities_stats %}
-            <dt>{{ activity[0].name }}</dt>
+            <dt>{{ activity[0] }}</dt>
             <dd>{{ activity[1] | number_format(2, ',', '.') | default('0') }} ({{ (100* activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
         {% endfor %}
     </dl>
+    {% if workday.locked %}
+        <div class="alert alert-info"><i class="fa fa-lock"></i> {{ 'prompt.locked'|trans|nl2br }}</div>
+    {% endif %}
     {% if workday.trackedHours != 0 and workday.trackedHours != workday.hours %}
-        <div class="alert alert-danger">{{ 'prompt.no_hours_match'|trans({ '%hours%': workday.hours, '%count%': workday.trackedHours })|nl2br }}</div>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ 'prompt.no_hours_match'|trans({ '%hours%': workday.hours, '%count%': workday.trackedHours })|nl2br }}</div>
     {% endif %}
     {% if workday.trackedHours != 0 and workday.trackedHours == workday.hours %}
-        <div class="alert alert-success">{{ 'prompt.match'|trans|nl2br }}</div>
+        <div class="alert alert-success"><i class="fa fa-check"></i> {{ 'prompt.match'|trans|nl2br }}</div>
     {% endif %}
     <h2>{{ 'form.daily_activities'|trans({ '%hours%': workday.hours }) }}</h2>
     {{ form_start(form) }}

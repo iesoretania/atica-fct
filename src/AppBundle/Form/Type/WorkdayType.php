@@ -41,6 +41,16 @@ class WorkdayType extends AbstractType
                 'label' => 'form.hours',
                 'required' => true
             ])
+            ->add('locked', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                'label' => 'form.is_locked',
+                'choices_as_values' => true,
+                'choices' => [
+                    'form.unlocked' => false,
+                    'form.locked' => true
+                ],
+                'expanded' => true,
+                'required' => true
+            ])
             ->add('notes', null, [
                 'label' => 'form.notes',
                 'required' => false

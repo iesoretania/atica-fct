@@ -41,6 +41,9 @@ form.tracking_back: Volver al calendario
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
+prompt.locked: >
+  La jornada está bloqueada. Solamente el tutor docente podrá realizar cambios en la misma.
+
 prompt.no_hours_match: >
   ¡ADVERTENCIA! La suma de las horas de las actividades indicadas (%count% horas) no coincide con la prevista para la jornada (%hours% horas).
 

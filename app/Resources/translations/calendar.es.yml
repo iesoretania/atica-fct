@@ -17,6 +17,10 @@ form.hours_fri: Horas viernes
 form.hours_sat: Horas sábado
 form.hours_sun: Horas domingo
 
+form.is_locked: Bloqueo
+form.unlocked: El estudiante puede realizar cambios en las actividades
+form.locked: La jornada está bloqueada y el estudiante no podrá realizar cambios
+
 form.date: Fecha
 form.hours: Horas
 form.no_sessions: No hay sesiones

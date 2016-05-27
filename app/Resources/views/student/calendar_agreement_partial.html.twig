@@ -5,5 +5,6 @@
     <a href="{{ path('student_tracking', {'id': day.data.id}) }}">
     {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
     </a>
+    {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
 {% endblock %}
 

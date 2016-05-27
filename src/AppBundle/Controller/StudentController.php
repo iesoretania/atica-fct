@@ -125,7 +125,9 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
 
-        $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday);
+        $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday, [
+            'disabled' => $workday->isLocked() && !$this->isGranted('ROLE_TEACHING_TUTOR')
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
