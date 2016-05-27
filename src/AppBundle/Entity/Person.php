@@ -70,12 +70,6 @@ class Person
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected $initials;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     */
     protected $address;
 
     /**
@@ -244,30 +238,6 @@ class Person
     public function getDisplayName()
     {
         return $this->displayName;
-    }
-
-    /**
-     * Set initials
-     *
-     * @param string $initials
-     *
-     * @return User
-     */
-    public function setInitials($initials)
-    {
-        $this->initials = $initials;
-
-        return $this;
-    }
-
-    /**
-     * Get initials
-     *
-     * @return string
-     */
-    public function getInitials()
-    {
-        return $this->initials;
     }
 
     /**

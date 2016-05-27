@@ -11,7 +11,6 @@ form.gender: Sexo
 form.gender_unknown: Desconocido
 form.gender_male: Hombre
 form.gender_female: Mujer
-form.initials: Iniciales
 form.email: Correo electrónico
 
 form.from_date: Desde

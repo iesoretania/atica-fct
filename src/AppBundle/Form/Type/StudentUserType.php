@@ -71,11 +71,7 @@ class StudentUserType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true
-            ])
-            ->add('initials', null, array(
-                'label' => 'form.initials',
-                'required' => false
-            ));
+            ]);
     }
 
     /**
