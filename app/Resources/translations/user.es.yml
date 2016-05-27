@@ -8,6 +8,7 @@ form.gender_unknown: Desconocido
 form.gender_male: Hombre
 form.gender_female: Mujer
 form.email: Correo electrónico
+form.phone_number: Número de teléfono
 form.enabled: El usuario está activo
 form.global_administrator: Es administrador global
 form.tutorized_groups: Es tutor de los grupos

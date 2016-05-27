@@ -29,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/grupo")
+ * @Route("/grupos")
  * @Security("is_granted('ROLE_GROUP_TUTOR')")
  */
 class GroupController extends Controller

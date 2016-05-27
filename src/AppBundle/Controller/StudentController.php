@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 class StudentController extends Controller
 {
     /**
-     * @Route("/estudiante/{id}", name="student_detail", methods={"GET", "POST"})
+     * @Route("/grupos/estudiante/{id}", name="student_detail", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
      */
     public function studentIndexAction(User $student, Request $request)

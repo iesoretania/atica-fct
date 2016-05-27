@@ -3,6 +3,8 @@ browse.title: Listado de grupos
 form.name: Nombre
 form.last_name: Apellidos
 form.first_name: Nombre
+form.user_name: Nombre de usuario
+form.email: Correo electrónico
 form.training: Enseñanza
 form.department: Departamento
 form.tutors: Tutores/as

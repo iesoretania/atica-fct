@@ -71,6 +71,10 @@ class StudentUserType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true
+            ])
+            ->add('phoneNumber', null, [
+                'label' => 'form.phone_number',
+                'required' => false
             ]);
     }
 
