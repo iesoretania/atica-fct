@@ -20,8 +20,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\Tracking;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Workday;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -107,6 +110,115 @@ class GroupController extends Controller
                 'title' => $group->getName(),
                 'pagination' => $pagination,
                 'user' => $this->getUser()
+            ]);
+    }
+
+    /**
+     * @Route("/{id}/seguimiento", name="admin_group_student_agreements", methods={"GET"})
+     * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
+     */
+    public function studentAgreementIndexAction(User $student)
+    {
+        $agreements = $student->getStudentAgreements();
+
+        /*if (count($agreements) == 1) {
+            return $this->studentAgreementCalendarIndexAction($agreements[0]);
+        }*/
+
+        return $this->render('student/calendar_agreement_select.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student],
+                ],
+                'user' => $this->getUser(),
+                'elements' => $agreements,
+                'route_name' => 'admin_group_student_calendar'
+            ]);
+    }
+
+    /**
+     * @Route("/seguimiento/{id}", name="admin_group_student_calendar", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function studentCalendarAgreementIndexAction(Agreement $agreement)
+    {
+        $student = $agreement->getStudent();
+
+        $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
+        $title = (string) $agreement->getWorkcenter();
+
+        return $this->render('student/calendar_agreement.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                    ['fixed' => $title],
+                ],
+                'title' => $title,
+                'user' => $this->getUser(),
+                'calendar' => $calendar,
+                'agreement' => $agreement,
+                'route_name' => 'admin_group_student_tracking'
+            ]);
+    }
+
+    /**
+     * @Route("/seguimiento/jornada/{id}", name="admin_group_student_tracking", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")
+     */
+    public function studentWorkdayAction(Workday $workday, Request $request)
+    {
+        $student = $workday->getAgreement()->getStudent();
+
+        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($workday->getAgreement());
+
+        $dow = ((6 + (int) $workday->getDate()->format('w')) % 7);
+
+        $title = $this->get('translator')->trans('dow' . $dow, [], 'calendar') . ', ' . $workday->getDate()->format('d/m/Y');
+        $em = $this->getDoctrine()->getManager();
+        $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
+
+        $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Tracking $tracking */
+            foreach ($workday->getTrackingActivities() as $tracking) {
+                if ($tracking->getHours() == 0) {
+                    $workday->removeTrackingActivity($tracking);
+                    $em->remove($tracking);
+                } else {
+                    $em->persist($tracking);
+                }
+            }
+            $em->flush();
+        }
+
+        $activitiesStats = $em->getRepository('AppBundle:Agreement')->getActivitiesStats($workday->getAgreement());
+        $next = $em->getRepository('AppBundle:Workday')->getNext($workday);
+        $previous = $em->getRepository('AppBundle:Workday')->getPrevious($workday);
+
+        return $this->render('student/tracking_form.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                    ['fixed' => (string) $workday->getAgreement()->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $workday->getAgreement()->getId()]],
+                    ['fixed' => $title],
+                ],
+                'title' => $title,
+                'user' => $this->getUser(),
+                'workday' => $workday,
+                'form' => $form->createView(),
+                'agreement_hours' => $agreementHours,
+                'activities_stats' => $activitiesStats,
+                'next' => $next,
+                'previous' => $previous,
+                'back_route_name' => 'admin_group_student_calendar'
             ]);
     }
 }

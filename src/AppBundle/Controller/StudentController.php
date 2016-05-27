@@ -112,7 +112,7 @@ class StudentController extends Controller
     }
 
     /**
-     * @Route("/seguimiento/ficha/{id}", name="student_tracking", methods={"GET", "POST"})
+     * @Route("/seguimiento/jornada/{id}", name="student_tracking", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement()) and user.getStudentAgreements() !== null and user.getStudentAgreements().count() > 0")
      */
     public function studentWorkdayAction(Workday $workday, Request $request)
@@ -126,7 +126,7 @@ class StudentController extends Controller
         $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
 
         $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday, [
-            'disabled' => $workday->isLocked() && !$this->isGranted('ROLE_TEACHING_TUTOR')
+            'disabled' => $workday->isLocked()
         ]);
         $form->handleRequest($request);
 

@@ -17,7 +17,7 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('student_calendar_agreement', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.workcenter_select' | trans }}</a>
+                    <a href="{{ path(route_name is defined ? route_name : 'student_calendar_agreement', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.workcenter_select' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

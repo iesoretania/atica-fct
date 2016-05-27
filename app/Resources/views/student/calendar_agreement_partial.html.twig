@@ -2,7 +2,7 @@
 {% extends 'calendar/agreement_calendar_graphic_partial.html.twig' %}
 
 {% block detail %}
-    <a href="{{ path('student_tracking', {'id': day.data.id}) }}">
+    <a href="{{ path(route_name is defined ? route_name : 'student_tracking', {'id': day.data.id}) }}">
     {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
     </a>
     {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
