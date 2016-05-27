@@ -144,6 +144,10 @@ class AgreementController extends Controller
                         $em->remove($date);
                     }
                 }
+                $em->flush();
+
+                $agreement->setFromDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealFromDate($agreement));
+                $agreement->setToDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealToDate($agreement));
 
                 $em->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'calendar'));
