@@ -1,0 +1,57 @@
+{% trans_default_domain 'student' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block content %}
+    <h2>{{ 'form.agreement_stats'|trans }}</h2>
+    <dl class="dl">
+        <dt>{{ 'form.agreement_hours'|trans }}</dt>
+        <dd>{{ agreement_hours | number_format(2, ',', '.') | default('0') }}</dd>
+        {% for activity in activities_stats %}
+            <dt>{{ activity[0].name }}</dt>
+            <dd>{{ activity[1] | number_format(2, ',', '.') | default('0') }} ({{ (100* activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
+        {% endfor %}
+    </dl>
+    {% if workday.trackedHours != 0 and workday.trackedHours != workday.hours %}
+        <div class="alert alert-danger">{{ 'prompt.no_hours_match'|trans({ '%hours%': workday.hours, '%count%': workday.trackedHours })|nl2br }}</div>
+    {% endif %}
+    {% if workday.trackedHours != 0 and workday.trackedHours == workday.hours %}
+        <div class="alert alert-success">{{ 'prompt.match'|trans|nl2br }}</div>
+    {% endif %}
+    <h2>{{ 'form.daily_activities'|trans({ '%hours%': workday.hours }) }}</h2>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.link_button(path('student_calendar_agreement', {'id': workday.agreement.id}), 'arrow-left', 'btn-default', 'form.tracking_back'|trans) }}
+        {% if previous %}{{ m.link_button(path('student_tracking', {'id': previous.id}), 'arrow-circle-left', 'btn-info', 'form.previous'|trans~' - '~previous.date|date('d/m/Y')) }}{% endif %}
+        {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+        {% if next %}{{ m.link_button(path('student_tracking', {'id': next.id}), 'arrow-circle-right', 'btn-info', 'form.next'|trans~' - '~next.date|date('d/m/Y')) }}{% endif %}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var dirty = false;
+        var isDirty = function() { return dirty };
+
+        window.onload = function() {
+            window.addEventListener("beforeunload", function (e) {
+                if (!isDirty()) {
+                    return undefined;
+                }
+
+                var confirmationMessage = '{{ 'prompt.unsaved_changes'|trans|e('js') }}';
+
+                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+            });
+        };
+
+        $(":input").change(function () {
+            dirty = true;
+        });
+
+        $("form").submit(function () {
+            dirty = false;
+        });
+    </script>
+{% endblock %}

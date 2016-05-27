@@ -137,4 +137,34 @@ class WorkdayRepository extends EntityRepository
 
         return $calendar;
     }
+
+    public function getNext(Workday $workday)
+    {
+        $query = $this->createQueryBuilder('w')
+            ->where('w.agreement = :agreement')
+            ->andWhere('w.date > :date')
+            ->orderBy('w.date', 'ASC')
+            ->setParameter('date', $workday->getDate())
+            ->setParameter('agreement', $workday->getAgreement())
+            ->getQuery();
+
+        $result = $query->setMaxResults(1)->getResult();
+
+        return $result ? $result[0] : null;
+    }
+
+    public function getPrevious(Workday $workday)
+    {
+        $query = $this->createQueryBuilder('w')
+            ->where('w.agreement = :agreement')
+            ->andWhere('w.date < :date')
+            ->orderBy('w.date', 'DESC')
+            ->setParameter('date', $workday->getDate())
+            ->setParameter('agreement', $workday->getAgreement())
+            ->getQuery();
+
+        $result = $query->setMaxResults(1)->getResult();
+
+        return $result ? $result[0] : null;
+    }
 }

@@ -23,7 +23,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TrackingRepository")
  */
 class Tracking
 {
@@ -104,13 +104,14 @@ class Tracking
     /**
      * Set workday
      *
-     * @param \AppBundle\Entity\Workday $workday
+     * @param Workday $workday
      *
      * @return Tracking
      */
-    public function setWorkday(\AppBundle\Entity\Workday $workday)
+    public function setWorkday(Workday $workday)
     {
         $this->workday = $workday;
+        $workday->addTrackingActivity($this);
 
         return $this;
     }
@@ -118,7 +119,7 @@ class Tracking
     /**
      * Get workday
      *
-     * @return \AppBundle\Entity\Workday
+     * @return Workday
      */
     public function getWorkday()
     {
@@ -128,11 +129,11 @@ class Tracking
     /**
      * Set activity
      *
-     * @param \AppBundle\Entity\Activity $activity
+     * @param Activity $activity
      *
      * @return Tracking
      */
-    public function setActivity(\AppBundle\Entity\Activity $activity)
+    public function setActivity(Activity $activity)
     {
         $this->activity = $activity;
 
@@ -142,7 +143,7 @@ class Tracking
     /**
      * Get activity
      *
-     * @return \AppBundle\Entity\Activity
+     * @return Activity
      */
     public function getActivity()
     {

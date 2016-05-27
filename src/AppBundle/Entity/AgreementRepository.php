@@ -33,4 +33,17 @@ class AgreementRepository extends EntityRepository
 
         return null === $date ?: new \DateTime($date);
     }
+
+    public function getActivitiesStats(Agreement $agreement)
+    {
+        $activities = $agreement->getActivities();
+
+        $result = $this->getEntityManager()
+            ->createQuery('SELECT a, SUM(t.hours), COUNT(a) FROM AppBundle:Activity a INNER JOIN AppBundle:Tracking t WITH t.activity = a.id INNER JOIN t.workday w WHERE w.agreement = :agreement AND a.id IN (:activities) GROUP BY a.id')
+            ->setParameter('agreement', $agreement)
+            ->setParameter('activities', $activities)
+            ->getResult();
+
+        return $result;
+    }
 }
