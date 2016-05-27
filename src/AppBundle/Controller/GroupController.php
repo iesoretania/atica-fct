@@ -149,7 +149,7 @@ class GroupController extends Controller
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
         $title = (string) $agreement->getWorkcenter();
 
-        return $this->render('student/calendar_agreement.html.twig',
+        return $this->render('group/calendar_agreement.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
                 'breadcrumb' => [
@@ -163,6 +163,38 @@ class GroupController extends Controller
                 'agreement' => $agreement,
                 'route_name' => 'admin_group_student_tracking'
             ]);
+    }
+
+    public function lockWorkdayAction(Agreement $agreement, Request $request, $status)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->request->has('ids')) {
+            try {
+                $ids = $request->request->get('ids');
+
+                $em->createQuery('UPDATE AppBundle:Workday w SET w.locked = :locked WHERE w.id IN (:ids) AND w.agreement = :agreement')
+                    ->setParameter('locked', $status)
+                    ->setParameter('ids', $ids)
+                    ->setParameter('agreement', $agreement)
+                    ->execute();
+
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.locked', [], 'calendar'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.locked_error', [], 'calendar'));
+            }
+        }
+        return $this->redirectToRoute('admin_group_student_calendar', ['id' => $agreement->getId()]);
+    }
+
+    /**
+     * @Route("/seguimiento/{id}/operacion", name="admin_group_student_calendar_operation", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+    public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)
+    {
+        return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'));
     }
 
     /**

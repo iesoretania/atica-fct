@@ -1,4 +1,5 @@
 browse.title: Listado de grupos
+calendar.title: Calendario del acuerdo de colaboración
 
 form.name: Nombre
 form.last_name: Apellidos
@@ -16,6 +17,10 @@ form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Nuevo grupo
 form.view: Modificar
+
+form.lock_action: Bloquear
+form.unlock_action: Desbloquear
+form.select_deselect: Seleccionar/deseleccionar jornadas
 
 student.detail: Gestionar
 student.agreements: Acuerdos
