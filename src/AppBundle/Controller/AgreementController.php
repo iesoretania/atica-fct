@@ -88,17 +88,48 @@ class AgreementController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/acuerdos/{id}/calendario/eliminar", name="agreement_calendar_delete", methods={"POST"})
-     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
-     */
-    public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)
+    public function lockWorkdayAction(Agreement $agreement, Request $request, $status)
     {
         $em = $this->getDoctrine()->getManager();
 
         if ($request->request->has('ids')) {
             try {
                 $ids = $request->request->get('ids');
+
+                $em->createQuery('UPDATE AppBundle:Workday w SET w.locked = :locked WHERE w.id IN (:ids) AND w.agreement = :agreement')
+                        ->setParameter('locked', $status)
+                        ->setParameter('ids', $ids)
+                        ->setParameter('agreement', $agreement)
+                        ->execute();
+                
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.locked', [], 'calendar'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.locked_error', [], 'calendar'));
+            }
+        }
+        return $this->redirectToRoute('agreement_calendar', ['id' => $agreement->getId()]);
+    }
+    
+    /**
+     * @Route("/acuerdos/{id}/calendario/eliminar", name="agreement_calendar_delete", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+    public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)
+    {
+        if ($request->request->has('lock')) {
+            return $this->lockWorkdayAction($agreement, $request, true);
+        }
+        if ($request->request->has('unlock')) {
+            return $this->lockWorkdayAction($agreement, $request, false);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->request->has('ids')) {
+            try {
+                $ids = $request->request->get('ids');
+
                 $dates = $em->getRepository('AppBundle:Workday')->createQueryBuilder('w')
                     ->where('w.id IN (:ids)')
                     ->andWhere('w.agreement = :agreement')

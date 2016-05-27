@@ -15,6 +15,8 @@
         {{ m.link_button(path('agreement_calendar_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-success', 'form.add'|trans) }}
         {% if calendar is not empty %}
             {{ m.submit_button('submit', 'trash', 'btn-danger', 'form.delete'|trans) }}
+            {{ m.submit_button('lock', 'lock', 'btn-default', 'form.lock_action'|trans) }}
+            {{ m.submit_button('unlock', 'unlock', 'btn-default', 'form.unlock_action'|trans) }}
             {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}
             <p></p>
             <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>

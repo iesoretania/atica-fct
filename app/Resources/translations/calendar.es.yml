@@ -29,6 +29,8 @@ form.notes: Anotaciones
 form.edit: Modificar
 form.delete_item: Eliminar
 form.delete: Eliminar jornadas seleccionadas
+form.lock_action: Bloquear
+form.unlock_action: Desbloquear
 form.select_deselect: Seleccionar/deseleccionar jornadas
 
 form.submit: Guardar cambios
@@ -40,6 +42,9 @@ form.back: Volver
 alert.saved: Jornadas añadidas al calendario del acuerdo
 alert.deleted: Jornadas eliminadas del calendario
 alert.not_deleted: Ha ocurrido un error al eliminar las jornada. Compruebe que el estudiante no las ha cumplimentado.
+
+alert.locked: Bloqueo de jornadas actualizado.
+alert.locked_error: Error al actualizar el bloqueo.
 
 prompt.session_deletion_warning: >
     ¡ATENCIÓN! No se podrá eliminar una jornada del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento.
