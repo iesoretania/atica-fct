@@ -7,4 +7,7 @@
         {{ form_widget(form) }}
     {{ form_end(form) }}
     {{ m.link_button(path('admin_users'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ m.link_button(path('frontpage', {'_switch_user': user.username}), 'user-secret', 'btn-warning', 'form.impersonate'|trans) }}
+    {% endif %}
 {% endblock %}

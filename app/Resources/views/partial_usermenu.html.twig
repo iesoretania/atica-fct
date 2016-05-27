@@ -6,7 +6,7 @@
             <li><a href="{{ path('personal_form') }}"><i class="fa fa-cog"></i> {{ 'menu.personal'|trans }}</a></li>
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                 <li class="divider"></li>
-                <li><a href="{{ path('frontpage', {'_switch_to': '_exit'}) }}"><i class="fa fa-user-secret"></i> {{ 'menu.impersonate.exit'|trans }}</a></li>
+                <li><a href="{{ path('frontpage', {'_switch_user': '_exit'}) }}"><i class="fa fa-user-secret"></i> {{ 'menu.impersonate.exit'|trans }}</a></li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="divider"></li>

@@ -28,6 +28,7 @@ alert.not_saved: No se han podido guardar los cambios
 form.view: Detalles
 form.delete: Eliminar
 form.back: Volver
+form.impersonate: Acceder como el usuario
 
 user.invite: Invitar a un usuario
 user.new: Nuevo usuario

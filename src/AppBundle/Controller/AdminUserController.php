@@ -121,7 +121,8 @@ class AdminUserController extends Controller
             'breadcrumb' => [
                 ['fixed' => $titulo]
             ],
-            'title' => $titulo
+            'title' => $titulo,
+            'user' => $user
         ]);
     }
 

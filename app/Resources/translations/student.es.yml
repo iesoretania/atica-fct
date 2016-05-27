@@ -36,6 +36,7 @@ form.tracking: Seguimiento
 
 form.back: Volver
 form.tracking_back: Volver al calendario
+form.impersonate: Acceder como el estudiante
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios

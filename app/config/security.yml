@@ -39,4 +39,4 @@ security:
                 target: /
             switch_user:
                 role: ROLE_ADMIN
-                parameter: _switch_to
+                parameter: _switch_user
