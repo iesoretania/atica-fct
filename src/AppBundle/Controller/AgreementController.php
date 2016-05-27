@@ -112,7 +112,7 @@ class AgreementController extends Controller
     }
     
     /**
-     * @Route("/acuerdos/{id}/calendario/eliminar", name="agreement_calendar_delete", methods={"POST"})
+     * @Route("/acuerdos/{id}/calendario/operacion", name="agreement_calendar_operation", methods={"POST"})
      * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function deleteAgreementCalendarAction(Agreement $agreement, Request $request)

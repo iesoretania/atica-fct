@@ -6,7 +6,7 @@
 
     {% include 'calendar/agreement_calendar_stats_partial.html.twig' %}
 
-    <form method="post" action="{{ path('agreement_calendar_delete', {'id': agreement.id}) }}">
+    <form method="post" action="{{ path('agreement_calendar_operation', {'id': agreement.id}) }}">
         {% if calendar is not empty %}
             {% set buttons = true %}
             {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
@@ -14,7 +14,7 @@
         {{ m.link_button(path('admin_agreement_form', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
         {{ m.link_button(path('agreement_calendar_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-success', 'form.add'|trans) }}
         {% if calendar is not empty %}
-            {{ m.submit_button('submit', 'trash', 'btn-danger', 'form.delete'|trans) }}
+            {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.delete'|trans) }}
             {{ m.submit_button('lock', 'lock', 'btn-default', 'form.lock_action'|trans) }}
             {{ m.submit_button('unlock', 'unlock', 'btn-default', 'form.unlock_action'|trans) }}
             {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}
