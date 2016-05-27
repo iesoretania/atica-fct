@@ -69,7 +69,8 @@ class StudentController extends Controller
     }
 
     /**
-     * @Route("/calendario", name="student_calendar", methods={"GET"})
+     * @Route("/seguimiento", name="student_calendar", methods={"GET"})
+     * @Security("user.getStudentAgreements() !== null and user.getStudentAgreements().count() > 0")
      */
     public function studentCalendarIndexAction()
     {
@@ -89,7 +90,7 @@ class StudentController extends Controller
 
     /**
      * @Route("/seguimiento/{id}", name="student_calendar_agreement", methods={"GET"})
-     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement) and user.getStudentAgreements() !== null and user.getStudentAgreements().count() > 0")
      */
     public function studentCalendarAgreementIndexAction(Agreement $agreement)
     {
@@ -111,7 +112,7 @@ class StudentController extends Controller
 
     /**
      * @Route("/seguimiento/ficha/{id}", name="student_tracking", methods={"GET"})
-     * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement) and user.getStudentAgreements() !== null and user.getStudentAgreements().count() > 0")
      */
     public function studentWorkdayAction(Workday $workday)
     {

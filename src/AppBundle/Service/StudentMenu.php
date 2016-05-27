@@ -38,7 +38,7 @@ class StudentMenu implements MenuBuilderInterface
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
-        if (!$user->getStudentGroup()) {
+        if (!$user->getStudentGroup() || $user->getStudentAgreements()->count() === 0) {
             return null;
         }
 
