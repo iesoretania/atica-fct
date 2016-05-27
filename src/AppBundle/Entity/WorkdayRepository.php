@@ -78,6 +78,8 @@ class WorkdayRepository extends EntityRepository
             return [];
         }
 
+        $calendar = [];
+        
         /** @var Workday $current */
         $currentWorkday = $workdays->first();
 
