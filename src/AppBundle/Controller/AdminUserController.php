@@ -79,7 +79,7 @@ class AdminUserController extends Controller
 
         $me = ($user->getId() === $this->getUser()->getId());
 
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm('AppBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'me' => $me,
             'new' => $new

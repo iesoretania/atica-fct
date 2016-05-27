@@ -37,7 +37,7 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm('AppBundle\Form\Type\UserType', $user, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'me' => true
         ]);
