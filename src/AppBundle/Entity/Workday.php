@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Agreement;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -68,6 +69,13 @@ class Workday
      * @var Collection
      */
     protected $trackingActivities;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    protected $locked;
+
     /**
      * Get id
      *
@@ -153,11 +161,11 @@ class Workday
     /**
      * Set agreement
      *
-     * @param \AppBundle\Entity\Agreement $agreement
+     * @param Agreement $agreement
      *
      * @return Workday
      */
-    public function setAgreement(\AppBundle\Entity\Agreement $agreement = null)
+    public function setAgreement(Agreement $agreement = null)
     {
         $this->agreement = $agreement;
 
@@ -167,7 +175,7 @@ class Workday
     /**
      * Get agreement
      *
-     * @return \AppBundle\Entity\Agreement
+     * @return Agreement
      */
     public function getAgreement()
     {
@@ -179,6 +187,7 @@ class Workday
     public function __construct()
     {
         $this->trackingActivities = new ArrayCollection();
+        $this->setLocked(false);
     }
 
     /**
@@ -224,5 +233,29 @@ class Workday
         }
 
         return $hours;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     *
+     * @return Workday
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Is locked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
     }
 }
