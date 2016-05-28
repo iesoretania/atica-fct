@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class GroupVoter extends Voter
 {
-    const MANAGE = 'ROLE_GROUP_ADMIN';
+    const MANAGE = 'GROUP_MANAGE';
 
     private $decisionManager;
 

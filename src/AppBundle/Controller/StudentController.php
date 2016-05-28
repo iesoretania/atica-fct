@@ -33,7 +33,7 @@ class StudentController extends Controller
 {
     /**
      * @Route("/grupos/estudiante/{id}", name="student_detail", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
+     * @Security("is_granted('GROUP_MANAGE', student.getStudentGroup())")
      */
     public function studentIndexAction(User $student, Request $request)
     {

@@ -82,7 +82,7 @@ class GroupController extends Controller
 
     /**
      * @Route("/{id}", name="admin_group_students", methods={"GET"})
-     * @Security("is_granted('ROLE_GROUP_ADMIN', group)")
+     * @Security("is_granted('GROUP_MANAGE', group)")
      */
     public function groupDetailIndexAction(Group $group, Request $request)
     {
@@ -117,7 +117,7 @@ class GroupController extends Controller
 
     /**
      * @Route("/{id}/seguimiento", name="admin_group_student_agreements", methods={"GET"})
-     * @Security("is_granted('ROLE_GROUP_ADMIN', student.getStudentGroup())")
+     * @Security("is_granted('GROUP_MANAGE', student.getStudentGroup())")
      */
     public function studentAgreementIndexAction(User $student)
     {
