@@ -34,7 +34,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/grupos")
+ * @Route("/alumnado")
  * @Security("is_granted('ROLE_GROUP_TUTOR')")
  */
 class GroupController extends Controller
@@ -116,7 +116,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/{id}/seguimiento", name="admin_group_student_agreements", methods={"GET"})
+     * @Route("/seguimiento/seleccion/{id}", name="admin_group_student_agreements", methods={"GET"})
      * @Security("is_granted('GROUP_MANAGE', student.getStudentGroup())")
      */
     public function studentAgreementIndexAction(User $student)
@@ -137,7 +137,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/acuerdos/{id}", name="admin_group_student_calendar", methods={"GET"})
+     * @Route("/seguimiento/acuerdo/{id}", name="admin_group_student_calendar", methods={"GET"})
      * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
      */
     public function studentCalendarAgreementIndexAction(Agreement $agreement)
@@ -227,7 +227,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/acuerdos/seguimiento/{id}/operacion", name="admin_group_student_workday_operation", methods={"POST"})
+     * @Route("/seguimiento/acuerdo/{id}/operacion", name="admin_group_student_workday_operation", methods={"POST"})
      * @Security("is_granted('AGREEMENT_ACCESS',agreement)")
      */
     public function operationWorkdayAction(Agreement $agreement, Request $request)
@@ -241,7 +241,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/acuerdos/seguimiento/{id}/incorporar", name="admin_group_student_workday_add", methods={"GET", "POST"})
+     * @Route("/seguimiento/acuerdo/{id}/incorporar", name="admin_group_student_workday_add", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
     public function addAgreementCalendarAction(Agreement $agreement, Request $request)
@@ -295,7 +295,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/acuerdos/seguimiento/jornada/{id}", name="admin_group_student_tracking", methods={"GET", "POST"})
+     * @Route("/seguimiento/acuerdo/jornada/{id}", name="admin_group_student_tracking", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")
      */
     public function studentWorkdayAction(Workday $workday, Request $request)
@@ -353,7 +353,7 @@ class GroupController extends Controller
 
 
     /**
-     * @Route("/acuerdos/seguimiento/modificar/{id}", name="admin_group_student_workday_form", methods={"GET", "POST"})
+     * @Route("/seguimiento/acuerdo/modificar/{id}", name="admin_group_student_workday_form", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_MANAGE', workday.getAgreement())")
      */
     public function agreementCalendarFormAction(Workday $workday, Request $request)
