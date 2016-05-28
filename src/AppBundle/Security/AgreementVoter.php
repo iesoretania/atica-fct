@@ -29,6 +29,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class AgreementVoter extends Voter
 {
     const MANAGE = 'AGREEMENT_MANAGE';
+    const LOCK = 'AGREEMENT_LOCK';
+    const UNLOCK = 'AGREEMENT_UNLOCK';
     const ACCESS = 'AGREEMENT_ACCESS';
 
     private $decisionManager;
@@ -47,7 +49,7 @@ class AgreementVoter extends Voter
             return false;
         }
 
-        if (!in_array($attribute, [self::MANAGE, self::ACCESS], true)) {
+        if (!in_array($attribute, [self::MANAGE, self::LOCK, self::UNLOCK, self::ACCESS], true)) {
             return false;
         }
 
@@ -62,6 +64,7 @@ class AgreementVoter extends Voter
         if (!$subject instanceof Agreement) {
             return false;
         }
+
         // los administradores globales siempre tienen permiso
         if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
@@ -75,18 +78,18 @@ class AgreementVoter extends Voter
             return false;
         }
 
-        // Si es el jefe de departamento, permitir
+        // Si es el jefe de departamento, permitir siempre
         if ($user->getDirects()->contains($subject->getStudent()->getStudentGroup()->getTraining()->getDepartment())) {
             return true;
         }
 
-        // Si es el propio estudiante, tutor de grupo, tutor docente o tutor loboral, sólo acceso de lectura
+        // Si es el tutor de grupo, tutor docente o tutor laboral, denegar acceso de gestión
         if ($subject->getStudent() == $user
-            || $user->getTutorizedGroups()->contains($subject)
+            || $user->getTutorizedGroups()->contains($subject->getStudent()->getStudentGroup())
             || $subject->getEducationalTutor() == $user
             || $subject->getWorkTutor() == $user) {
 
-            return $attribute == self::ACCESS;
+            return $attribute !== self::MANAGE;
         }
 
         // denegamos en cualquier otro caso

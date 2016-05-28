@@ -22,13 +22,17 @@
         <tr>
             {% for day in week %}
                 <td {% if day.data is defined %}class="{{ day.data.trackedHours == 0 ? 'info' : (day.data.trackedHours == day.data.hours ? 'success' : 'danger') }}"{% endif %}>
-                    <strong>{{ day.day }}</strong><br/>
+                    {% if is_granted('AGREEMENT_MANAGE', agreement) and day.data is defined %}<a href="{{ path('admin_group_student_workday_form', {'id': day.data.id}) }}" title="{{ 'form.edit'|trans }}">{% endif %}
+                        <strong>{{ day.day }}</strong><br/>
+                    {% if is_granted('AGREEMENT_MANAGE', agreement) %}</a>{% endif %}
                     {% if day.data is defined %}
                         {% block detail %}
-                        <input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}"> <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}">
-                        {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
-                        </a>
-                        {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
+                            {% if is_granted('AGREEMENT_MANAGE', agreement) or is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement) %}
+                            <input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}" title="{{ 'form.select'|trans }}"> {% endif %}
+                            <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}" title="{{ 'form.tracking'|trans }}">
+                            {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
+                            </a>
+                            {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
                         {% endblock %}
                     {% else %}
                         &nbsp;

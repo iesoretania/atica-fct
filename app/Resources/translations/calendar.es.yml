@@ -27,6 +27,8 @@ form.no_sessions: No hay sesiones
 form.notes: Anotaciones
 
 form.edit: Modificar
+form.tracking: Seguimiento
+form.select: Seleccionar jornada
 form.delete_item: Eliminar
 form.delete: Eliminar jornadas seleccionadas
 form.lock_action: Bloquear

@@ -1,0 +1,24 @@
+{% trans_default_domain 'calendar' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'form.add'|trans }}</h2>
+
+    {% include 'calendar/agreement_calendar_stats_partial.html.twig' %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ m.start_button }}
+        {{ m.submit_button('calc', 'calculator', 'btn-info', 'form.calculate'|trans) }}
+        {{ m.submit_button('submit', 'calendar-plus-o', 'btn-success', 'form.add'|trans) }}
+    {{ m.end_button }}
+    {{ form_end(form) }}
+
+    {{ m.link_button(path('admin_group_student_calendar', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+
+    {% if calendar %}
+        <p></p>
+        {% include 'calendar/agreement_calendar_graphic_partial.html.twig' %}
+    {% endif %}
+
+{% endblock %}

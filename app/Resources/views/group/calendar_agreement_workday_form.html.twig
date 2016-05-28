@@ -1,0 +1,15 @@
+{% trans_default_domain 'calendar' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'form.title'|trans }}</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ m.start_button }}
+        {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+    {{ m.end_button }}
+    {{ form_end(form) }}
+
+    {{ m.link_button(path('student_calendar_agreement', {'id': workday.agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+{% endblock %}

@@ -18,8 +18,9 @@ form.delete: Eliminar
 form.new: Nuevo grupo
 form.view: Modificar
 
-form.lock_action: Bloquear
-form.unlock_action: Desbloquear
+form.workday_lock: Bloquear
+form.workday_unlock: Desbloquear
+form.workday_add: Añadir jornadas
 form.select_deselect: Seleccionar/deseleccionar jornadas
 
 student.detail: Gestionar
@@ -36,6 +37,9 @@ alert.not_deleted: No se ha podido eliminar el grupo. Compruebe que no hay eleme
 
 prompt.delete_confirm: >
     ¡ATENCIÓN! El grupo sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+prompt.session_deletion_warning: >
+    ¡ATENCIÓN! No se podrá eliminar una jornada del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento.
 
 form.back: Volver
 form.delete_back: Volver sin eliminar
