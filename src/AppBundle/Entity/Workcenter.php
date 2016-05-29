@@ -37,7 +37,7 @@ class Workcenter
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company")
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="workcenters")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $company;

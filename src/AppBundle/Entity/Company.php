@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -90,6 +91,12 @@ class Company
      * @ORM\JoinColumn(nullable=false)
      */
     protected $manager;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Workcenter", mappedBy="company")
+     * @ORM\OrderBy({"name": "ASC"})
+     */
+    protected $workcenters;
 
     public function __toString()
     {
@@ -320,5 +327,46 @@ class Company
     public function getName()
     {
         return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->workcenters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add workcenter
+     *
+     * @param Workcenter $workcenter
+     *
+     * @return Company
+     */
+    public function addWorkcenter(Workcenter $workcenter)
+    {
+        $this->workcenters[] = $workcenter;
+
+        return $this;
+    }
+
+    /**
+     * Remove workcenter
+     *
+     * @param Workcenter $workcenter
+     */
+    public function removeWorkcenter(Workcenter $workcenter)
+    {
+        $this->workcenters->removeElement($workcenter);
+    }
+
+    /**
+     * Get workcenters
+     *
+     * @return Collection
+     */
+    public function getWorkcenters()
+    {
+        return $this->workcenters;
     }
 }

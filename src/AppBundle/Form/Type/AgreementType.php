@@ -44,12 +44,10 @@ class AgreementType extends AbstractType
         $this->em = $em;
     }
 
-    public function addElements(FormInterface $form, Company $company = null)
+    public function addElements(FormInterface $form, User $student = null, Company $company = null)
     {
-        $workcenters = [];
-        if ($company) {
-            $workcenters = $this->em->getRepository('AppBundle:Workcenter')->findBy(['company' => $company], ['name' => 'ASC']);
-        }
+        $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
+        $workcenters = null === $company ? [] : $company->getWorkcenters();
 
         $form
             ->add('company', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
@@ -63,6 +61,7 @@ class AgreementType extends AbstractType
             ->add('workcenter', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
                 'label' => 'form.workcenter',
                 'class' => 'AppBundle\Entity\Workcenter',
+                'choice_label' => 'name',
                 'choices' => $workcenters,
                 'required' => true
             ])
@@ -88,6 +87,12 @@ class AgreementType extends AbstractType
                 'label' => 'form.to_date',
                 'widget' => 'single_text',
                 'required' => true
+            ])
+            ->add('activities', null, [
+                'label' => 'form.activities',
+                'expanded' => true,
+                'required' => false,
+                'choices' => $activities
             ]);
     }
 
@@ -132,35 +137,17 @@ class AgreementType extends AbstractType
 
             $company = $data->getWorkcenter() ? $data->getWorkcenter()->getCompany() : null;
 
-            $this->addElements($form, $company);
+            $this->addElements($form, $data->getStudent(), $company);
         });
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $form = $event->getForm();
             $data = $event->getData();
 
-            $company = $this->em->getRepository('AppBundle:Company')->find($data['company']);
+            $company = isset($data['company']) ? $this->em->getRepository('AppBundle:Company')->find($data['company']) : null;
+            $student = $this->em->getRepository('AppBundle:User')->find($data['student']);
 
-            $this->addElements($form, $company);
-        });
-
-        $formModifier = function(FormInterface $form, User $student = null) {
-            $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
-
-            $form->add('activities', null, [
-                'label' => 'form.activities',
-                'expanded' => true,
-                'required' => false,
-                'choices' => $activities
-            ]);
-        };
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($formModifier) {
-            $formModifier($event->getForm(), $event->getData()->getStudent());
-        });
-
-        $builder->get('student')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($formModifier) {
-            $formModifier($event->getForm()->getParent(), $event->getForm()->getData());
+            $this->addElements($form, $student, $company);
         });
     }
 
