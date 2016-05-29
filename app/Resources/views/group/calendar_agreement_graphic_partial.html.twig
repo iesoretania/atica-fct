@@ -44,4 +44,6 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <div class="alert alert-warning">{{ 'prompt.empty'|trans|nl2br }}</div>
 {% endfor %}

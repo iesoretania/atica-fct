@@ -29,6 +29,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class GroupVoter extends Voter
 {
     const MANAGE = 'GROUP_MANAGE';
+    const CREATE_AGREEMENT = 'GROUP_CREATE_AGREEMENT';
 
     private $decisionManager;
 
@@ -45,7 +46,7 @@ class GroupVoter extends Voter
             return false;
         }
 
-        if (!in_array($attribute, [self::MANAGE], true)) {
+        if (!in_array($attribute, [self::MANAGE, self::CREATE_AGREEMENT], true)) {
             return false;
         }
 
@@ -61,11 +62,6 @@ class GroupVoter extends Voter
             return false;
         }
 
-        // los administradores globales siempre tienen permiso
-        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
-            return true;
-        }
-
         /** @var User $user */
         $user = $token->getUser();
 
@@ -74,12 +70,19 @@ class GroupVoter extends Voter
             return false;
         }
 
-        if ($user->getTutorizedGroups()->contains($subject)) {
+        // los administradores globales siempre tienen permiso
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
         }
 
+        // los jefes de departamento de la enseñanza tienen todos los permisos
         if ($user->getDirects()->contains($subject->getTraining()->getDepartment())) {
             return true;
+        }
+
+        // los tutores de grupo pueden gestionarlos, pero no crear acuerdos de colaboración
+        if ($user->getTutorizedGroups()->contains($subject)) {
+            return $attribute === self::MANAGE;
         }
 
         // denegamos en cualquier otro caso

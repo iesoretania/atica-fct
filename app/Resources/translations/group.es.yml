@@ -1,5 +1,7 @@
 browse.title: Listado de grupos
+agreement_select.title: Seleccione acuerdo de colaboración
 calendar.title: Calendario del acuerdo de colaboración
+student.browse.title: Listado de alumnado
 
 form.name: Nombre
 form.last_name: Apellidos
@@ -27,7 +29,13 @@ student.detail: Gestionar
 student.agreements: Acuerdos
 student.tracking: Seguimiento
 
-student.browse.title: Listado de alumnado
+form.from_date: Desde
+form.to_date: Hasta
+form.workcenter: Centro de trabajo
+form.hours: Horas
+form.no_workcenters: No hay centros de trabajo asociados
+form.training_hours: Horas totales de la enseñanza: %hours%
+form.calendar: Seguimiento
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
@@ -38,8 +46,13 @@ alert.not_deleted: No se ha podido eliminar el grupo. Compruebe que no hay eleme
 prompt.delete_confirm: >
     ¡ATENCIÓN! El grupo sólo podrá ser eliminado si no existen datos asociados al mismo.
 
+prompt.activity_deletion_warning: >
+    ¡ATENCIÓN! No se podrá eliminar una actividad del programa formativo si el estudiante la ha incluido en alguna de sus fichas de seguimiento.
+
 prompt.session_deletion_warning: >
     ¡ATENCIÓN! No se podrá eliminar una jornada del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento.
 
 form.back: Volver
+form.new_agreement: Registrar nuevo acuerdo
+
 form.delete_back: Volver sin eliminar

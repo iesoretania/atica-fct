@@ -123,14 +123,14 @@ class GroupController extends Controller
     {
         $agreements = $student->getStudentAgreements();
 
-        return $this->render('student/calendar_agreement_select.html.twig',
+        return $this->render('group/calendar_agreement_select.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
                 'breadcrumb' => [
                     ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
                     ['fixed' => (string) $student],
                 ],
-                'user' => $this->getUser(),
+                'student' => $student,
                 'elements' => $agreements,
                 'route_name' => 'admin_group_student_calendar'
             ]);
@@ -351,9 +351,8 @@ class GroupController extends Controller
             ]);
     }
 
-
     /**
-     * @Route("/seguimiento/acuerdo/modificar/{id}", name="admin_group_student_workday_form", methods={"GET", "POST"})
+     * @Route("/seguimiento/acuerdo/jornada/modificar/{id}", name="admin_group_student_workday_form", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_MANAGE', workday.getAgreement())")
      */
     public function agreementCalendarFormAction(Workday $workday, Request $request)
@@ -382,5 +381,54 @@ class GroupController extends Controller
             'form' => $form->createView(),
             'workday' => $workday
         ]);
+    }
+
+    /**
+     * @Route("/seguimiento/acuerdo/nuevo/{id}", name="admin_group_student_agreement_new", methods={"GET", "POST"})
+     * @Security("is_granted('GROUP_CREATE_AGREEMENT', user.getStudentGroup())")
+     */
+    public function agreementNewFormAction(User $user, Request $request)
+    {
+        $agreement = new Agreement();
+        $agreement->setStudent($user);
+        $this->getDoctrine()->getManager()->persist($agreement);
+
+        return $this->agreementFormAction($agreement, $request);
+    }
+
+    /**
+     * @Route("/seguimiento/acuerdo/modificar/{id}", name="admin_group_student_agreement_form", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+    public function agreementFormAction(Agreement $agreement, Request $request)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\AgreementType', $agreement);
+
+        $form->handleRequest($request);
+
+        $student = $agreement->getStudent();
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            // Probar a guardar los cambios
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'group'));
+                return $this->redirectToRoute('admin_group_student_agreements', ['id' => $student->getId()]);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'group'));
+            }
+        }
+
+        return $this->render('group/form_agreement.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                    ['fixed' => $this->get('translator')->trans('form.new_agreement', [], 'group')]
+                ],
+                'form' => $form->createView(),
+                'agreement' => $agreement
+            ]);
     }
 }

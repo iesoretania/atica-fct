@@ -73,3 +73,5 @@ dow5: Sábado
 dow6: Domingo
 
 caption.hours: horas
+
+prompt.empty: No hay jornadas registradas en el calendario. Añada alguna antes de continuar.

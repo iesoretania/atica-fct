@@ -432,4 +432,39 @@ class Agreement
     {
         return $this->report;
     }
+
+    /**
+     * Get total hours
+     *
+     * @return float
+     */
+    public function getTotalHours()
+    {
+        $total = 0.0;
+
+        /** @var Workday $workday */
+        foreach ($this->getWorkdays() as $workday) {
+            $total += $workday->getHours();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Get tracked hours
+     *
+     * @return float
+     */
+    public function getTrackedHours()
+    {
+        $total = 0.0;
+
+        /** @var Workday $workday */
+        foreach ($this->getWorkdays() as $workday) {
+            $total += $workday->getTrackedHours();
+        }
+
+        return $total;
+    }
+
 }

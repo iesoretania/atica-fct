@@ -20,7 +20,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Agreement;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -224,9 +223,12 @@ class Workday
         return $this->trackingActivities;
     }
 
+    /**
+     * @return float
+     */
     public function getTrackedHours()
     {
-        $hours = 0;
+        $hours = 0.0;
         /** @var Tracking $track */
         foreach ($this->getTrackingActivities() as $track) {
             $hours += $track->getHours();

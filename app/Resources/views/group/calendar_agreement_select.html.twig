@@ -1,0 +1,9 @@
+{% trans_default_domain 'group' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'agreement_select.title'|trans }}</h2>
+    {% include 'group/calendar_agreement_select_partial.html.twig' %}
+    {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if is_granted('GROUP_CREATE_AGREEMENT', student.studentGroup) %}{{ m.link_button(path('admin_group_student_agreement_new', {'id': student.id}), 'plus', 'btn-info', 'form.new_agreement'|trans) }}{% endif %}
+{% endblock %}
