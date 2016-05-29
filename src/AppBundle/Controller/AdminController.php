@@ -20,13 +20,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
 use AppBundle\Entity\Training;
-use AppBundle\Entity\User;
 use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
@@ -114,23 +112,6 @@ class AdminController extends Controller
             ['size' => '7', 'sort_field' => 'n.name', 'name' => 'form.name']
         ],
         'data_columns' => ['date', 'name']
-    ];
-
-    public static $AGREEMENT_ENTITY_DATA = [
-        'entity' => 'agreement',
-        'entityClassName' => 'AppBundle\Entity\Agreement',
-        'entityFormType' => 'AppBundle\Form\Type\AgreementType',
-        'manage_template' => 'agreement/manage_agreement.html.twig',
-        'form_template' => 'agreement/form_agreement.html.twig',
-        'query' => null,
-        'defaultSortFieldName' => 's.lastName',
-        'columns' => [
-            ['size' => '2', 'sort_field' => 's.lastName', 'name' => 'form.last_name'],
-            ['size' => '2', 'sort_field' => 's.firstName', 'name' => 'form.first_name'],
-            ['size' => '1', 'sort_field' => 'g.name', 'name' => 'form.group'],
-            ['size' => '4', 'sort_field' => 'w.name', 'name' => 'form.workcenter']
-        ],
-        'data_columns' => []
     ];
 
     /**
@@ -440,59 +421,5 @@ class AdminController extends Controller
     public function nonSchoolDayDeleteAction(Workcenter $element, Request $request)
     {
         return $this->genericDeleteAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/acuerdos", name="admin_agreement", methods={"GET"})
-     * @Security("is_granted('ROLE_GROUP_TUTOR')")
-     */
-    public function agreementIndexAction(Request $request)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        // Obtener:
-        // - todos los acuerdos si es administrador
-        // - los de los alumnos de mi(s) tutoría(s) si soy tutor de un grupo
-        // - los de el departamento si soy jefe de departamentp
-
-            /** @var User $user */
-        $user = $this->getUser();
-
-        $qb = $em->getRepository('AppBundle:Agreement')
-            ->createQueryBuilder('a')
-            ->innerJoin('a.workcenter', 'w')
-            ->innerJoin('a.student', 's')
-            ->innerJoin('s.studentGroup', 'g');
-
-        if (!$user->isGlobalAdministrator()) {
-            $qb = $qb
-                ->innerJoin('g.training', 't')
-                ->innerJoin('t.department', 'd')
-                ->where('g.id IN (:groups)')
-                ->orWhere('d.head = :user')
-                ->setParameter('groups', $user->getTutorizedGroups()->toArray())
-                ->setParameter('user', $user);
-        }
-        return $this->genericIndexAction(self::$AGREEMENT_ENTITY_DATA, $request, null, $qb->getQuery());
-    }
-
-    /**
-     * @Route("/acuerdos/nuevo", name="admin_agreement_new", methods={"GET", "POST"})
-     * @Route("/acuerdos/{id}", name="admin_agreement_form", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_GROUP_TUTOR')")
-     */
-    public function agreementFormAction(Agreement $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/acuerdos/eliminar/{id}", name="admin_agreement_delete", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_GROUP_TUTOR')")
-     */
-    public function agreementDeleteAction(Agreement $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$AGREEMENT_ENTITY_DATA, $element, $request);
     }
 }

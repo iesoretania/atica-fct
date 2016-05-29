@@ -63,17 +63,6 @@ class HeadDepartmentMenu implements MenuBuilderInterface
             ->setIcon('building');
 
         $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.agreement')
-            ->setRouteName('admin_agreement')
-            ->setCaption('menu.admin.agreement')
-            ->setDescription('menu.admin.agreement.detail')
-            ->setColor('dark-blue')
-            ->setIcon('link');
-
-        $mainItem->addChild($item);
     }
 
     public function getMenuPriority()
