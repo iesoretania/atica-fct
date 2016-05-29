@@ -108,7 +108,7 @@ class Workcenter
 
     public function __toString()
     {
-        return $this->getName() ? $this->getName() . ' (' . $this->getCompany() . ')' : '';
+        return $this->getName() ? $this->getCompany() . ' - ' . $this->getName() : '';
     }
 
     /**
