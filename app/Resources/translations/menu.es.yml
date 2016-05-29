@@ -31,9 +31,6 @@ menu.admin.workcenters.detail: Gestionar centros de trabajo
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos
 
-menu.admin.agreement: Acuerdos de colaboración
-menu.admin.agreement.detail: Crear o modificar los acuerdos de colaboración
-
 menu.admin: Administración
 menu.admin.detail: Realizar cambios en la configuración de la plataforma
 

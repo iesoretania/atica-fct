@@ -1,10 +1,3 @@
-browse.title: Acuerdos de colaboración registrados
-
-form.first_name: Nombre
-form.last_name: Apellidos
-form.group: Grupo
-form.hours: Horas
-
 form.sign_date: Fecha de la firma
 form.from_date: Fecha de inicio
 form.to_date: Fecha de finalización
@@ -16,22 +9,6 @@ form.workcenter: Centro de trabajo
 form.activities: Programa formativo
 
 form.submit: Guardar cambios
-form.delete: Eliminar
-form.calendar: Calendario
-form.new: Nuevo acuerdo
-form.view: Modificar
-
-alert.saved: Datos guardados correctamente
-alert.not_saved: No se han podido guardar los cambios
-
-alert.deleted: Acuerdo eliminado con éxito
-alert.not_deleted: No se ha podido eliminar el acuerdo. Compruebe que no hay elementos asociados al mismo.
-
-prompt.delete_confirm: >
-    ¡ATENCIÓN! El acuerdo sólo podrá ser eliminado si no existen datos asociados al mismo.
-
-prompt.activity_deletion_warning: >
-    ¡ATENCIÓN! No se podrá eliminar una actividad del programa formativo si el estudiante la ha incluido en alguna de sus fichas de seguimiento.
 
 form.back: Volver
 form.delete_back: Volver sin eliminar
