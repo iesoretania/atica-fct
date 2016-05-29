@@ -28,7 +28,7 @@
                     {% if day.data is defined %}
                         {% block detail %}
                             {% if is_granted('AGREEMENT_MANAGE', agreement) or is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement) %}
-                            <input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}" title="{{ 'form.select'|trans }}"> {% endif %}
+                            <input type="checkbox" class="check" name="ids[]" value="{{ day.data.id }}" title="{{ 'form.select'|trans }}"> {% endif %}
                             <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}" title="{{ 'form.tracking'|trans }}">
                             {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
                             </a>
