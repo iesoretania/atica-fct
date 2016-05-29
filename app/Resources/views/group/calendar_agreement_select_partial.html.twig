@@ -29,7 +29,7 @@
                     <a href="{{ path('admin_group_student_calendar', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-{{ manage ? 4 : 12 }}"><i class="fa fa-calendar"></i> {{ 'form.calendar' | trans }}</a>
                     {% if manage %}
                         <a href="{{ path('admin_group_student_agreement_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-4"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
-                        <a href="" class="btn btn-danger col-xs-12 col-sm-4"><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                        <a href="{{ path('admin_group_student_agreement_delete', {'id': element.id}) }}" class="btn btn-danger col-xs-12 col-sm-4"><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
                     {% endif %}
                 {% endblock %}
                 </div>

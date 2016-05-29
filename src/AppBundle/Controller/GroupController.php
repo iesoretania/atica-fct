@@ -228,7 +228,7 @@ class GroupController extends Controller
 
     /**
      * @Route("/seguimiento/acuerdo/{id}/operacion", name="admin_group_student_workday_operation", methods={"POST"})
-     * @Security("is_granted('AGREEMENT_ACCESS',agreement)")
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
      */
     public function operationWorkdayAction(Agreement $agreement, Request $request)
     {
@@ -431,4 +431,41 @@ class GroupController extends Controller
                 'agreement' => $agreement
             ]);
     }
+
+    /**
+     * @Route("/seguimiento/acuerdo/eliminar/{id}", name="admin_group_student_agreement_delete", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+
+    public function agreementDeleteAction(Agreement $agreement, Request $request)
+    {
+        $student = $agreement->getStudent();
+
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            // Eliminar el acuerdo de la base de datos
+            $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->delete($agreement);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.agreement_deleted', [], 'group'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.agreement_not_deleted', [], 'group'));
+            }
+            return $this->redirectToRoute('admin_group_student_agreements', ['id' => $student->getId()]);
+        }
+
+        $title = (string) $agreement->getWorkcenter();
+
+        return $this->render('group/delete_agreement.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+            'breadcrumb' => [
+                ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                ['fixed' => $title]
+            ],
+            'title' => $title,
+            'agreement' => $agreement
+        ]);
+    }
+
 }

@@ -46,4 +46,23 @@ class AgreementRepository extends EntityRepository
 
         return $result;
     }
+
+    public function delete(Agreement $agreement)
+    {
+        // borrar informe si estaba cumplimentado
+        if ($agreement->getReport()) {
+            $this->getEntityManager()->remove($agreement->getReport());
+        }
+
+        // borrar calendario
+        foreach ($agreement->getWorkdays() as $workday) {
+            $this->getEntityManager()->remove($workday);
+        }
+
+        // borrar actividades de plan de formación individualizado
+        $agreement->getActivities()->clear();
+
+        // borrar acuerdo
+        $this->getEntityManager()->remove($agreement);
+    }
 }

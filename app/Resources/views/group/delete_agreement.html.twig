@@ -1,0 +1,11 @@
+{% trans_default_domain 'group' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    <div class="alert alert-warning">{{ 'prompt.delete_agreement_confirm'|trans|nl2br }}</div>
+    <form method="post">
+        {{ m.link_button(path('admin_group_student_agreements', {id: agreement.student.id}), 'arrow-left', 'btn-default', 'form.delete_back'|trans) }}
+        {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.delete_confirm'|trans) }}
+    </form>
+{% endblock %}
