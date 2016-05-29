@@ -419,13 +419,17 @@ class GroupController extends Controller
             }
         }
 
+        $title = (null === $agreement->getId())
+            ? $this->get('translator')->trans('form.new_agreement', [], 'group')
+            : (string) $agreement->getWorkcenter();
+
         return $this->render('group/form_agreement.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
                 'breadcrumb' => [
                     ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
                     ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
-                    ['fixed' => $this->get('translator')->trans('form.new_agreement', [], 'group')]
+                    ['fixed' => $title]
                 ],
                 'form' => $form->createView(),
                 'agreement' => $agreement

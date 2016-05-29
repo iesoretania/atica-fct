@@ -20,7 +20,10 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Agreement;
+use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,10 +36,59 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class AgreementType extends AbstractType
 {
     private $tokenStorage;
+    private $em;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, EntityManager $em)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->em = $em;
+    }
+
+    public function addElements(FormInterface $form, Company $company = null)
+    {
+        $workcenters = [];
+        if ($company) {
+            $workcenters = $this->em->getRepository('AppBundle:Workcenter')->findBy(['company' => $company], ['name' => 'ASC']);
+        }
+
+        $form
+            ->add('company', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+                'label' => 'form.company',
+                'class' => 'AppBundle\Entity\Company',
+                'mapped' => false,
+                'data' => $company,
+                'placeholder' => 'form.select_company',
+                'required' => true
+            ])
+            ->add('workcenter', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+                'label' => 'form.workcenter',
+                'class' => 'AppBundle\Entity\Workcenter',
+                'choices' => $workcenters,
+                'required' => true
+            ])
+            ->add('workTutor', null, [
+                'label' => 'form.work_tutor',
+                'required' => true
+            ])
+            ->add('educationalTutor', null, [
+                'label' => 'form.educational_tutor',
+                'required' => true
+            ])
+            ->add('signDate', null, [
+                'label' => 'form.sign_date',
+                'widget' => 'single_text',
+                'required' => false
+            ])
+            ->add('fromDate', null, [
+                'label' => 'form.from_date',
+                'widget' => 'single_text',
+                'required' => true
+            ])
+            ->add('toDate', null, [
+                'label' => 'form.to_date',
+                'widget' => 'single_text',
+                'required' => true
+            ]);
     }
 
     /**
@@ -72,34 +124,25 @@ class AgreementType extends AbstractType
                     return $qb;
                 },
                 'required' => true
-            ])
-            ->add('workcenter', null, [
-                'label' => 'form.workcenter',
-                'required' => true
-            ])
-            ->add('workTutor', null, [
-                'label' => 'form.work_tutor',
-                'required' => true
-            ])
-            ->add('educationalTutor', null, [
-                'label' => 'form.educational_tutor',
-                'required' => true
-            ])
-            ->add('signDate', null, [
-                'label' => 'form.sign_date',
-                'widget' => 'single_text',
-                'required' => false
-            ])
-            ->add('fromDate', null, [
-                'label' => 'form.from_date',
-                'widget' => 'single_text',
-                'required' => true
-            ])
-            ->add('toDate', null, [
-                'label' => 'form.to_date',
-                'widget' => 'single_text',
-                'required' => true
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $company = $data->getWorkcenter() ? $data->getWorkcenter()->getCompany() : null;
+
+            $this->addElements($form, $company);
+        });
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $company = $this->em->getRepository('AppBundle:Company')->find($data['company']);
+
+            $this->addElements($form, $company);
+        });
 
         $formModifier = function(FormInterface $form, User $student = null) {
             $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
