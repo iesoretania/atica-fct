@@ -25,8 +25,8 @@ menu.group_admin.detail: Gestionar el alumnado del grupo
 menu.admin.companies: Empresas
 menu.admin.companies.detail: Gestionar empresas de la FCT
 
-menu.admin.workcenters: Centros de trabajo
-menu.admin.workcenters.detail: Gestionar centros de trabajo
+menu.admin.workcenters: Sedes
+menu.admin.workcenters.detail: Gestionar centros de trabajo de las empresas
 
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos

@@ -5,7 +5,7 @@ form.student: Estudiante
 form.select_student: Seleccione un estudiante
 form.work_tutor: Tutor laboral
 form.educational_tutor: Tutor docente
-form.workcenter: Centro de trabajo
+form.workcenter: Sede
 form.activities: Programa formativo
 
 form.submit: Guardar cambios
