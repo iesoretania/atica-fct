@@ -49,7 +49,7 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
 
         static::assertEquals(302, $client->getResponse()->getStatusCode());
-        static::assertTrue($client->getResponse()->isRedirect());
+        static::assertTrue($client->getResponse()->isRedirect($loginUrl));
     }
 
     public function testSuccessLogin()
