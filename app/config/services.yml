@@ -43,6 +43,12 @@ services:
         tags:
             -  { name: atica_core.menu_builder }
 
+    app.student_tracking.menu:
+        class: AppBundle\Service\StudentTrackingMenu
+        arguments: ['@security.token_storage']
+        tags:
+            -  { name: atica_core.menu_builder }
+
     AppBundle\Form\Type\AgreementType:
         class: AppBundle\Form\Type\AgreementType
         arguments: ['@security.token_storage', '@doctrine']
