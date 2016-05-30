@@ -69,6 +69,30 @@ class Report
     protected $contingencyResponse;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $otherDescription1;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $other1;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $otherDescription2;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $other2;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
@@ -270,5 +294,101 @@ class Report
     public function getSignDate()
     {
         return $this->signDate;
+    }
+
+    /**
+     * Set otherDescription1
+     *
+     * @param string $otherDescription1
+     *
+     * @return Report
+     */
+    public function setOtherDescription1($otherDescription1)
+    {
+        $this->otherDescription1 = $otherDescription1;
+
+        return $this;
+    }
+
+    /**
+     * Get otherDescription1
+     *
+     * @return string
+     */
+    public function getOtherDescription1()
+    {
+        return $this->otherDescription1;
+    }
+
+    /**
+     * Set other1
+     *
+     * @param integer $other1
+     *
+     * @return Report
+     */
+    public function setOther1($other1)
+    {
+        $this->other1 = $other1;
+
+        return $this;
+    }
+
+    /**
+     * Get other1
+     *
+     * @return integer
+     */
+    public function getOther1()
+    {
+        return $this->other1;
+    }
+
+    /**
+     * Set otherDescription2
+     *
+     * @param string $otherDescription2
+     *
+     * @return Report
+     */
+    public function setOtherDescription2($otherDescription2)
+    {
+        $this->otherDescription2 = $otherDescription2;
+
+        return $this;
+    }
+
+    /**
+     * Get otherDescription2
+     *
+     * @return string
+     */
+    public function getOtherDescription2()
+    {
+        return $this->otherDescription2;
+    }
+
+    /**
+     * Set other2
+     *
+     * @param integer $other2
+     *
+     * @return Report
+     */
+    public function setOther2($other2)
+    {
+        $this->other2 = $other2;
+
+        return $this;
+    }
+
+    /**
+     * Get other2
+     *
+     * @return integer
+     */
+    public function getOther2()
+    {
+        return $this->other2;
     }
 }
