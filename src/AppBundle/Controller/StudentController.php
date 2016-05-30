@@ -22,7 +22,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Tracking;
-use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -31,44 +30,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * @Route("/alumnado/estudiante/{id}", name="student_detail", methods={"GET", "POST"})
-     * @Security("is_granted('GROUP_MANAGE', student.getStudentGroup())")
-     */
-    public function studentIndexAction(User $student, Request $request)
-    {
-        $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $student, [
-            'admin' => $this->isGranted('ROLE_ADMIN')
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // Guardar el usuario en la base de datos
-
-            // Probar a guardar los cambios
-            try {
-                $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
-                return $this->redirectToRoute('admin_group_students', ['id' => $student->getStudentGroup()->getId()]);
-            } catch (\Exception $e) {
-                $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'student'));
-            }
-        }
-        return $this->render('group/form_student.html.twig',
-            [
-                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
-                'breadcrumb' => [
-                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
-                    ['fixed' => (string) $student],
-                ],
-                'title' => (string) $student,
-                'user' => $student,
-                'form' => $form->createView()
-            ]);
-    }
-
     /**
      * @Route("/seguimiento", name="student_calendar", methods={"GET"})
      * @Security("user.getStudentAgreements() !== null and user.getStudentAgreements().count() > 0")
