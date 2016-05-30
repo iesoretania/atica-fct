@@ -21,14 +21,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
-use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
     /**
      * @Route("/seguimiento", name="student_calendar", methods={"GET"})
@@ -78,51 +76,13 @@ class StudentController extends Controller
      */
     public function studentWorkdayAction(Workday $workday, Request $request)
     {
-        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($workday->getAgreement());
-
-        $dow = ((6 + (int) $workday->getDate()->format('w')) % 7);
-        
-        $title = $this->get('translator')->trans('dow' . $dow, [], 'calendar') . ', ' . $workday->getDate()->format('d/m/Y');
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
-
-        $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday, [
-            'disabled' => $workday->isLocked()
+        return $this->baseWorkdayAction($workday, $request, [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
+            'breadcrumb' => [
+                ['fixed' => (string) $workday->getAgreement()->getWorkcenter(), 'path' => 'student_calendar_agreement', 'options' => ['id' => $workday->getAgreement()->getId()]],
+                ['fixed' => $workday->getDate()->format('d/m/Y')]
+            ],
+            'back_route_name' => 'student_calendar_agreement'
         ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Tracking $tracking */
-            foreach ($workday->getTrackingActivities() as $tracking) {
-                if ($tracking->getHours() == 0) {
-                    $workday->removeTrackingActivity($tracking);
-                    $em->remove($tracking);
-                } else {
-                    $em->persist($tracking);
-                }
-            }
-            $em->flush();
-        }
-
-        $activitiesStats = $em->getRepository('AppBundle:Agreement')->getActivitiesStats($workday->getAgreement());
-        $next = $em->getRepository('AppBundle:Workday')->getNext($workday);
-        $previous = $em->getRepository('AppBundle:Workday')->getPrevious($workday);
-        
-        return $this->render('student/tracking_form.html.twig',
-            [
-                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
-                'breadcrumb' => [
-                    ['fixed' => (string) $workday->getAgreement()->getWorkcenter(), 'path' => 'student_calendar_agreement', 'options' => ['id' => $workday->getAgreement()->getId()]],
-                    ['fixed' => $title],
-                ],
-                'title' => $title,
-                'user' => $this->getUser(),
-                'workday' => $workday,
-                'form' => $form->createView(),
-                'agreement_hours' => $agreementHours,
-                'activities_stats' => $activitiesStats,
-                'next' => $next,
-                'previous' => $previous
-            ]);
     }
 }

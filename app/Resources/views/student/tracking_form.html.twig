@@ -26,7 +26,7 @@
     <h2>{{ 'form.daily_activities'|trans({ '%hours%': workday.hours }) }}</h2>
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        {{ m.link_button(path(back_route_name is defined ? back_route_name : 'student_calendar_agreement', {'id': workday.agreement.id}), 'arrow-left', 'btn-default', 'form.tracking_back'|trans) }}
+        {{ m.link_button(path(back_route_name, {'id': workday.agreement.id}), 'arrow-left', 'btn-default', 'form.tracking_back'|trans) }}
         {% if previous %}{{ m.link_button(path(app.request.get('_route'), {'id': previous.id}), 'arrow-circle-left', 'btn-info', 'form.previous'|trans~' - '~previous.date|date('d/m/Y')) }}{% endif %}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
         {% if next %}{{ m.link_button(path(app.request.get('_route'), {'id': next.id}), 'arrow-circle-right', 'btn-info', 'form.next'|trans~' - '~next.date|date('d/m/Y')) }}{% endif %}
