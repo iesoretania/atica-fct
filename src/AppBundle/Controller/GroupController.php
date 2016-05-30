@@ -81,7 +81,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/alumnado/{id}", name="admin_group_students", methods={"GET"})
+     * @Route("/grupo/{id}", name="admin_group_students", methods={"GET"})
      * @Security("is_granted('GROUP_MANAGE', group)")
      */
     public function groupDetailIndexAction(Group $group, Request $request)
