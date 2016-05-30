@@ -1,4 +1,4 @@
-browse.title: Listado de centros de trabajo
+browse.title: Listado de sedes
 
 form.name: Denominación
 form.company: Empresa
@@ -18,11 +18,11 @@ form.manager: Gerente
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
-alert.deleted: Centro eliminado con éxito
-alert.not_deleted: No se ha podido eliminar el centro de trabajo. Compruebe que no hay elementos asociados al mismo.
+alert.deleted: Sede eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la sede. Compruebe que no hay elementos asociados a la misma.
 
 prompt.delete_confirm: >
-    ¡ATENCIÓN! El centro de trabajo sólo podrá ser eliminado si no existen datos asociados al mismo.
+    ¡ATENCIÓN! La sede sólo podrá ser eliminada si no existen datos asociados a la misma.
 
 form.back: Volver
 form.delete_back: Volver sin eliminar
