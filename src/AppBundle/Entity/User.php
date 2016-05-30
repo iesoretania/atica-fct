@@ -111,12 +111,28 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $directs;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Agreement", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="student")
      * @ORM\OrderBy({"fromDate": "ASC"})
      *
      * @var Collection
      */
     protected $studentAgreements;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="educationalTutor")
+     * @ORM\OrderBy({"fromDate": "ASC"})
+     *
+     * @var Collection
+     */
+    protected $educationalTutorAgreements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="workTutor")
+     * @ORM\OrderBy({"fromDate": "ASC"})
+     *
+     * @var Collection
+     */
+    protected $workTutorAgreements;
 
     /**
      * Constructor
@@ -576,10 +592,78 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Get studentAgreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getStudentAgreements()
     {
         return $this->studentAgreements;
+    }
+
+    /**
+     * Add educationalTutorAgreement
+     *
+     * @param \AppBundle\Entity\Agreement $educationalTutorAgreement
+     *
+     * @return User
+     */
+    public function addEducationalTutorAgreement(\AppBundle\Entity\Agreement $educationalTutorAgreement)
+    {
+        $this->educationalTutorAgreements[] = $educationalTutorAgreement;
+
+        return $this;
+    }
+
+    /**
+     * Remove educationalTutorAgreement
+     *
+     * @param \AppBundle\Entity\Agreement $educationalTutorAgreement
+     */
+    public function removeEducationalTutorAgreement(\AppBundle\Entity\Agreement $educationalTutorAgreement)
+    {
+        $this->educationalTutorAgreements->removeElement($educationalTutorAgreement);
+    }
+
+    /**
+     * Get educationalTutorAgreements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEducationalTutorAgreements()
+    {
+        return $this->educationalTutorAgreements;
+    }
+
+    /**
+     * Add workTutorAgreement
+     *
+     * @param \AppBundle\Entity\Agreement $workTutorAgreement
+     *
+     * @return User
+     */
+    public function addWorkTutorAgreement(\AppBundle\Entity\Agreement $workTutorAgreement)
+    {
+        $this->workTutorAgreements[] = $workTutorAgreement;
+
+        return $this;
+    }
+
+    /**
+     * Remove workTutorAgreement
+     *
+     * @param \AppBundle\Entity\Agreement $workTutorAgreement
+     */
+    public function removeWorkTutorAgreement(\AppBundle\Entity\Agreement $workTutorAgreement)
+    {
+        $this->workTutorAgreements->removeElement($workTutorAgreement);
+    }
+
+    /**
+     * Get workTutorAgreements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkTutorAgreements()
+    {
+        return $this->workTutorAgreements;
     }
 }

@@ -64,14 +64,14 @@ class Agreement
     protected $student;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="workTutorAgreements")
      * @ORM\JoinColumn(nullable=false)
      * @var User
      */
     protected $workTutor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="educationalTutorAgreements")
      * @ORM\JoinColumn(nullable=false)
      * @var User
      */
