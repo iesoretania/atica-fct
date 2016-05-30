@@ -18,3 +18,14 @@
         &nbsp;
     {% endif %}
 {% endblock %}
+
+{% block actions %}
+    {% if week.count %}
+            {% if week.count != week.locked %}
+                <button type="submit" name="week_lock" value="{{ n + year * 100 }}" class="btn btn-xs btn-default col-xs-12 col-sm-12"><i class="fa fa-lock"></i> {{ 'form.week_lock_action'|trans }}</button>
+            {% else %}
+                <button type="submit" name="week_unlock" value="{{ n + year * 100 }}" class="btn btn-xs btn-default col-xs-12 col-sm-12"><i class="fa fa-unlock"></i> {{ 'form.week_unlock_action'|trans }}</button>
+            {% endif %}
+            <a href="" class="btn btn-xs btn-warning col-xs-12 col-sm-12"><i class="fa fa-print"></i> {{ 'form.print' | trans }}</a>
+    {% endif %}
+{% endblock %}

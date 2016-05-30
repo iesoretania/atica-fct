@@ -188,6 +188,33 @@ class GroupController extends Controller
         return $this->redirectToRoute('admin_group_student_calendar', ['id' => $agreement->getId()]);
     }
 
+    public function lockWeekAction(Agreement $agreement, Request $request, $status)
+    {
+        $this->denyAccessUnlessGranted($status ? 'AGREEMENT_LOCK' : 'AGREEMENT_UNLOCK', $agreement);
+
+        $data = $request->get($status ? 'week_lock' : 'week_unlock');
+        $week = $data % 100;
+        $year = intdiv($data, 100);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $workdays = $em->getRepository('AppBundle:Workday')->getWorkdaysInWeek($agreement, $week, $year);
+
+        try {
+            /** @var Workday $workday */
+            foreach ($workdays as $workday) {
+                $workday->setLocked($status);
+            }
+
+            $em->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.locked', [], 'calendar'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->get('translator')->trans('alert.locked_error', [], 'calendar'));
+        }
+
+        return $this->redirectToRoute('admin_group_student_calendar', ['id' => $agreement->getId()]);
+    }
+
     public function deleteWorkdayAction(Agreement $agreement, Request $request)
     {
         $this->denyAccessUnlessGranted('AGREEMENT_MANAGE', $agreement);
@@ -234,6 +261,8 @@ class GroupController extends Controller
     {
         if ($request->request->has('delete')) {
             return $this->deleteWorkdayAction($agreement, $request);
+        } elseif ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
+            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'));
         } else {
             return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'));
         }

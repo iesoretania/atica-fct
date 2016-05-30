@@ -101,6 +101,9 @@ class WorkdayRepository extends EntityRepository
             $week[] = ['day' => ''];
         }
 
+        $count = 0;
+        $locked = 0;
+
         /** @var \ArrayIterator $iterator */
         $iterator = $workdays->getIterator();
 
@@ -108,8 +111,10 @@ class WorkdayRepository extends EntityRepository
         while ($iterator->valid() && ($targetDate = $iterator->current()->getDate()) >= $currentDate) {
             while ($targetDate >= $currentDate) {
                 if ($currentWeek != $currentDate->format('W') || $currentMonth != $currentDate->format('m')) {
-                    $month[(int) $currentWeek] = $week;
+                    $month[(int) $currentWeek] = ['days' => $week, 'count' => $count, 'locked' => $locked];
                     $week = [];
+                    $count = 0;
+                    $locked = 0;
                     if ($currentMonth != $currentDate->format('m')) {
                         $calendar[((int) $currentYear * 12 + (int) $currentMonth - 1)] = $month;
                         $dayOfWeek = $currentDate->format('w');
@@ -131,11 +136,15 @@ class WorkdayRepository extends EntityRepository
                 $currentDate->setTime(0, 0);
             }
             $week[] = ['day' =>  $targetDate->format('d'), 'data' => $iterator->current()];
+            $count++;
+            if ($iterator->current()->isLocked()) {
+                $locked++;
+            }
             $iterator->next();
         }
-        $month[(int) $currentWeek] = $week;
+        $month[(int) $currentWeek] = ['days' => $week, 'count' => $count, 'locked' => $locked];
 
-        $calendar[((int) $currentYear*12 + (int) $currentMonth - 1)] = $month;
+        $calendar[((int) $currentYear * 12 + (int) $currentMonth - 1)] = $month;
 
         return $calendar;
     }
