@@ -108,9 +108,8 @@ class WorkdayRepository extends EntityRepository
         while ($iterator->valid() && ($targetDate = $iterator->current()->getDate()) >= $currentDate) {
             while ($targetDate >= $currentDate) {
                 if ($currentWeek != $currentDate->format('W') || $currentMonth != $currentDate->format('m')) {
-                    $month[] = $week;
+                    $month[(int) $currentWeek] = $week;
                     $week = [];
-                    $currentWeek = $currentDate->format('W');
                     if ($currentMonth != $currentDate->format('m')) {
                         $calendar[((int) $currentYear * 12 + (int) $currentMonth - 1)] = $month;
                         $dayOfWeek = $currentDate->format('w');
@@ -122,6 +121,7 @@ class WorkdayRepository extends EntityRepository
                         $currentMonth = $currentDate->format('m');
                         $currentYear = $currentDate->format('Y');
                     }
+                    $currentWeek = $currentDate->format('W');
                 }
 
                 if ($targetDate != $currentDate) {
@@ -133,7 +133,7 @@ class WorkdayRepository extends EntityRepository
             $week[] = ['day' =>  $targetDate->format('d'), 'data' => $iterator->current()];
             $iterator->next();
         }
-        $month[] = $week;
+        $month[(int) $currentWeek] = $week;
 
         $calendar[((int) $currentYear*12 + (int) $currentMonth - 1)] = $month;
 
@@ -168,5 +168,48 @@ class WorkdayRepository extends EntityRepository
         $result = $query->setMaxResults(1)->getResult();
 
         return $result ? $result[0] : null;
+    }
+
+    public function getWorkdaysInRange(Agreement $agreement, \DateTime $start, \DateTime $end)
+    {
+        return $this->createQueryBuilder('w')
+            ->where('w.agreement = :agreement')
+            ->andWhere('w.date >= :start')
+            ->andWhere('w.date <= :end')
+            ->orderBy('w.date', 'DESC')
+            ->setParameter('agreement', $agreement)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getWorkdaysInWeek(Agreement $agreement, $week, $year)
+    {
+        $date = new \DateTime();
+        $start = $date->setISODate($year, $week);
+        $end = clone $date;
+        $end = $end->modify('+6 days');
+
+        return $this->getWorkdaysInRange($agreement, $start, $end);
+    }
+
+    public function isWeekLocked(Agreement $agreement, $week, $year)
+    {
+        $workdays = $this->getWorkdaysInWeek($agreement, $week, $year);
+
+        $count = 0;
+        $locked = 0;
+
+        /** @var Workday $workday */
+        foreach ($workdays as $workday) {
+            $count++;
+            if ($workday->isLocked()) {
+                $locked++;
+            }
+        }
+
+        // la semana está bloqueada si hay días de trabajo y todos están bloqueados
+        return $count && ($count === $locked);
     }
 }
