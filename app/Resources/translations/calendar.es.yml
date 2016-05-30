@@ -24,7 +24,7 @@ form.locked: La jornada está bloqueada y el estudiante no podrá realizar cambi
 form.date: Fecha
 form.hours: Horas
 form.no_sessions: No hay sesiones
-form.notes: Anotaciones
+form.notes: Anotaciones sobre la jornada
 
 form.edit: Modificar
 form.tracking: Seguimiento

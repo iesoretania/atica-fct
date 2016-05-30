@@ -39,6 +39,10 @@ class WorkdayTrackingType extends AbstractType
                 'options' => [
                     'label' => false
                 ]
+            ])
+            ->add('notes', null, [
+                'label' => 'form.notes',
+                'required' => false
             ]);
     }
 

@@ -32,17 +32,13 @@ class TrackingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('activity', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('activity', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
                 'label' => 'form.activity',
                 'disabled' => true
             ])
             ->add('hours', null, [
                 'label' => 'form.hours',
                 'required' => true
-            ])
-            ->add('notes', null, [
-                'label' => 'form.notes',
-                'required' => false
             ]);
     }
 
