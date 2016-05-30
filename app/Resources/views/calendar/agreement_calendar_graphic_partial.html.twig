@@ -1,41 +1,19 @@
 {% trans_default_domain 'calendar' %}
+{% extends 'calendar/agreement_calendar_graphic_partial_base.html.twig' %}
 
-{% for num, month in calendar %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-        <tr>
-            <th colspan="7" class="calendar-month">{{ ('month'~(num % 12))|trans }} {{ num//12 }}</th>
-        </tr>
-        <tr>
-            <th class="col-md-1">{{ 'dow0'|trans }}</th>
-            <th class="col-md-1">{{ 'dow1'|trans }}</th>
-            <th class="col-md-1">{{ 'dow2'|trans }}</th>
-            <th class="col-md-1">{{ 'dow3'|trans }}</th>
-            <th class="col-md-1">{{ 'dow4'|trans }}</th>
-            <th class="col-md-1">{{ 'dow5'|trans }}</th>
-            <th class="col-md-1">{{ 'dow6'|trans }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for week in month %}
-        <tr>
-            {% for day in week %}
-                <td {% if day.data is defined %}class="{{ day.data.trackedHours == 0 ? 'info' : (day.data.trackedHours == day.data.hours ? 'success' : 'danger') }}"{% endif %}>
-                    <strong>{{ day.day }}</strong><br/>
-                    {% if day.data is defined %}
-                        {% block detail %}
-                        {% if buttons is defined and buttons %}<input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}"> <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}">{% endif %}
-                        {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
-                        {% if buttons is defined and buttons %}</a>{% endif %}
-                        {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
-                        {% endblock %}
-                    {% else %}
-                        &nbsp;
-                    {% endif %}
-                </td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endfor %}
+{% block day %}
+    <strong>{{ day.day }}</strong><br/>
+    {% if day.data is defined %}
+        {% block detail %}
+            {% if buttons is defined and buttons %}<input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}"  title="{{ 'form.select'|trans }}"> <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}">{% endif %}
+            {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
+            {% if buttons is defined and buttons %}</a>{% endif %}
+            {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
+        {% endblock %}
+    {% else %}
+        &nbsp;
+    {% endif %}
+{% endblock %}
+
+{% block actions %}
+{% endblock %}
