@@ -23,8 +23,8 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -36,12 +36,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class AgreementType extends AbstractType
 {
     private $tokenStorage;
-    private $em;
+    private $managerRegistry;
 
-    public function __construct(TokenStorageInterface $tokenStorage, EntityManager $em)
+    public function __construct(TokenStorageInterface $tokenStorage, ManagerRegistry $managerRegistry)
     {
         $this->tokenStorage = $tokenStorage;
-        $this->em = $em;
+        $this->managerRegistry = $managerRegistry;
     }
 
     public function addElements(FormInterface $form, User $student = null, Company $company = null)
@@ -141,11 +141,15 @@ class AgreementType extends AbstractType
         });
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+
             $form = $event->getForm();
             $data = $event->getData();
 
-            $company = isset($data['company']) ? $this->em->getRepository('AppBundle:Company')->find($data['company']) : null;
-            $student = $this->em->getRepository('AppBundle:User')->find($data['student']);
+            /** @var Company|null $company */
+            $company = isset($data['company']) ? $this->managerRegistry->getManager()->getRepository('AppBundle:Company')->find($data['company']) : null;
+
+            /** @var User|null $student */
+            $student = $this->managerRegistry->getManager()->getRepository('AppBundle:User')->find($data['student']);
 
             $this->addElements($form, $student, $company);
         });

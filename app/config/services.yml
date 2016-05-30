@@ -45,7 +45,7 @@ services:
 
     AppBundle\Form\Type\AgreementType:
         class: AppBundle\Form\Type\AgreementType
-        arguments: ['@security.token_storage', '@doctrine.orm.default_entity_manager']
+        arguments: ['@security.token_storage', '@doctrine']
         tags:
             - { name: form.type }
 
