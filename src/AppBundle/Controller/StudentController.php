@@ -66,7 +66,8 @@ class StudentController extends BaseController
                 'title' => $title,
                 'user' => $this->getUser(),
                 'calendar' => $calendar,
-                'agreement' => $agreement
+                'agreement' => $agreement,
+                'route_name' => 'student_tracking'
             ]);
     }
 

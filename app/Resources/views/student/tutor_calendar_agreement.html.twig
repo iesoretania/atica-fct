@@ -1,0 +1,13 @@
+{% trans_default_domain 'student' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'calendar.title'|trans }}</h2>
+    {% include 'student/calendar_agreement_partial.html.twig' %}
+
+    {% if agreement.student.studentAgreements.count() == 1 %}
+        {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% else %}
+        {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% endif %}
+{% endblock %}

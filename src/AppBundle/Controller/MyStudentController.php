@@ -20,9 +20,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Workday;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MyStudentController extends BaseController
@@ -44,7 +47,6 @@ class MyStudentController extends BaseController
         ]);
     }
 
-
     /**
      * @Route("/estudiantes/{id}", name="my_student_agreements", methods={"GET"})
      * @Security("is_granted('USER_TRACK', user)")
@@ -53,9 +55,9 @@ class MyStudentController extends BaseController
     {
         $agreements = $user->getStudentAgreements();
 
-        /*if (count($agreements) == 1) {
-            return $this->studentCalendarAgreementIndexAction($agreements[0]);
-        }*/
+        if (count($agreements) == 1) {
+            return $this->myStudentAgreementCalendarAction($agreements[0]);
+        }
 
         $title = $user->getFullDisplayName();
         return $this->render('student/calendar_agreement_select.html.twig',
@@ -68,5 +70,47 @@ class MyStudentController extends BaseController
                 'title' => $title,
                 'elements' => $agreements
             ]);
+    }
+
+    /**
+     * @Route("/estudiantes/seguimiento/{id}", name="my_student_agreement_calendar", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function myStudentAgreementCalendarAction(Agreement $agreement)
+    {
+        $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
+        $title = (string) $agreement->getWorkcenter();
+
+        return $this->render('student/calendar_agreement.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+                'breadcrumb' => [
+                    ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                    ['fixed' => $title],
+                ],
+                'title' => $title,
+                'user' => $this->getUser(),
+                'calendar' => $calendar,
+                'agreement' => $agreement,
+                'route_name' => 'my_student_agreement_tracking'
+            ]);
+    }
+
+    /**
+     * @Route("/estudiantes/seguimiento/jornada/{id}", name="my_student_agreement_tracking", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")
+     */
+    public function studentWorkdayAction(Workday $workday, Request $request)
+    {
+        $agreement = $workday->getAgreement();
+        return $this->baseWorkdayAction($workday, $request, [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+            'breadcrumb' => [
+                ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $workday->getAgreement()->getId()]],
+                ['fixed' => $workday->getDate()->format('d/m/Y')]
+            ],
+            'back_route_name' => 'my_student_agreement_calendar'
+        ]);
     }
 }
