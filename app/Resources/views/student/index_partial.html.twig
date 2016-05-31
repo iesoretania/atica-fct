@@ -1,0 +1,38 @@
+{% trans_default_domain 'group' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        {{ m.paginator_th(elements, 'col-md-3', 'u.lastName', 'form.last_name'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.firstName', 'form.first_name'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.loginUsername', 'form.user_name'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-2', 'u.email', 'form.email'|trans) }}
+        <th class="col-md-3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element.lastName }}</td>
+            <td>{{ element.firstName }}</td>
+            <td>{{ element.loginUsername }}</td>
+            <td>{{ element.email }}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('admin_group_student_agreements', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-6"><i class="fa fa-calendar"></i> {{ 'student.tracking' | trans }}</a>
+                    <a href="{{ path('student_detail', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'student.detail' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">{{ m.paginator_stats(elements) }}</th>
+    </tr>
+    </tfoot>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(elements) }}
+</div>

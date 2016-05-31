@@ -20,7 +20,31 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
 class MyStudentController extends BaseController
 {
-    
+    /**
+     * @Route("/estudiantes", name="my_student_index", methods={"GET"})
+     */
+    public function groupDetailIndexAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $usersQuery = $em->createQuery('SELECT u FROM AppBundle:User u JOIN AppBundle:Agreement a WHERE a.educationalTutor = :user OR a.workTutor = :user')
+            ->setParameter('user', $this->getUser());
+
+        return $this->studentListIndexAction($usersQuery, $request,
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+                'breadcrumb' => [
+
+                ],
+                'title' => null,
+                'template' => 'student/index.html.twig'
+            ]);
+    }
 }

@@ -90,26 +90,12 @@ class GroupController extends BaseController
         $usersQuery = $em->createQuery('SELECT u FROM AppBundle:User u WHERE u.studentGroup = :group')
             ->setParameter('group', $group);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $usersQuery,
-            $request->query->getInt('page', 1),
-            $this->getParameter('page.size'),
-            [
-                'defaultSortFieldName' => 'u.lastName',
-                'defaultSortDirection' => 'asc'
-            ]
-        );
-
-        return $this->render('group/manage_students.html.twig',
+        return $this->studentListIndexAction($usersQuery, $request,
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
-                'breadcrumb' => [
-                    ['fixed' => $group->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $group->getId()]],
-                ],
+                'breadcrumb' => null,
                 'title' => $group->getName(),
-                'pagination' => $pagination,
-                'user' => $this->getUser()
+                'template' => 'group/manage_students.html.twig'
             ]);
     }
 
