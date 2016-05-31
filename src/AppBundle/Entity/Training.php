@@ -45,6 +45,12 @@ class Training
     protected $name;
 
     /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $stage;
+
+    /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="training")
      * @var Collection
      */
@@ -231,5 +237,29 @@ class Training
     public function getProgramHours()
     {
         return $this->programHours;
+    }
+
+    /**
+     * Set stage
+     *
+     * @param string $stage
+     *
+     * @return Training
+     */
+    public function setStage($stage)
+    {
+        $this->stage = $stage;
+
+        return $this;
+    }
+
+    /**
+     * Get stage
+     *
+     * @return string
+     */
+    public function getStage()
+    {
+        return $this->stage;
     }
 }

@@ -1,6 +1,7 @@
 browse.title: Listado de enseñanzas
 
 form.name: Denominación
+form.stage: Grado
 form.department: Departamento
 form.program_hours: Número de horas de FCT
 

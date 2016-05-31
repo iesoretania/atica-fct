@@ -36,6 +36,10 @@ class TrainingType extends AbstractType
                 'label' => 'form.name',
                 'required' => true
             ])
+            ->add('stage', null, [
+                'label' => 'form.stage',
+                'required' => true
+            ])
             ->add('department', null, [
                 'label' => 'form.department',
                 'required' => true
