@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
+use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -36,15 +37,18 @@ class StudentController extends BaseController
     {
         $agreements = $this->getUser()->getStudentAgreements();
 
-        if (count($agreements) == 1) {
+        if (count($agreements) === 1) {
             return $this->studentCalendarAgreementIndexAction($agreements[0]);
         }
 
         return $this->render('student/calendar_agreement_select.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
-                'user' => $this->getUser(),
-                'elements' => $agreements
+                'student' => $this->getUser(),
+                'elements' => $agreements,
+                'route_name' => 'student_calendar_agreement',
+                'back_route_name' => 'frontpage',
+                'back_route_params' => []
             ]);
     }
 
@@ -57,6 +61,8 @@ class StudentController extends BaseController
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
         $title = (string) $agreement->getWorkcenter();
 
+        /** @var User $user */
+        $user = $this->getUser();
         return $this->render('student/calendar_agreement.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar'),
@@ -67,7 +73,10 @@ class StudentController extends BaseController
                 'user' => $this->getUser(),
                 'calendar' => $calendar,
                 'agreement' => $agreement,
-                'route_name' => 'student_tracking'
+                'route_name' => 'student_tracking',
+                'back_route_name' => ($user->getStudentAgreements()->count() == 1) ? 'frontpage' : 'student_calendar',
+                'back_route_params' => [],
+                'activities_stats' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement)
             ]);
     }
 

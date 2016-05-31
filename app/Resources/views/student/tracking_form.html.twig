@@ -5,11 +5,9 @@
 {% block content %}
     <h2>{{ 'form.agreement_stats'|trans }}</h2>
     <dl class="dl">
-        <dt>{{ 'form.agreement_hours'|trans }}</dt>
-        <dd>{{ agreement_hours | number_format(2, ',', '.') | default('0') }}</dd>
         {% for activity in activities_stats %}
             <dt>{{ activity[0] }}</dt>
-            <dd>{{ activity[1] | number_format(2, ',', '.') | default('0') }} ({{ (100* activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
+            <dd>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
         {% endfor %}
     </dl>
     {% if workday.locked %}

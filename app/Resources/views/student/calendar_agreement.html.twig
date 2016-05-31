@@ -5,9 +5,16 @@
     <h2>{{ 'calendar.title'|trans }}</h2>
     {% include 'student/calendar_agreement_partial.html.twig' %}
 
-    {% if user.studentAgreements.count() == 1 %}
-        {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-    {% else %}
-        {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if activities_stats %}
+        <h2>{{ 'form.agreement_stats'|trans }}</h2>
+        <dl class="dl">
+            {% set agreement_hours = agreement.totalHours %}
+            {% for activity in activities_stats %}
+                <dt>{{ activity[0] }}</dt>
+                <dd>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
+            {% endfor %}
+        </dl>
     {% endif %}
+
+    {{ m.link_button(path(back_route_name, back_route_params), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 {% endblock %}

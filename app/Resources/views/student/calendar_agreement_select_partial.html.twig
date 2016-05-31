@@ -4,8 +4,8 @@
     <tr>
         <th class="col-md-2">{{ 'form.from_date'|trans }}</th>
         <th class="col-md-2">{{ 'form.to_date'|trans }}</th>
-        <th class="col-md-4">{{ 'form.tracked_hours'|trans }}</th>
-        <th class="col-md-2">{{ 'form.workcenter'|trans }}</th>
+        <th class="col-md-4">{{ 'form.workcenter'|trans }}</th>
+        <th class="col-md-2">{{ 'form.tracked_hours'|trans }}</th>
         <th class="col-md-2"></th>
     </tr>
     </thead>
@@ -21,7 +21,7 @@
             <td>{{ element.fromDate|date('d/m/Y') }}</td>
             <td>{{ element.toDate|date('d/m/Y') }}</td>
             <td>{{ element.workcenter }}</td>
-            <td>{% if total_hours %}{{ tracked_hours|number_format(2, ',', '.') }}/{{ total_hours|number_format(2, ',', '.') }} ({{ (100 * tracked_hours / total_hours) | number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
+            <td>{{ tracked_hours|number_format(2, ',', '.') }}/{{ total_hours|number_format(2, ',', '.') }}{% if total_hours %} ({{ (100 * tracked_hours / total_hours) | number_format(2, ',', '.') }}%){% endif %}</td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
@@ -40,7 +40,7 @@
     <tfoot>
         <tr>
             <td colspan="3">{{ 'form.training_hours'|trans({'%hours%': student.studentGroup.training.programHours}) }}</td>
-            <td>{% if sum_total_hours %}{{ sum_tracked_hours|number_format(2, ',', '.') }}/{{ student.studentGroup.training.programHours|number_format(2, ',', '.') }} ({{ (100.0 * sum_tracked_hours / sum_total_hours)|number_format(2, ',', '.') }}%){% else %}0.00{% endif %}</td>
+            <td>{{ sum_tracked_hours|number_format(2, ',', '.') }}/{{ student.studentGroup.training.programHours|number_format(2, ',', '.') }}{% if sum_total_hours %} ({{ (100.0 * sum_tracked_hours / sum_total_hours)|number_format(2, ',', '.') }}%){% endif %}</td>
             <td></td>
         </tr>
     </tfoot>

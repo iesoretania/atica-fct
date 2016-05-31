@@ -23,7 +23,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
-use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,11 +34,11 @@ class MyStudentController extends BaseController
      */
     public function myStudentIndexAction()
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
 
-        $users = $em->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
-
+        if (count($users) === 1) {
+            return $this->myStudentAgreementIndexAction($users[0][0]);
+        }
         return $this->render('student/index.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
             'title' => null,
@@ -53,6 +52,7 @@ class MyStudentController extends BaseController
      */
     public function myStudentAgreementIndexAction(User $user)
     {
+        $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
         $agreements = $user->getStudentAgreements();
 
         if (count($agreements) == 1) {
@@ -68,7 +68,10 @@ class MyStudentController extends BaseController
                 ],
                 'student' => $user,
                 'title' => $title,
-                'elements' => $agreements
+                'elements' => $agreements,
+                'route_name' => 'my_student_agreement_calendar',
+                'back_route_name' => count($users) === 1 ? 'frontpage' : 'my_student_index',
+                'back_route_params' => [],
             ]);
     }
 
@@ -78,8 +81,12 @@ class MyStudentController extends BaseController
      */
     public function myStudentAgreementCalendarAction(Agreement $agreement)
     {
+        $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
         $title = (string) $agreement->getWorkcenter();
+        $agreements = $agreement->getStudent()->getStudentAgreements();
+
+        $parent = (count($users) === 1 ? 'frontpage' : 'my_student_index');
 
         return $this->render('student/calendar_agreement.html.twig',
             [
@@ -92,7 +99,10 @@ class MyStudentController extends BaseController
                 'user' => $this->getUser(),
                 'calendar' => $calendar,
                 'agreement' => $agreement,
-                'route_name' => 'my_student_agreement_tracking'
+                'route_name' => 'my_student_agreement_tracking',
+                'back_route_name' => count($agreements) === 1 ? $parent : 'my_student_agreements',
+                'back_route_params' => count($agreements) === 1 ? []: ['id' => $agreement->getStudent()->getId()],
+                'activities_stats' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement)
             ]);
     }
 
