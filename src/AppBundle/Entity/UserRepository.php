@@ -64,4 +64,23 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setParameter('user', $user)
             ->getSingleScalarResult();
     }
+
+    public function countTrackedHours(User $user)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT SUM(t.hours) FROM AppBundle:Tracking t INNER JOIN AppBundle:Workday w INNER JOIN w.agreement a WHERE a.student = :user')
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    public function getAgreementRelatedStudents(User $user)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT DISTINCT u,
+              (SELECT SUM(t2.hours) FROM AppBundle:Tracking t2 INNER JOIN AppBundle:Workday w2 WITH t2.workday = w2 INNER JOIN w2.agreement a2 WITH w2.agreement = a2 WHERE a2.student = u),
+              (SELECT SUM(w3.hours) FROM AppBundle:Workday w3 INNER JOIN w3.agreement a3 WHERE a3.student = u)
+              FROM AppBundle:User u JOIN AppBundle:Agreement a WITH a.student = u WHERE a.educationalTutor = :user OR a.workTutor = :user ORDER BY u.lastName, u.firstName')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
 }

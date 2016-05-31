@@ -20,8 +20,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MyStudentController extends BaseController
@@ -29,22 +30,43 @@ class MyStudentController extends BaseController
     /**
      * @Route("/estudiantes", name="my_student_index", methods={"GET"})
      */
-    public function groupDetailIndexAction(Request $request)
+    public function myStudentIndexAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $usersQuery = $em->createQuery('SELECT u FROM AppBundle:User u JOIN AppBundle:Agreement a WHERE a.educationalTutor = :user OR a.workTutor = :user')
-            ->setParameter('user', $this->getUser());
+        $users = $em->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
 
-        return $this->studentListIndexAction($usersQuery, $request,
+        return $this->render('student/index.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+            'title' => null,
+            'elements' => $users
+        ]);
+    }
+
+
+    /**
+     * @Route("/estudiantes/{id}", name="my_student_agreements", methods={"GET"})
+     * @Security("is_granted('USER_TRACK', user)")
+     */
+    public function myStudentAgreementIndexAction(User $user)
+    {
+        $agreements = $user->getStudentAgreements();
+
+        /*if (count($agreements) == 1) {
+            return $this->studentCalendarAgreementIndexAction($agreements[0]);
+        }*/
+
+        $title = $user->getFullDisplayName();
+        return $this->render('student/calendar_agreement_select.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
-
+                    ['fixed' => $title]
                 ],
-                'title' => null,
-                'template' => 'student/index.html.twig'
+                'student' => $user,
+                'title' => $title,
+                'elements' => $agreements
             ]);
     }
 }

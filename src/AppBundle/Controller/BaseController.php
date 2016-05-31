@@ -23,7 +23,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,26 +77,4 @@ class BaseController extends Controller
             ]);
     }
 
-    public function studentListIndexAction(Query $query, Request $request, $options)
-    {
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            $this->getParameter('page.size'),
-            [
-                'defaultSortFieldName' => 'u.lastName',
-                'defaultSortDirection' => 'asc'
-            ]
-        );
-
-        return $this->render($options['template'],
-            [
-                'menu_item' => $options['menu_item'],
-                'breadcrumb' => $options['breadcrumb'],
-                'title' => $options['title'],
-                'pagination' => $pagination,
-                'user' => $this->getUser()
-            ]);
-    }
 }

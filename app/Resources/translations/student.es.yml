@@ -1,11 +1,13 @@
 browse.title: Datos del estudiante
 calendar_select.title: Seleccione un acuerdo de colaboración
 calendar.title: Calendario del acuerdo de colaboración
+student.browse.title: Listado de alumnado
 
 form.login_username: Nombre de usuario
 form.reference: NIF/NIE
 form.first_name: Nombre
 form.last_name: Apellidos
+form.group: Grupo
 form.display_name: Nombre mostrado
 form.gender: Sexo
 form.gender_unknown: Desconocido
@@ -18,6 +20,7 @@ form.to_date: Hasta
 form.workcenter: Centro de trabajo
 form.workcenter_select: Seleccionar
 form.no_workcenters: No hay centros de trabajo asociados
+form.training_hours: "Horas totales de la enseñanza: %hours%"
 
 form.daily_activities: Actividades del día (previstas %hours% horas)
 form.agreement_stats: Estado del programa
@@ -25,6 +28,7 @@ form.agreement_hours: Horas totales del acuerdo
 form.activity: Actividad
 form.description: Descripción
 form.hours: Horas realizadas
+form.tracked_hours: Horas cumplimentadas
 form.notes: Notas adicionales
 
 form.submit: Guardar cambios
