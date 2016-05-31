@@ -35,7 +35,7 @@ form.to_date: Hasta
 form.workcenter: Sede
 form.hours: Horas
 form.no_workcenters: No hay acuerdos de colaboración
-form.training_hours: Horas totales de la enseñanza: %hours%
+form.training_hours: "Horas totales de la enseñanza: %hours%"
 form.calendar: Seguimiento
 
 alert.saved: Datos guardados correctamente
