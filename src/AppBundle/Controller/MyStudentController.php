@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
+use AppBundle\Entity\Report;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -121,6 +122,43 @@ class MyStudentController extends BaseController
                 ['fixed' => $workday->getDate()->format('d/m/Y')]
             ],
             'back_route_name' => 'my_student_agreement_calendar'
+        ]);
+    }
+    
+    /**
+     * @Route("/estudiantes/informe/{id}", name="my_student_agreement_report_form", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function studentReportAction(Agreement $agreement, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (null === $agreement->getReport()) {
+            $report = new Report();
+            $report->setAgreement($agreement);
+            $em->persist($report);
+        } else {
+            $report = $agreement->getReport();
+        }
+
+        $form = $this->createForm('AppBundle\Form\Type\ReportType', $report);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $report->setSignDate(new \DateTime());
+            $em->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
+            return $this->redirectToRoute('my_student_agreement_calendar', ['id' => $agreement->getId()]);
+        }
+
+        return $this->render('student/report_form.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+            'breadcrumb' => [
+                ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
+                ['fixed' => $this->get('translator')->trans('form.report', [], 'student')]
+            ],
+            'form' => $form->createView(),
+            'agreement' => $agreement
         ]);
     }
 }

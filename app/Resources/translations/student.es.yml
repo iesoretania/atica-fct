@@ -42,8 +42,20 @@ form.back: Volver
 form.tracking_back: Volver al calendario
 form.impersonate: Acceder como el estudiante
 
-alert.saved: Datos guardados correctamente
-alert.not_saved: No se han podido guardar los cambios
+form.report: Informe del tutor laboral
+form.work_activities: Áreas y puestos de trabajo donde ha desarrollado las actividades formativas
+form.professional_competence: Valoración de la competencia profesional
+form.organizational_competence: Valoración de la competencia organizacional
+form.relational_competence: Valoración de la competencia relacional
+form.contingency_response: Valoración de la capacidad de respuesta ante contingencias
+form.proposed_changes: Modificaciones a introducir en el programa formativo (opcional)
+
+form.grade_negative: Negativo
+form.grade_positive: Positivo
+form.grade_excellent: Excelente
+
+alert.saved: Datos guardados correctamente.
+alert.not_saved: No se han podido guardar los cambios.
 
 prompt.locked: >
   La jornada está bloqueada. Solamente el tutor docente podrá realizar cambios en la misma.

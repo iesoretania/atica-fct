@@ -1,0 +1,41 @@
+{% trans_default_domain 'student' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block content %}
+    <h2>{{ 'form.report'|trans }}</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.link_button(path('my_student_agreement_calendar', {'id': agreement.id}), 'arrow-left', 'btn-default', 'form.tracking_back'|trans) }}
+        {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var dirty = false;
+        var isDirty = function() { return dirty };
+
+        window.onload = function() {
+            window.addEventListener("beforeunload", function (e) {
+                if (!isDirty()) {
+                    return undefined;
+                }
+
+                var confirmationMessage = '{{ 'prompt.unsaved_changes'|trans|e('js') }}';
+
+                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+            });
+        };
+
+        $(":input").change(function () {
+            dirty = true;
+        });
+
+        $("form").submit(function () {
+            dirty = false;
+        });
+    </script>
+{% endblock %}

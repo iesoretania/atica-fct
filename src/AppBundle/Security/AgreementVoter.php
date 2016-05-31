@@ -32,6 +32,7 @@ class AgreementVoter extends Voter
     const LOCK = 'AGREEMENT_LOCK';
     const UNLOCK = 'AGREEMENT_UNLOCK';
     const ACCESS = 'AGREEMENT_ACCESS';
+    const REPORT = 'AGREEMENT_REPORT';
 
     private $decisionManager;
 
@@ -49,7 +50,7 @@ class AgreementVoter extends Voter
             return false;
         }
 
-        if (!in_array($attribute, [self::MANAGE, self::LOCK, self::UNLOCK, self::ACCESS], true)) {
+        if (!in_array($attribute, [self::MANAGE, self::LOCK, self::UNLOCK, self::ACCESS, self::REPORT], true)) {
             return false;
         }
 
@@ -83,13 +84,20 @@ class AgreementVoter extends Voter
             return true;
         }
 
-        // Si es el tutor de grupo, tutor docente o tutor laboral, denegar acceso de gestión
-        if ($subject->getStudent() == $user
-            || $user->getTutorizedGroups()->contains($subject->getStudent()->getStudentGroup())
-            || $subject->getEducationalTutor() == $user
-            || $subject->getWorkTutor() == $user) {
-
+        // Si es el tutor de grupo o tutor docente, permitir cualquier cosa salvo gestión
+        if ($user->getTutorizedGroups()->contains($subject->getStudent()->getStudentGroup())
+                || $subject->getEducationalTutor() == $user) {
             return $attribute !== self::MANAGE;
+        }
+
+        // Si es el tutor laboral, permitir acceso al calendario y al informe
+        if ($subject->getWorkTutor() == $user) {
+            return $attribute === self::ACCESS || $attribute === self::REPORT;
+        }
+
+        // Si es propio usuario, denegar permitir sólo acceso
+        if ($subject->getStudent() == $user) {
+            return $attribute === self::ACCESS;
         }
 
         // denegamos en cualquier otro caso

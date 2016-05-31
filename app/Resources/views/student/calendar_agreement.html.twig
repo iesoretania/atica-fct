@@ -2,9 +2,6 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
-    <h2>{{ 'calendar.title'|trans }}</h2>
-    {% include 'student/calendar_agreement_partial.html.twig' %}
-
     {% if activities_stats %}
         <h2>{{ 'form.agreement_stats'|trans }}</h2>
         <dl class="dl">
@@ -16,5 +13,11 @@
         </dl>
     {% endif %}
 
+    <h2>{{ 'calendar.title'|trans }}</h2>
+    {% include 'student/calendar_agreement_partial.html.twig' %}
+
     {{ m.link_button(path(back_route_name, back_route_params), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {% if is_granted('AGREEMENT_REPORT', agreement) %}
+        {{ m.link_button(path('my_student_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
+    {% endif %}
 {% endblock %}
