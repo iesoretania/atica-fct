@@ -89,7 +89,7 @@ class MyStudentController extends BaseController
 
         $parent = (count($users) === 1 ? 'frontpage' : 'my_student_index');
 
-        return $this->render('student/calendar_agreement.html.twig',
+        return $this->render('student/tutor_calendar_agreement.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
@@ -107,6 +107,18 @@ class MyStudentController extends BaseController
             ]);
     }
 
+    /**
+     * @Route("/estudiantes/seguimiento/{id}/operacion", name="my_student_agreement_calendar_operation", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement)")
+     */
+    public function operationWorkdayAction(Agreement $agreement, Request $request)
+    {
+        if ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
+            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'my_student_agreement_calendar');
+        } else {
+            return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'my_student_agreement_calendar');
+        }
+    }
     /**
      * @Route("/estudiantes/seguimiento/jornada/{id}", name="my_student_agreement_tracking", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_ACCESS', workday.getAgreement())")

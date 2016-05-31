@@ -31,6 +31,9 @@ form.hours: Horas realizadas
 form.tracked_hours: Horas cumplimentadas
 form.notes: Notas adicionales
 
+form.workday_lock: Bloquear jornadas seleccionadas
+form.workday_unlock: Desbloquear jornadas seleccionadas
+
 form.submit: Guardar cambios
 form.previous: Jornada anterior
 form.next: Siguiente jornada
@@ -39,6 +42,7 @@ form.agreements: Acuerdos de colaboración
 form.tracking: Seguimiento
 
 form.back: Volver
+
 form.tracking_back: Volver al calendario
 form.impersonate: Acceder como el estudiante
 
