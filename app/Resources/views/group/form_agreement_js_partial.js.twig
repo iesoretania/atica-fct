@@ -1,0 +1,60 @@
+{% trans_default_domain 'group' %}
+    function clearForm(form) {
+        var values = {};
+        $.each(form[0].elements, function(i, field) {
+            field.value = "";
+        });
+
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: values,
+            success: function(result) { callback(result); }
+        });
+    }
+
+    my_item = $("select#agreement_workTutor");
+
+    $(function() {
+        $("select.person").select2('destroy');
+        $("select.person")
+                .append($('<option>', {value: 'new', text: "{{ 'form.new_user'|trans|e('js') }}"}))
+                .select2({
+                    theme: "bootstrap"
+                })
+                .on('change', function(e) {
+                    my_item = e.currentTarget;
+                    if (e.currentTarget.value === 'new') {
+                        $('#new_user').modal('show');
+                    }
+                });
+    });
+
+    $('#create_user').on('click', function (e) {
+        e.preventDefault();
+        sendForm($('.modal-body').find('form'), function(response) {
+            if (typeof response == "object") {
+                $("select.person").select2('destroy');
+                $("select.person")
+                    .prepend($('<option>', {value: response.id, text: response.name}));
+                $("select.person").select2({
+                    theme: "bootstrap"
+                });
+
+                $('#new_user').modal('hide');
+
+                clearForm($('.modal-body').find('form'));
+
+                $(my_item).select2({
+                    theme: "bootstrap"
+                }).val(response.id);
+
+                $(my_item).select2({
+                    theme: "bootstrap"
+                }).val(response.id);
+            }
+            else {
+                $('#new_user').find('.modal-body').html(response);
+            }
+        });
+    });
