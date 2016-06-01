@@ -4,5 +4,5 @@
 {% block content %}
     {% include 'student/index_partial.html.twig' %}
 
-    {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 {% endblock %}

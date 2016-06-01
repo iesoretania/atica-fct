@@ -31,7 +31,8 @@ class BaseController extends Controller
 {
     public function baseWorkdayAction(Workday $workday, Request $request, $options)
     {
-        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($workday->getAgreement());
+        $agreement = $workday->getAgreement();
+        $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
 
         $dow = ((6 + (int) $workday->getDate()->format('w')) % 7);
         
@@ -40,7 +41,7 @@ class BaseController extends Controller
         $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
 
         $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday, [
-            'disabled' => $workday->isLocked()
+            'disabled' => ($this->isGranted('AGREEMENT_FILL', $agreement) || $workday->isLocked()) && (!$this->isGranted('AGREEMENT_UNLOCK', $agreement))
         ]);
         $form->handleRequest($request);
 
@@ -57,7 +58,7 @@ class BaseController extends Controller
             $em->flush();
         }
 
-        $activitiesStats = $em->getRepository('AppBundle:Agreement')->getActivitiesStats($workday->getAgreement());
+        $activitiesStats = $em->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement);
         $next = $em->getRepository('AppBundle:Workday')->getNext($workday);
         $previous = $em->getRepository('AppBundle:Workday')->getPrevious($workday);
         

@@ -65,4 +65,14 @@ class AgreementRepository extends EntityRepository
         // borrar acuerdo
         $this->getEntityManager()->remove($agreement);
     }
+
+    public function getTutorizedAgreements(User $student, User $user)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT a FROM AppBundle:Agreement a WHERE a.student = :student AND (a.educationalTutor = :user OR a.workTutor = :user) ORDER BY a.fromDate, a.toDate')
+            ->setParameter('user', $user)
+            ->setParameter('student', $student)
+            ->getResult();
+
+    }
 }

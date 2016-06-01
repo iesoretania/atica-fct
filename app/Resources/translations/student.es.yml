@@ -31,8 +31,9 @@ form.hours: Horas realizadas
 form.tracked_hours: Horas cumplimentadas
 form.notes: Notas adicionales
 
-form.workday_lock: Bloquear jornadas seleccionadas
-form.workday_unlock: Desbloquear jornadas seleccionadas
+form.workday_lock: Bloquear jornadas
+form.workday_unlock: Desbloquear jornadas
+form.select_deselect: Seleccionar/deseleccionar jornadas
 
 form.submit: Guardar cambios
 form.previous: Jornada anterior

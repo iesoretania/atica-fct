@@ -49,25 +49,25 @@ class MyStudentController extends BaseController
 
     /**
      * @Route("/estudiantes/{id}", name="my_student_agreements", methods={"GET"})
-     * @Security("is_granted('USER_TRACK', user)")
+     * @Security("is_granted('USER_TRACK', student)")
      */
-    public function myStudentAgreementIndexAction(User $user)
+    public function myStudentAgreementIndexAction(User $student)
     {
         $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
-        $agreements = $user->getStudentAgreements();
+        $agreements = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getTutorizedAgreements($student, $this->getUser());
 
         if (count($agreements) == 1) {
             return $this->myStudentAgreementCalendarAction($agreements[0]);
         }
 
-        $title = $user->getFullDisplayName();
+        $title = $student->getFullDisplayName();
         return $this->render('student/calendar_agreement_select.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
                     ['fixed' => $title]
                 ],
-                'student' => $user,
+                'student' => $student,
                 'title' => $title,
                 'elements' => $agreements,
                 'route_name' => 'my_student_agreement_calendar',
@@ -84,8 +84,8 @@ class MyStudentController extends BaseController
     {
         $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
+        $agreements = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getTutorizedAgreements($agreement->getStudent(), $this->getUser());
         $title = (string) $agreement->getWorkcenter();
-        $agreements = $agreement->getStudent()->getStudentAgreements();
 
         $parent = (count($users) === 1 ? 'frontpage' : 'my_student_index');
 
@@ -102,7 +102,7 @@ class MyStudentController extends BaseController
                 'agreement' => $agreement,
                 'route_name' => 'my_student_agreement_tracking',
                 'back_route_name' => count($agreements) === 1 ? $parent : 'my_student_agreements',
-                'back_route_params' => count($agreements) === 1 ? []: ['id' => $agreement->getStudent()->getId()],
+                'back_route_params' => count($agreements) === 1 ? [] : ['id' => $agreement->getStudent()->getId()],
                 'activities_stats' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement)
             ]);
     }
