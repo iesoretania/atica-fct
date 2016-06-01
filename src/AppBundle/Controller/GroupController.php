@@ -29,6 +29,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -414,7 +415,6 @@ class GroupController extends BaseController
      * @Route("/seguimiento/acuerdo/eliminar/{id}", name="admin_group_student_agreement_delete", methods={"GET", "POST"})
      * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
      */
-
     public function agreementDeleteAction(Agreement $agreement, Request $request)
     {
         $student = $agreement->getStudent();
@@ -446,4 +446,39 @@ class GroupController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/api/usuario/crear", name="api_user_new", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
+     */
+    public function apiNewUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $newUser = new User();
+        
+        $form = $this->createForm('AppBundle\Form\Type\NewUserType', $newUser, [
+            'action' => $this->generateUrl('api_user_new'),
+            'method' => 'POST'
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            $newUser
+                ->setEnabled(true)
+                ->setGlobalAdministrator(false);
+            
+            $em->persist($newUser);
+            $em->flush();
+
+            return new JsonResponse([
+                'success' => true,
+                'id' => $newUser->getId(),
+                'name' => $newUser->getFullPersonDisplayName()
+            ]);
+        }
+
+        return $this->render('group/new_user_partial.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }

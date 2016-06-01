@@ -38,6 +38,10 @@ form.no_workcenters: No hay acuerdos de colaboración
 form.training_hours: "Horas totales de la enseñanza: %hours%"
 form.calendar: Seguimiento
 
+form.new_user: Crear nuevo usuario
+form.new_user.close: Cerrar sin guardar
+form.new_user.save: Guardar cambios
+
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
