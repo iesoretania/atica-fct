@@ -14,10 +14,10 @@
         {% endif %}
         {% if buttons %}
             {% if is_granted('AGREEMENT_LOCK', agreement) %}
-                {{ m.submit_button('lock', 'lock', 'btn-default', 'form.workday_lock'|trans) }}
+                {{ m.submit_button('lock', 'lock', 'btn-primary', 'form.workday_lock'|trans) }}
             {% endif %}
             {% if is_granted('AGREEMENT_UNLOCK', agreement) %}
-                {{ m.submit_button('unlock', 'unlock', 'btn-default', 'form.workday_unlock'|trans) }}
+                {{ m.submit_button('unlock', 'unlock', 'btn-primary', 'form.workday_unlock'|trans) }}
             {% endif %}
             {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}
         {% endif %}
