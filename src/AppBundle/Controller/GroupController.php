@@ -103,6 +103,9 @@ class GroupController extends BaseController
 
         return $this->render('group/manage_students.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+            'breadcrumb' => [
+                ['fixed' => (string) $group],
+            ],
             'title' => $group->getName(),
             'pagination' => $pagination
         ]);
