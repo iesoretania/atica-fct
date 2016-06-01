@@ -67,10 +67,12 @@ class AgreementType extends AbstractType
             ])
             ->add('workTutor', null, [
                 'label' => 'form.work_tutor',
+                'choice_label' => 'fullPersonDisplayName',
                 'required' => true
             ])
             ->add('educationalTutor', null, [
                 'label' => 'form.educational_tutor',
+                'choice_label' => 'fullPersonDisplayName',
                 'required' => true
             ])
             ->add('signDate', null, [

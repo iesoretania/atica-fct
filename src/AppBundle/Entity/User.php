@@ -163,6 +163,22 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     }
 
     /**
+     * Returns the person's display name
+     *
+     * @return string
+     */
+    public function getFullPersonDisplayName()
+    {
+        $displayName = (string) $this;
+
+        if (null !== $this->getReference()) {
+            $displayName .= ' (' . $this->getReference() . ')';
+        }
+
+        return $displayName;
+    }
+
+    /**
      * Get id
      *
      * @return integer
