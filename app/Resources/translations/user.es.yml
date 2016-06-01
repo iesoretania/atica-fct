@@ -26,6 +26,10 @@ alert.password_changed: Datos guardados correctamente y contraseña cambiada
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
+alert.deleted: Usuario eliminado con éxito.
+alert.not_deleted: No se ha podido eliminar el usuario. Compruebe que no tiene datos asociados.
+
+form.delete_back: Volver sin eliminar
 form.view: Detalles
 form.delete: Eliminar
 form.back: Volver
@@ -36,8 +40,7 @@ user.new: Nuevo usuario
 user.title: Usuarios de la organización
 user.title_pending: Usuarios con invitaciones pendientes
 user.delete: Eliminar de la aplicación
-user.deleted: Usuario eliminado con éxito
-user.delete_failed: No se ha podido eliminar al usuario
-user.back: Volver al listado de usuario
-user.delete_confirm: >
-    ¡ATENCIÓN! El usuario no podrá eliminarse con éxito si está asociado a algún acuerdo de colaboración.
+form.delete_back: Volver al listado de usuarios
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El usuario no podrá eliminarse si está asociado a algún acuerdo de colaboración o a otros datos.

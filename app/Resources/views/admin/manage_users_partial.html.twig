@@ -20,7 +20,7 @@
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
                     <a href="{{ path('admin_user_form', {'user': user.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-user"></i> {{ 'form.view' | trans }}</a>
-                    <a href="" class="btn btn-danger col-xs-12 col-sm-6" ><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                    <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-danger col-xs-12 col-sm-6" ><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

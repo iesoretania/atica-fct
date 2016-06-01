@@ -126,4 +126,36 @@ class AdminUserController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/eliminar/{id}", name="admin_user_delete", methods={"GET", "POST"}, requirements={"user": "\d+"})
+     */
+    public function genericDeleteAction(User $element, Request $request)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            // Eliminar el departamento de la base de datos
+            $this->getDoctrine()->getManager()->remove($element);
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'user'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'user'));
+            }
+            return $this->redirectToRoute('admin_users');
+        }
+
+        $title = (string) $element;
+
+        $breadcrumb = [
+            ['fixed' => $title],
+            ['caption' => 'menu.delete']
+        ];
+
+        return $this->render('admin/delete_user.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_users'),
+            'breadcrumb' => $breadcrumb,
+            'title' => $title,
+            'element' => $element,
+        ]);
+    }
 }
