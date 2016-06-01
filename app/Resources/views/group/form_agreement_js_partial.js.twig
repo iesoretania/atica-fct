@@ -1,14 +1,21 @@
 {% trans_default_domain 'group' %}
-    function clearForm(form) {
+    function sendForm(form, callback) {
         var values = {};
         $.each(form[0].elements, function(i, field) {
-            field.value = "";
+            values[field.name] = field.value;
         });
-
         $.ajax({
             type: form.attr('method'),
             url: form.attr('action'),
             data: values,
+            success: function(result) { callback(result); }
+        });
+    }
+
+    function clearForm(form, callback) {
+        $.ajax({
+            type: 'GET',
+            url: form.attr('action'),
             success: function(result) { callback(result); }
         });
     }
@@ -18,7 +25,7 @@
     $(function() {
         $("select.person").select2('destroy');
         $("select.person")
-                .append($('<option>', {value: 'new', text: "{{ 'form.new_user'|trans|e('js') }}"}))
+                .prepend($('<option>', {value: 'new', text: "{{ 'form.new_user'|trans|e('js') }}"}))
                 .select2({
                     theme: "bootstrap"
                 })
@@ -36,14 +43,16 @@
             if (typeof response == "object") {
                 $("select.person").select2('destroy');
                 $("select.person")
-                    .prepend($('<option>', {value: response.id, text: response.name}));
+                    .append($('<option>', {value: response.id, text: response.name}));
                 $("select.person").select2({
                     theme: "bootstrap"
                 });
 
                 $('#new_user').modal('hide');
 
-                clearForm($('.modal-body').find('form'));
+                clearForm($('.modal-body').find('form'), function(response) {
+                    $('#new_user').find('.modal-body').html(response);
+                });
 
                 $(my_item).select2({
                     theme: "bootstrap"
