@@ -41,7 +41,7 @@ class BaseController extends Controller
         $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
 
         $form = $this->createForm('AppBundle\Form\Type\WorkdayTrackingType', $workday, [
-            'disabled' => ($this->isGranted('AGREEMENT_FILL', $agreement) || $workday->isLocked()) && (!$this->isGranted('AGREEMENT_UNLOCK', $agreement))
+            'disabled' => (!$this->isGranted('AGREEMENT_FILL', $agreement) || $workday->isLocked()) && (!$this->isGranted('AGREEMENT_UNLOCK', $agreement))
         ]);
         $form->handleRequest($request);
 
