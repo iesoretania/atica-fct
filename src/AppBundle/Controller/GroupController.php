@@ -219,7 +219,7 @@ class GroupController extends BaseController
 
                 /** @var Workday $date */
                 foreach ($dates as $date) {
-                    if ($date->getTrackedHours() === 0) {
+                    if ($date->getTrackedHours() === 0.0) {
                         $em->remove($date);
                     }
                 }
