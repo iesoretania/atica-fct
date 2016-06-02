@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Person;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -57,9 +56,7 @@ class SecurityController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // comprobar que está asociada a un usuario
-            $person = $this->getDoctrine()->getManager()->getRepository('AppBundle:Person')->findOneBy(['email' => $email]);
-
-            $user = (null !== $person) ? $person->getUser() : null;
+            $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->findOneBy(['email' => $email]);
 
             if (null === $user) {
                 $error = $this->get('translator')->trans('form.reset.notfound', [], 'security');
@@ -92,7 +89,7 @@ class SecurityController extends Controller
                             [
                                 'id' => 'form.reset.email.body',
                                 'parameters' => [
-                                    '%name%' => $user->getPerson()->getFirstName(),
+                                    '%name%' => $user->getFirstName(),
                                     '%link%' => $this->generateUrl('login_password_reset_do',
                                         ['userId' => $user->getId(), 'token' => $token],
                                         UrlGeneratorInterface::ABSOLUTE_URL),
