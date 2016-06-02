@@ -47,8 +47,8 @@ class StudentTrackingMenu implements MenuBuilderInterface
          */
         $root = reset($menu);
 
-        $mainItem = new MenuItem();
-        $mainItem
+        $menuItem = new MenuItem();
+        $menuItem
             ->setName('my_students_tracking')
             ->setRouteName('my_student_index')
             ->setCaption('menu.student_tracking')
@@ -56,7 +56,29 @@ class StudentTrackingMenu implements MenuBuilderInterface
             ->setColor('orange')
             ->setIcon('briefcase');
 
-        $root->addChild($mainItem, MenuItem::AT_THE_END);
+        $root->addChild($menuItem, MenuItem::AT_THE_END);
+
+        $menuItem = new MenuItem();
+        $menuItem
+            ->setName('my_students_visit')
+            ->setRouteName('my_student_index')
+            ->setCaption('menu.student_visit')
+            ->setDescription('menu.student_visit.detail')
+            ->setColor('yellow')
+            ->setIcon('car');
+
+        $root->addChild($menuItem, MenuItem::AT_THE_END);
+
+        $menuItem = new MenuItem();
+        $menuItem
+            ->setName('travel_expenses')
+            ->setRouteName('my_student_index')
+            ->setCaption('menu.travel_expenses')
+            ->setDescription('menu.travel_expenses.detail')
+            ->setColor('dark-teal')
+            ->setIcon('road');
+
+        $root->addChild($menuItem, MenuItem::AT_THE_END);
     }
 
     public function getMenuPriority()
