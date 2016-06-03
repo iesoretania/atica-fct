@@ -25,7 +25,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="VisitRepository")
  */
 class Visit
 {
@@ -48,7 +48,7 @@ class Visit
      * @ORM\JoinColumn(nullable=false)
      * @var User
      */
-    protected $teacher;
+    protected $tutor;
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
@@ -138,13 +138,13 @@ class Visit
     /**
      * Set teacher
      *
-     * @param User $teacher
+     * @param User $tutor
      *
      * @return Visit
      */
-    public function setTeacher(User $teacher)
+    public function setTutor(User $tutor)
     {
-        $this->teacher = $teacher;
+        $this->tutor = $tutor;
 
         return $this;
     }
@@ -154,9 +154,9 @@ class Visit
      *
      * @return User
      */
-    public function getTeacher()
+    public function getTutor()
     {
-        return $this->teacher;
+        return $this->tutor;
     }
 
     /**

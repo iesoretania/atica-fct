@@ -1,4 +1,5 @@
 browse.workcenter: Visitas de %user%
+browse.summary: Resumen
 browse.title: Resumen de visitas
 
 form.educational_tutor: Tutor docente
@@ -6,11 +7,14 @@ form.workcenter: Centro de trabajo
 form.agreements: Acuerdos
 form.students: Estudiantes
 form.visits: Visitas
+form.date: Fecha visita
 form.first_date: Primera visita
 form.last_date: Última visita
 
 form.select: Seleccionar
+form.no_visits: No hay visitas registradas
 
+form.summary: Ver resumen de visitas
 form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Nueva enseñanza

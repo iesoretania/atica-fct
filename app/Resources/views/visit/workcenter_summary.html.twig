@@ -1,0 +1,8 @@
+{% trans_default_domain 'visit' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    {% include 'visit/workcenter_summary_partial.html.twig' %}
+
+    {{ m.link_button(path('visit_workcenter_index', {'id': tutor.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+{% endblock %}

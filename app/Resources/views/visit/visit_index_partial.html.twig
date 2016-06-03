@@ -2,24 +2,18 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        <th class="col-md-4">{{ 'form.workcenter'|trans }}</th>
-        <th class="col-md-1">{{ 'form.agreements'|trans }}</th>
-        <th class="col-md-1">{{ 'form.students'|trans }}</th>
-        <th class="col-md-1">{{ 'form.visits'|trans }}</th>
-        <th class="col-md-1">{{ 'form.first_date'|trans }}</th>
-        <th class="col-md-1">{{ 'form.last_date'|trans }}</th>
+        <th class="col-md-2">{{ 'form.date'|trans }}</th>
+        <th class="col-md-3">{{ 'form.workcenter'|trans }}</th>
+        <th class="col-md-4">{{ 'form.students'|trans }}</th>
         <th class="col-md-3"></th>
     </tr>
     </thead>
     <tbody>
     {% for element in elements %}
         <tr>
-            <td>{{ element[0] }}</td>
-            <td>{{ element[1] }}</td>
-            <td>{{ element[3] }}</td>
-            <td>{{ element[5] }}</td>
-            <td>{{ element[7] ? element[7]|date('d/m/y') }}</td>
-            <td>{{ element[9] ? element[9]|date('d/m/y') }}</td>
+            <td>{{ element.when|date('d/m/Y') }}</td>
+            <td>{{ element.workcenter }}</td>
+            <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}student.fullDisplayName{% endfor %}</td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
@@ -27,6 +21,10 @@
                 {% endblock %}
                 </div>
             </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">{{ 'form.no_visits'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>

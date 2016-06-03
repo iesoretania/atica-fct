@@ -21,6 +21,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\Visit;
+use AppBundle\Entity\Workcenter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,7 +45,7 @@ class VisitController extends Controller
             return $this->visitIndexAction($user);
         }
 
-        return $this->render('visit/index.html.twig', [
+        return $this->render('visit/tutor_index.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('visit_index'),
             'title' => null,
             'elements' => $visits
@@ -56,17 +58,41 @@ class VisitController extends Controller
      */
     public function visitIndexAction(User $tutor)
     {
-        $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workcenter')->getVisitRelatedWorkcenters($tutor);
+        $workcenters = $this->getDoctrine()->getManager()->getRepository('AppBundle:Visit')->getRelatedVisits($tutor);
 
         $title = (string) $tutor;
 
-        return $this->render('visit/workcenter_index.html.twig', [
+        return $this->render('visit/visit_index.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('visit_index'),
             'breadcrumb' => [
                 ['fixed' => $title]
             ],
             'title' => $this->get('translator')->trans('browse.workcenter', ['%user%' => $title], 'visit'),
-            'elements' => $visits,
+            'tutor' => $tutor,
+            'elements' => $workcenters,
+            'back_route_name' => $this->isGranted('ROLE_DEPARTMENT_HEAD') ? 'visit_index' : 'frontpage'
+        ]);
+    }
+
+    /**
+     * @Route("/visitas/{id}/resumen", name="visit_workcenter_summary_index", methods={"GET"})
+     * @Security("is_granted('USER_VISIT_TRACK', tutor)")
+     */
+    public function visitWorkcenterSummaryAction(User $tutor)
+    {
+        $workcenters = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workcenter')->getVisitRelatedWorkcenters($tutor);
+
+        $title = (string) $tutor;
+
+        return $this->render('visit/workcenter_summary.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('visit_index'),
+            'breadcrumb' => [
+                ['fixed' => $title, 'path' => 'visit_workcenter_index', 'options' => ['id' => $tutor->getId()]],
+                ['fixed' => $this->get('translator')->trans('browse.summary', [], 'visit')]
+            ],
+            'title' => $this->get('translator')->trans('browse.workcenter', ['%user%' => $title], 'visit'),
+            'tutor' => $tutor,
+            'elements' => $workcenters,
             'back_route_name' => $this->isGranted('ROLE_DEPARTMENT_HEAD') ? 'visit_index' : 'frontpage'
         ]);
     }
