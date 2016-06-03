@@ -4,8 +4,8 @@
     <tr>
         <th class="col-md-2">{{ 'form.date'|trans }}</th>
         <th class="col-md-3">{{ 'form.workcenter'|trans }}</th>
-        <th class="col-md-4">{{ 'form.students'|trans }}</th>
-        <th class="col-md-3"></th>
+        <th class="col-md-5">{{ 'form.students'|trans }}</th>
+        <th class="col-md-2"></th>
     </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.select' | trans }}</a>
+                    <a href="" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

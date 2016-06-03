@@ -17,7 +17,7 @@ form.no_visits: No hay visitas registradas
 form.summary: Ver resumen de visitas
 form.submit: Guardar cambios
 form.delete: Eliminar
-form.new: Nueva enseñanza
+form.new: Registrar visita
 form.view: Modificar
 
 alert.saved: Datos guardados correctamente
