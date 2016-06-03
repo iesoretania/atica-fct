@@ -64,7 +64,7 @@ class StudentTrackingMenu implements MenuBuilderInterface
             $menuItem = new MenuItem();
             $menuItem
                 ->setName('my_students_visit')
-                ->setRouteName('my_student_index')
+                ->setRouteName('visit_index')
                 ->setCaption('menu.student_visit')
                 ->setDescription('menu.student_visit.detail')
                 ->setColor('yellow')

@@ -83,4 +83,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setParameter('user', $user)
             ->getResult();
     }
+
+    public function getEducationalTutors()
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT u,
+              (SELECT COUNT(a1) FROM AppBundle:Agreement a1 WHERE a1.educationalTutor = u),
+              (SELECT COUNT(DISTINCT a2.student) FROM AppBundle:Agreement a2 WHERE a2.educationalTutor = u)
+              FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a) ORDER BY u.lastName, u.firstName')
+            ->getResult();
+    }
 }

@@ -1,0 +1,29 @@
+browse.workcenter: Visitas de %user%
+browse.title: Resumen de visitas
+
+form.educational_tutor: Tutor docente
+form.workcenter: Centro de trabajo
+form.agreements: Acuerdos
+form.students: Estudiantes
+form.visits: Visitas
+form.first_date: Primera visita
+form.last_date: Última visita
+
+form.select: Seleccionar
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Nueva enseñanza
+form.view: Modificar
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Visita eliminada con éxito
+alert.not_deleted: No se ha podido eliminar la visita. Compruebe que no hay elementos asociados a la misma.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! La visita sólo podrá ser eliminada si no existen datos asociados a la misma.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar
