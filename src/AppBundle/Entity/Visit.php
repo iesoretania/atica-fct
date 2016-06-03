@@ -42,13 +42,6 @@ class Visit
     protected $when;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(nullable=false)
-     * @var User
-     */
-    protected $teacher;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Agreement", inversedBy="visits")
      * @ORM\JoinColumn(nullable=false)
      * @var Agreement
@@ -93,30 +86,6 @@ class Visit
     public function getWhen()
     {
         return $this->when;
-    }
-
-    /**
-     * Set teacher
-     *
-     * @param User $teacher
-     *
-     * @return Visit
-     */
-    public function setTeacher(User $teacher)
-    {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
-
-    /**
-     * Get teacher
-     *
-     * @return User
-     */
-    public function getTeacher()
-    {
-        return $this->teacher;
     }
 
     /**
