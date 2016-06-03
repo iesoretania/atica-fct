@@ -105,4 +105,18 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setParameter('departments', $departments)
             ->getResult();
     }
+
+    public function getStudentsByWorkcenterAndEducationalTutor(Workcenter $workcenter = null, User $tutor = null)
+    {
+        if (null === $workcenter || null === $tutor) {
+            return [];
+        }
+
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT u
+              FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.student) FROM AppBundle:Agreement a WHERE a.workcenter = :workcenter AND a.educationalTutor = :tutor) ORDER BY u.lastName, u.firstName')
+            ->setParameter('workcenter', $workcenter)
+            ->setParameter('tutor', $tutor)
+            ->getResult();
+    }
 }

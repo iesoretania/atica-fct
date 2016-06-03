@@ -55,6 +55,12 @@ services:
         tags:
             - { name: form.type }
 
+    AppBundle\Form\Type\VisitType:
+        class: AppBundle\Form\Type\VisitType
+        arguments: ['@security.token_storage', '@doctrine']
+        tags:
+            - { name: form.type }
+
     app.entity.group_voter:
         class: AppBundle\Security\GroupVoter
         autowire: true

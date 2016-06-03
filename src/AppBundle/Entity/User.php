@@ -145,7 +145,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
 
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="tutor")
-     * @ORM\OrderBy({"when": "ASC"})
+     * @ORM\OrderBy({"date": "ASC"})
      * @var Collection
      */
     protected $visits;

@@ -11,7 +11,7 @@ class VisitRepository extends EntityRepository
         return $this->createQueryBuilder('v')
             ->where('v.tutor = :user')
             ->setParameter('user', $user)
-            ->orderBy('v.when')
+            ->orderBy('v.date')
             ->getQuery()
             ->getResult();
     }

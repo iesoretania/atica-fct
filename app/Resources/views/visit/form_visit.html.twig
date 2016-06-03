@@ -1,0 +1,41 @@
+{% trans_default_domain 'visit' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.start_button }}
+        {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+        {{ m.end_button }}
+    {{ form_end(form) }}
+    {{ m.link_button(path('visit_workcenter_index', {'id': tutor.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    var tutor = $("#visit_tutor");
+    var workcenter = $("#visit_workcenter");
+
+    workcenter.change(function() {
+        var form = $(this).closest('form');
+        var data = {};
+        data[tutor.attr('name')] = tutor.val();
+        data[workcenter.attr('name')] = workcenter.val();
+        $('#visit_students').replaceWith('<div id="visit_students"><span class="text-info"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span></div>');
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: data,
+            success: function(html) {
+                $('#visit_students').replaceWith(
+                        $(html).find('#visit_students')
+                )
+            },
+            error: function() {
+                $('#visit_students').replaceWith('<div id="visit_students"><span class="text-danger"><i class="fa fa-times-circle fa-3x"></i></span></div>')
+            }
+        });
+    });
+</script>
+{% endblock %}

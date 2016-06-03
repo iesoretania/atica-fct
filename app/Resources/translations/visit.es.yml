@@ -18,7 +18,11 @@ form.summary: Ver resumen de visitas
 form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Registrar visita
-form.view: Modificar
+form.view: Modificar visita
+
+form.select_workcenter: Seleccione centro de trabajo
+form.visited_students: Estudiantes visitados
+form.notes: Observaciones de la visita
 
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios

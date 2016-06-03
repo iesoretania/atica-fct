@@ -25,6 +25,7 @@ use AppBundle\Entity\Visit;
 use AppBundle\Entity\Workcenter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -97,5 +98,48 @@ class VisitController extends Controller
             'elements' => $workcenters,
             'back_route_name' => $this->isGranted('ROLE_DEPARTMENT_HEAD') ? 'visit_index' : 'frontpage'
         ]);
+    }
+    
+    /**
+     * @Route("/visitas/{id}/modificar/{visit}", name="visit_form", methods={"GET", "POST"})
+     * @Security("is_granted('USER_VISIT_TRACK', tutor) and visit.getTutor() == tutor")
+     */
+    public function visitFormAction(User $tutor, Visit $visit, Request $request)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\VisitType', $visit);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            $this->getDoctrine()->getManager()->persist($visit);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'visit'));
+            return $this->redirectToRoute('visit_workcenter_index', ['id' => $tutor->getId()]);
+        }
+        $title = $this->get('translator')->trans($visit->getId() ? 'form.view' : 'form.new', [], 'visit');
+
+        return $this->render('visit/form_visit.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('visit_index'),
+            'breadcrumb' => [
+                ['fixed' => (string) $tutor, 'path' => 'visit_workcenter_index', 'options' => ['id' => $tutor->getId()]],
+                ['fixed' => $title]
+            ],
+            'title' => $title,
+            'visit' => $visit,
+            'form' => $form->createView(),
+            'tutor' => $tutor
+        ]);
+    }
+
+    /**
+     * @Route("/visitas/{id}/registrar", name="visit_form_new", methods={"GET", "POST"})
+     * @Security("is_granted('USER_VISIT_TRACK', tutor)")
+     */
+    public function visitNewAction(User $tutor, Request $request)
+    {
+        $visit = new Visit();
+        $visit->setTutor($tutor);
+        $visit->setDate(new \DateTime());
+
+        return $this->visitFormAction($tutor, $visit, $request);
     }
 }

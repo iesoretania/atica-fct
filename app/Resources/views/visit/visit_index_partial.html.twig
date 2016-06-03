@@ -11,13 +11,13 @@
     <tbody>
     {% for element in elements %}
         <tr>
-            <td>{{ element.when|date('d/m/Y') }}</td>
+            <td>{{ element.date|date('d/m/Y') }}</td>
             <td>{{ element.workcenter }}</td>
-            <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}student.fullDisplayName{% endfor %}</td>
+            <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
+                    <a href="{{ path('visit_form', {'id': tutor.id, 'visit': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

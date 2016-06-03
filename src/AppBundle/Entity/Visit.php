@@ -38,10 +38,10 @@ class Visit
     protected $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @var \DateTime
      */
-    protected $when;
+    protected $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="visits")
@@ -90,13 +90,13 @@ class Visit
     /**
      * Set when
      *
-     * @param \DateTime $when
+     * @param \DateTime $date
      *
      * @return Visit
      */
-    public function setWhen($when)
+    public function setDate($date)
     {
-        $this->when = $when;
+        $this->date = $date;
 
         return $this;
     }
@@ -106,9 +106,9 @@ class Visit
      *
      * @return \DateTime
      */
-    public function getWhen()
+    public function getDate()
     {
-        return $this->when;
+        return $this->date;
     }
 
     /**
