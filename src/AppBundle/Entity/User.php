@@ -135,6 +135,14 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $workTutorAgreements;
 
     /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="teacher")
+     * @ORM\OrderBy({"date": "ASC"})
+     *
+     * @var Collection
+     */
+    protected $expenses;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -618,11 +626,11 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Add educationalTutorAgreement
      *
-     * @param \AppBundle\Entity\Agreement $educationalTutorAgreement
+     * @param Agreement $educationalTutorAgreement
      *
      * @return User
      */
-    public function addEducationalTutorAgreement(\AppBundle\Entity\Agreement $educationalTutorAgreement)
+    public function addEducationalTutorAgreement(Agreement $educationalTutorAgreement)
     {
         $this->educationalTutorAgreements[] = $educationalTutorAgreement;
 
@@ -632,9 +640,9 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Remove educationalTutorAgreement
      *
-     * @param \AppBundle\Entity\Agreement $educationalTutorAgreement
+     * @param Agreement $educationalTutorAgreement
      */
-    public function removeEducationalTutorAgreement(\AppBundle\Entity\Agreement $educationalTutorAgreement)
+    public function removeEducationalTutorAgreement(Agreement $educationalTutorAgreement)
     {
         $this->educationalTutorAgreements->removeElement($educationalTutorAgreement);
     }
@@ -652,11 +660,11 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Add workTutorAgreement
      *
-     * @param \AppBundle\Entity\Agreement $workTutorAgreement
+     * @param Agreement $workTutorAgreement
      *
      * @return User
      */
-    public function addWorkTutorAgreement(\AppBundle\Entity\Agreement $workTutorAgreement)
+    public function addWorkTutorAgreement(Agreement $workTutorAgreement)
     {
         $this->workTutorAgreements[] = $workTutorAgreement;
 
@@ -666,9 +674,9 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Remove workTutorAgreement
      *
-     * @param \AppBundle\Entity\Agreement $workTutorAgreement
+     * @param Agreement $workTutorAgreement
      */
-    public function removeWorkTutorAgreement(\AppBundle\Entity\Agreement $workTutorAgreement)
+    public function removeWorkTutorAgreement(Agreement $workTutorAgreement)
     {
         $this->workTutorAgreements->removeElement($workTutorAgreement);
     }
@@ -681,5 +689,39 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     public function getWorkTutorAgreements()
     {
         return $this->workTutorAgreements;
+    }
+
+    /**
+     * Add expense
+     *
+     * @param \AppBundle\Entity\Expense $expense
+     *
+     * @return User
+     */
+    public function addExpense(\AppBundle\Entity\Expense $expense)
+    {
+        $this->expenses[] = $expense;
+
+        return $this;
+    }
+
+    /**
+     * Remove expense
+     *
+     * @param \AppBundle\Entity\Expense $expense
+     */
+    public function removeExpense(\AppBundle\Entity\Expense $expense)
+    {
+        $this->expenses->removeElement($expense);
+    }
+
+    /**
+     * Get expenses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpenses()
+    {
+        return $this->expenses;
     }
 }
