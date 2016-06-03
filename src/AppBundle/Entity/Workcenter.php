@@ -24,7 +24,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WorkcenterRepository")
  */
 class Workcenter
 {
@@ -97,6 +97,11 @@ class Workcenter
      */
     protected $agreements;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="workcenter")
+     * @var Collection
+     */
+    protected $visits;
 
     /**
      * Constructor
@@ -104,6 +109,7 @@ class Workcenter
     public function __construct()
     {
         $this->agreements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -369,5 +375,39 @@ class Workcenter
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add visit
+     *
+     * @param \AppBundle\Entity\Visit $visit
+     *
+     * @return Workcenter
+     */
+    public function addVisit(\AppBundle\Entity\Visit $visit)
+    {
+        $this->visits[] = $visit;
+
+        return $this;
+    }
+
+    /**
+     * Remove visit
+     *
+     * @param \AppBundle\Entity\Visit $visit
+     */
+    public function removeVisit(\AppBundle\Entity\Visit $visit)
+    {
+        $this->visits->removeElement($visit);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Collection
+     */
+    public function getVisits()
+    {
+        return $this->visits;
     }
 }

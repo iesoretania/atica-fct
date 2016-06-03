@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -143,15 +144,26 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $expenses;
 
     /**
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="teacher")
+     * @ORM\OrderBy({"when": "ASC"})
+     * @var Collection
+     */
+    protected $visits;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
 
-        $this->tutorizedGroups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->directs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->studentAgreements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tutorizedGroups = new ArrayCollection();
+        $this->directs = new ArrayCollection();
+        $this->studentAgreements = new ArrayCollection();
+        $this->educationalTutorAgreements = new ArrayCollection();
+        $this->workTutorAgreements = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+        $this->visits = new ArrayCollection();
     }
 
     /**
@@ -658,7 +670,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Get educationalTutorAgreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getEducationalTutorAgreements()
     {
@@ -692,7 +704,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Get workTutorAgreements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getWorkTutorAgreements()
     {
@@ -726,10 +738,44 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     /**
      * Get expenses
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getExpenses()
     {
         return $this->expenses;
+    }
+
+    /**
+     * Add visit
+     *
+     * @param Visit $visit
+     *
+     * @return User
+     */
+    public function addVisit(Visit $visit)
+    {
+        $this->visits[] = $visit;
+
+        return $this;
+    }
+
+    /**
+     * Remove visit
+     *
+     * @param Visit $visit
+     */
+    public function removeVisit(Visit $visit)
+    {
+        $this->visits->removeElement($visit);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Collection
+     */
+    public function getVisits()
+    {
+        return $this->visits;
     }
 }

@@ -94,13 +94,6 @@ class Agreement
     protected $activities;
 
     /**
-     * @ORM\OneToMany(targetEntity="Visit", mappedBy="agreement")
-     * @ORM\OrderBy({"when"="ASC"})
-     * @var Collection
-     */
-    protected $visits;
-
-    /**
      * @ORM\OneToMany(targetEntity="Workday", mappedBy="agreement")
      * @ORM\OrderBy({"date"="ASC"})
      * @var Collection
@@ -119,7 +112,6 @@ class Agreement
     public function __construct()
     {
         $this->activities = new ArrayCollection();
-        $this->visits = new ArrayCollection();
         $this->workdays = new ArrayCollection();
 
         $this->fromDate = new \DateTime();
@@ -341,40 +333,6 @@ class Agreement
     public function getActivities()
     {
         return $this->activities;
-    }
-
-    /**
-     * Add visit
-     *
-     * @param Visit $visit
-     *
-     * @return Agreement
-     */
-    public function addVisit(Visit $visit)
-    {
-        $this->visits[] = $visit;
-
-        return $this;
-    }
-
-    /**
-     * Remove visit
-     *
-     * @param Visit $visit
-     */
-    public function removeVisit(Visit $visit)
-    {
-        $this->visits->removeElement($visit);
-    }
-
-    /**
-     * Get visits
-     *
-     * @return Collection
-     */
-    public function getVisits()
-    {
-        return $this->visits;
     }
 
     /**

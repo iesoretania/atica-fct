@@ -20,6 +20,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,17 +44,38 @@ class Visit
     protected $when;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Agreement", inversedBy="visits")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="visits")
      * @ORM\JoinColumn(nullable=false)
-     * @var Agreement
+     * @var User
      */
-    protected $agreement;
+    protected $teacher;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @var Collection
+     */
+    protected $students;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Workcenter", inversedBy="visits")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Workcenter
+     */
+    protected $workcenter;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $notes;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->students = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -89,30 +112,6 @@ class Visit
     }
 
     /**
-     * Set agreement
-     *
-     * @param \AppBundle\Entity\Agreement $agreement
-     *
-     * @return Visit
-     */
-    public function setAgreement(\AppBundle\Entity\Agreement $agreement)
-    {
-        $this->agreement = $agreement;
-
-        return $this;
-    }
-
-    /**
-     * Get agreement
-     *
-     * @return \AppBundle\Entity\Agreement
-     */
-    public function getAgreement()
-    {
-        return $this->agreement;
-    }
-
-    /**
      * Set notes
      *
      * @param string $notes
@@ -134,5 +133,87 @@ class Visit
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param User $teacher
+     *
+     * @return Visit
+     */
+    public function setTeacher(User $teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
+    /**
+     * Set workcenter
+     *
+     * @param Workcenter $workcenter
+     *
+     * @return Visit
+     */
+    public function setWorkcenter(Workcenter $workcenter)
+    {
+        $this->workcenter = $workcenter;
+
+        return $this;
+    }
+
+    /**
+     * Get workcenter
+     *
+     * @return Workcenter
+     */
+    public function getWorkcenter()
+    {
+        return $this->workcenter;
+    }
+
+    /**
+     * Add student
+     *
+     * @param User $student
+     *
+     * @return Visit
+     */
+    public function addStudent(User $student)
+    {
+        $this->students[] = $student;
+
+        return $this;
+    }
+
+    /**
+     * Remove student
+     *
+     * @param User $student
+     */
+    public function removeStudent(User $student)
+    {
+        $this->students->removeElement($student);
+    }
+
+    /**
+     * Get students
+     *
+     * @return Collection
+     */
+    public function getStudents()
+    {
+        return $this->students;
     }
 }
