@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -91,6 +92,17 @@ class UserRepository extends EntityRepository implements UserProviderInterface
               (SELECT COUNT(a1) FROM AppBundle:Agreement a1 WHERE a1.educationalTutor = u),
               (SELECT COUNT(DISTINCT a2.student) FROM AppBundle:Agreement a2 WHERE a2.educationalTutor = u)
               FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a) ORDER BY u.lastName, u.firstName')
+            ->getResult();
+    }
+
+    public function getEducationalTutorsByDepartments(Collection $departments)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT u,
+              (SELECT COUNT(a1) FROM AppBundle:Agreement a1 WHERE a1.educationalTutor = u),
+              (SELECT COUNT(DISTINCT a2.student) FROM AppBundle:Agreement a2 WHERE a2.educationalTutor = u)
+              FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a JOIN AppBundle:User s WITH a.student = s JOIN AppBundle:Group g WITH s.studentGroup = g JOIN AppBundle:Training t WITH g.training = t JOIN AppBundle:Department d WITH t.department = d WHERE d IN (:departments)) ORDER BY u.lastName, u.firstName')
+            ->setParameter('departments', $departments)
             ->getResult();
     }
 }

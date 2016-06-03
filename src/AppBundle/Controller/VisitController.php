@@ -39,8 +39,10 @@ class VisitController extends Controller
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($this->isGranted('ROLE_DEPARTMENT_HEAD')) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutors();
+        } elseif ($this->isGranted('ROLE_DEPARTMENT_HEAD')) {
+            $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsByDepartments($user->getDirects());
         } else {
             return $this->visitIndexAction($user);
         }
