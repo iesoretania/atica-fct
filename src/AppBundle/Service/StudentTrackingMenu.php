@@ -28,9 +28,12 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 class StudentTrackingMenu implements MenuBuilderInterface
 {
     private $tokenStorage;
+    private $authorizationChecker;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+
+    public function __construct(AuthorizationChecker $authorizationChecker, TokenStorageInterface $tokenStorage)
     {
+        $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -38,47 +41,48 @@ class StudentTrackingMenu implements MenuBuilderInterface
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
-        if ($user->getEducationalTutorAgreements()->count() === 0 && $user->getWorkTutorAgreements()->count() === 0) {
-            return null;
-        }
-        
+
         /**
          * @var $root MenuItem
          */
         $root = reset($menu);
 
-        $menuItem = new MenuItem();
-        $menuItem
-            ->setName('my_students_tracking')
-            ->setRouteName('my_student_index')
-            ->setCaption('menu.student_tracking')
-            ->setDescription('menu.student_tracking.detail')
-            ->setColor('orange')
-            ->setIcon('briefcase');
+        if ($user->getEducationalTutorAgreements()->count() !== 0 || $user->getWorkTutorAgreements()->count() !== 0) {
+            $menuItem = new MenuItem();
+            $menuItem
+                ->setName('my_students_tracking')
+                ->setRouteName('my_student_index')
+                ->setCaption('menu.student_tracking')
+                ->setDescription('menu.student_tracking.detail')
+                ->setColor('orange')
+                ->setIcon('briefcase');
 
-        $root->addChild($menuItem, MenuItem::AT_THE_END);
+            $root->addChild($menuItem, MenuItem::AT_THE_END);
+        }
 
-        $menuItem = new MenuItem();
-        $menuItem
-            ->setName('my_students_visit')
-            ->setRouteName('my_student_index')
-            ->setCaption('menu.student_visit')
-            ->setDescription('menu.student_visit.detail')
-            ->setColor('yellow')
-            ->setIcon('car');
+        if ($this->authorizationChecker->isGranted('ROLE_DEPARTMENT_HEAD') || $user->getEducationalTutorAgreements()->count() !== 0) {
+            $menuItem = new MenuItem();
+            $menuItem
+                ->setName('my_students_visit')
+                ->setRouteName('my_student_index')
+                ->setCaption('menu.student_visit')
+                ->setDescription('menu.student_visit.detail')
+                ->setColor('yellow')
+                ->setIcon('car');
 
-        $root->addChild($menuItem, MenuItem::AT_THE_END);
+            $root->addChild($menuItem, MenuItem::AT_THE_END);
 
-        $menuItem = new MenuItem();
-        $menuItem
-            ->setName('travel_expenses')
-            ->setRouteName('my_student_index')
-            ->setCaption('menu.travel_expenses')
-            ->setDescription('menu.travel_expenses.detail')
-            ->setColor('dark-teal')
-            ->setIcon('road');
+            $menuItem = new MenuItem();
+            $menuItem
+                ->setName('travel_expenses')
+                ->setRouteName('my_student_index')
+                ->setCaption('menu.travel_expenses')
+                ->setDescription('menu.travel_expenses.detail')
+                ->setColor('dark-teal')
+                ->setIcon('road');
 
-        $root->addChild($menuItem, MenuItem::AT_THE_END);
+            $root->addChild($menuItem, MenuItem::AT_THE_END);
+        }
     }
 
     public function getMenuPriority()
