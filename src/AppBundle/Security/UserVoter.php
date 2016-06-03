@@ -136,7 +136,7 @@ class UserVoter extends Voter
             return false;
         }
 
-        switch($attribute) {
+        switch ($attribute) {
             case self::TRACK:
                 return $this->voteOnTrack($subject, $token);
             case self::MANAGE:

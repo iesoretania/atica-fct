@@ -135,7 +135,7 @@ class AgreementType extends AbstractType
                 'required' => true
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $form = $event->getForm();
             $data = $event->getData();
 
@@ -144,7 +144,7 @@ class AgreementType extends AbstractType
             $this->addElements($form, $data->getStudent(), $company);
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
 
             $form = $event->getForm();
             $data = $event->getData();

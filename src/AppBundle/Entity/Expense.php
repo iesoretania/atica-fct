@@ -44,7 +44,7 @@ class Expense
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="expenses")
      * @ORM\JoinColumn(nullable=false)
-     * @var Agreement
+     * @var User
      */
     protected $teacher;
 
