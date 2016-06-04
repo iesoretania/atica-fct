@@ -62,7 +62,7 @@ menu.student_calendar: Fichas de seguimiento
 menu.student_calendar.detail: Gestionar mis fichas semanales de seguimiento
 
 menu.student_tracking: Seguimiento de mi alumnado
-menu.student_tracking.detail: Realizar el seguimiento como tutor docente
+menu.student_tracking.detail: Realizar el seguimiento como tutor
 
 menu.student_visit: Visitas de seguimiento
 menu.student_visit.detail: Gestionar las visitas a los centros de trabajo
