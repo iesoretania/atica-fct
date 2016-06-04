@@ -9,8 +9,8 @@ security:
     role_hierarchy:
         ROLE_ADMIN:       [ROLE_DEPARTMENT_HEAD]
         ROLE_DEPARTMENT_HEAD: [ROLE_GROUP_TUTOR]
-        ROLE_GROUP_TUTOR: [ROLE_TEACHING_TUTOR]
-        ROLE_TEACHING_TUTOR: [ROLE_WORK_TUTOR]
+        ROLE_GROUP_TUTOR: [ROLE_EDUCATIONAL_TUTOR]
+        ROLE_EDUCATIONAL_TUTOR: [ROLE_WORK_TUTOR]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:

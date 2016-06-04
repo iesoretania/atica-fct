@@ -450,6 +450,10 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
             $roles[] = new Role('ROLE_DEPARTMENT_HEAD');
         }
 
+        if ($this->educationalTutorAgreements && $this->educationalTutorAgreements->count()) {
+            $roles[] = new Role('ROLE_EDUCATIONAL_TUTOR');
+        }
+
         return $roles;
     }
 

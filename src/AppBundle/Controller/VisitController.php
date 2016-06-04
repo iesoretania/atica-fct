@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Security("is_granted('ROLE_TEACHING_TUTOR')")
+ * @Security("is_granted('ROLE_EDUCATIONAL_TUTOR')")
  */
 class VisitController extends Controller
 {
