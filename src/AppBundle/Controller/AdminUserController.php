@@ -75,6 +75,7 @@ class AdminUserController extends Controller
         $new = (null === $user);
         if ($new) {
             $user = $em->getRepository('AppBundle:User')->createNewUser();
+            $user->setEnabled(true);
         }
 
         $me = ($user->getId() === $this->getUser()->getId());

@@ -55,8 +55,8 @@ menu.admin.trainings.detail: Gestionar enseñanzas del centro
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos
 
-menu.admin.programs: Programas formativos
-menu.admin.programs.detail: Gestionar los programas formativos de las enseñanzas
+menu.admin.programs: Actividades formativo-productivas
+menu.admin.programs.detail: Gestionar las actividades aplicables a las enseñanzas
 
 menu.student_calendar: Fichas de seguimiento
 menu.student_calendar.detail: Gestionar mis fichas semanales de seguimiento

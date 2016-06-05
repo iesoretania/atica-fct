@@ -116,7 +116,7 @@ class AdminMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.calendar')
             ->setDescription('menu.admin.calendar.detail')
             ->setColor('dark-teal')
-            ->setIcon('calendar');
+            ->setIcon('calendar-times-o');
 
         $mainItem->addChild($item);
 

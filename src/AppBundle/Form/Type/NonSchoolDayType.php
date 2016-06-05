@@ -34,6 +34,7 @@ class NonSchoolDayType extends AbstractType
         $builder
             ->add('date', null, [
                 'label' => 'form.date',
+                'widget' => 'single_text',
                 'required' => true
             ])
             ->add('name', null, [
