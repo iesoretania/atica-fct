@@ -20,7 +20,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Company;
 use AppBundle\Entity\Department;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\NonSchoolDay;
@@ -47,20 +46,6 @@ class AdminController extends Controller
             ],
             'data_columns' => ['name', 'head']
         ];
-
-    public static $COMPANY_ENTITY_DATA = [
-        'entity' => 'company',
-        'entityClassName' => 'AppBundle\Entity\Company',
-        'entityFormType' => 'AppBundle\Form\Type\CompanyType',
-        'form_template' => 'admin/form_company.html.twig',
-        'query' => 'SELECT c FROM AppBundle:Company c',
-        'defaultSortFieldName' => 'c.name',
-        'columns' => [
-            ['size' => '2', 'sort_field' => 'c.code', 'name' => 'company.code'],
-            ['size' => '7', 'sort_field' => 'c.name', 'name' => 'company.name'],
-        ],
-        'data_columns' => ['code', 'name']
-    ];
 
     public static $WORKCENTER_ENTITY_DATA = [
         'entity' => 'workcenter',
@@ -282,34 +267,6 @@ class AdminController extends Controller
     public function deleteElementAction(Department $element, Request $request)
     {
         return $this->genericDeleteAction(self::$DEPARTMENT_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/empresas", name="admin_company", methods={"GET"})
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function companiesIndexAction(Request $request)
-    {
-        return $this->genericIndexAction(self::$COMPANY_ENTITY_DATA, $request);
-    }
-
-    /**
-     * @Route("/empresas/nueva", name="admin_company_new", methods={"GET", "POST"})
-     * @Route("/empresas/{id}", name="admin_company_form", methods={"GET", "POST"}, requirements={"id": "\d+"})
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function companyFormAction(Company $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$COMPANY_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/empresas/eliminar/{id}", name="admin_company_delete", methods={"GET", "POST"}, requirements={"id": "\d+"} )
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function companyDeleteAction(Company $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$COMPANY_ENTITY_DATA, $element, $request);
     }
 
     /**

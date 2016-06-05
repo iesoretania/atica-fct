@@ -18,6 +18,8 @@ form.phone_number: Número de teléfono
 form.email: Correo electrónico
 form.manager: Gerente
 
+form.workcenters: Sedes
+
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 

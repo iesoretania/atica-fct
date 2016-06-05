@@ -45,7 +45,7 @@ class HeadDepartmentMenu implements MenuBuilderInterface
         $item = new MenuItem();
         $item
             ->setName('admin.companies')
-            ->setRouteName('admin_company')
+            ->setRouteName('company_index')
             ->setCaption('menu.admin.companies')
             ->setDescription('menu.admin.companies.detail')
             ->setColor('cyan')
