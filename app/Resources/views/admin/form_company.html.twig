@@ -1,0 +1,25 @@
+{% trans_default_domain 'company' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.start_button }}
+        {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+        {% if not new %}
+            {{ m.link_button(path('admin_company_delete', {'id': element.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
+        {% endif %}
+        {{ m.end_button }}
+    {{ form_end(form) }}
+    {{ m.link_button(path(menu_item.routeName, menu_item.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+
+    {% include 'user/new_user_modal.partial.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    {% include 'user/new_user_js_partial.js.twig' %}
+</script>
+{% endblock %}

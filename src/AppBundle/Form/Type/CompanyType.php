@@ -66,7 +66,8 @@ class CompanyType extends AbstractType
             ])
             ->add('manager', null, [
                 'label' => 'form.manager',
-                'required' => true
+                'required' => true,
+                'attr' => ['class' => 'person']
             ]);
     }
 

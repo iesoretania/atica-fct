@@ -52,6 +52,7 @@ class AdminController extends Controller
         'entity' => 'company',
         'entityClassName' => 'AppBundle\Entity\Company',
         'entityFormType' => 'AppBundle\Form\Type\CompanyType',
+        'form_template' => 'admin/form_company.html.twig',
         'query' => 'SELECT c FROM AppBundle:Company c',
         'defaultSortFieldName' => 'c.name',
         'columns' => [
