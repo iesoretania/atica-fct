@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/desplazamientos")
- * @Security("is_granted('ROLE_EDUCATIONAL_TUTOR')")
+ * @Security("is_granted('ROLE_EDUCATIONAL_TUTOR') or is_granted('ROLE_FINANCIAL_MANAGER')")
  */
 class ExpenseController extends Controller
 {
@@ -40,7 +40,7 @@ class ExpenseController extends Controller
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_FINANCIAL_MANAGER')) {
             $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsExpenseSummary();
         } elseif ($this->isGranted('ROLE_DEPARTMENT_HEAD')) {
             $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsByDepartmentsExpenseSummary($user->getDirects());
@@ -57,7 +57,7 @@ class ExpenseController extends Controller
 
     /**
      * @Route("/{id}", name="expense_index", methods={"GET"})
-     * @Security("is_granted('USER_VISIT_TRACK', tutor)")
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or is_granted('USER_VISIT_TRACK', tutor)")
      */
     public function expenseIndexAction(User $tutor)
     {
@@ -73,13 +73,13 @@ class ExpenseController extends Controller
             'title' => $this->get('translator')->trans('browse.expenses', ['%user%' => $title], 'expense'),
             'tutor' => $tutor,
             'elements' => $workcenters,
-            'back_route_name' => $this->isGranted('ROLE_DEPARTMENT_HEAD') ? 'expense_tutor_index' : 'frontpage'
+            'back_route_name' => ($this->isGranted('ROLE_DEPARTMENT_HEAD') || $this->isGranted('ROLE_FINANCIAL_MANAGER')) ? 'expense_tutor_index' : 'frontpage'
         ]);
     }
 
     /**
      * @Route("/{id}/modificar/{expense}", name="expense_form", methods={"GET", "POST"})
-     * @Security("is_granted('USER_VISIT_TRACK', tutor) and expense.getTeacher() == tutor")
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or (is_granted('USER_VISIT_TRACK', tutor) and expense.getTeacher() == tutor)")
      */
     public function expenseFormAction(User $tutor, Expense $expense, Request $request)
     {
@@ -111,7 +111,7 @@ class ExpenseController extends Controller
 
     /**
      * @Route("/{id}/registrar", name="expense_form_new", methods={"GET", "POST"})
-     * @Security("is_granted('USER_VISIT_TRACK', tutor)")
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or is_granted('USER_VISIT_TRACK', tutor)")
      */
     public function expenseNewAction(User $tutor, Request $request)
     {

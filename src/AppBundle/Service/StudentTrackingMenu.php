@@ -60,7 +60,9 @@ class StudentTrackingMenu implements MenuBuilderInterface
             $root->addChild($menuItem, MenuItem::AT_THE_END);
         }
 
-        if ($this->authorizationChecker->isGranted('ROLE_DEPARTMENT_HEAD') || $user->getEducationalTutorAgreements()->count() !== 0) {
+        $check = ($this->authorizationChecker->isGranted('ROLE_DEPARTMENT_HEAD') || $user->getEducationalTutorAgreements()->count() !== 0);
+
+        if ($check) {
             $menuItem = new MenuItem();
             $menuItem
                 ->setName('my_students_visit')
@@ -71,7 +73,9 @@ class StudentTrackingMenu implements MenuBuilderInterface
                 ->setIcon('car');
 
             $root->addChild($menuItem, MenuItem::AT_THE_END);
+        }
 
+        if ($this->authorizationChecker->isGranted('ROLE_FINANCIAL_MANAGER') || $check) {
             $menuItem = new MenuItem();
             $menuItem
                 ->setName('travel_expenses')

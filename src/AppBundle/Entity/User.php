@@ -84,6 +84,12 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $globalAdministrator;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    protected $financialManager;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
@@ -118,7 +124,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
      * @var Collection
      */
     protected $studentAgreements;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Agreement", mappedBy="educationalTutor")
      * @ORM\OrderBy({"fromDate": "ASC"})
@@ -454,6 +460,13 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
             $roles[] = new Role('ROLE_EDUCATIONAL_TUTOR');
         }
 
+        if ($this->studentGroup) {
+            $roles[] = new Role('ROLE_STUDENT');
+        }
+        if ($this->isFinancialManager()) {
+            $roles[] = new Role('ROLE_FINANCIAL_MANAGER');
+        }
+
         return $roles;
     }
 
@@ -773,5 +786,29 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     public function getVisits()
     {
         return $this->visits;
+    }
+
+    /**
+     * Set financialManager
+     *
+     * @param boolean $financialManager
+     *
+     * @return User
+     */
+    public function setFinancialManager($financialManager)
+    {
+        $this->financialManager = $financialManager;
+
+        return $this;
+    }
+
+    /**
+     * Get financialManager
+     *
+     * @return boolean
+     */
+    public function isFinancialManager()
+    {
+        return $this->financialManager;
     }
 }

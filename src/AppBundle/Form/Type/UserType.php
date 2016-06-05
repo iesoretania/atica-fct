@@ -84,6 +84,10 @@ class UserType extends AbstractType
                     'label' => 'form.global_administrator',
                     'required' => false,
                     'disabled' => $options['me']
+                ])
+                ->add('financialManager', null, [
+                    'label' => 'form.financial_manager',
+                    'required' => false
                 ]);
         }
 
