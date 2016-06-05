@@ -22,6 +22,10 @@
                 </div>
             </td>
         </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">{{ 'form.no_tutors'|trans }}</td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>
