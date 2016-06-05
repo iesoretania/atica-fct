@@ -11,7 +11,7 @@
     <tbody>
     {% for element in elements %}
         <tr>
-            <td>{{ element.date|date('d/m/Y') }}</td>
+            <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y') }}</td>
             <td>{{ element.workcenter }}</td>
             <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
             <td class="text-center">
@@ -24,7 +24,7 @@
         </tr>
     {% else %}
         <tr>
-            <td colspan="3">{{ 'form.no_visits'|trans }}</td>
+            <td colspan="5">{{ 'form.no_visits'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>

@@ -4,10 +4,13 @@
 
 {% block content %}
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ m.start_button }}
+    {{ form_widget(form) }}
+    {{ m.start_button }}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
-        {{ m.end_button }}
+        {% if visit.id %}
+            {{ m.link_button(path('visit_delete', {'id': tutor.id, 'visit': visit.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
+        {% endif %}
+    {{ m.end_button }}
     {{ form_end(form) }}
     {{ m.link_button(path('visit_workcenter_index', {'id': tutor.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 {% endblock %}

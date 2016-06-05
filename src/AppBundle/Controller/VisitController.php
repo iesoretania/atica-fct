@@ -29,12 +29,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @Route("/visitas")
  * @Security("is_granted('ROLE_EDUCATIONAL_TUTOR')")
  */
 class VisitController extends Controller
 {
     /**
-     * @Route("/visitas", name="visit_index", methods={"GET"})
+     * @Route("", name="visit_index", methods={"GET"})
      */
     public function teacherIndexAction()
     {
@@ -56,7 +57,7 @@ class VisitController extends Controller
     }
 
     /**
-     * @Route("/visitas/{id}", name="visit_workcenter_index", methods={"GET"})
+     * @Route("/{id}", name="visit_workcenter_index", methods={"GET"})
      * @Security("is_granted('USER_VISIT_TRACK', tutor)")
      */
     public function visitIndexAction(User $tutor)
@@ -78,7 +79,7 @@ class VisitController extends Controller
     }
 
     /**
-     * @Route("/visitas/{id}/resumen", name="visit_workcenter_summary_index", methods={"GET"})
+     * @Route("/{id}/resumen", name="visit_workcenter_summary_index", methods={"GET"})
      * @Security("is_granted('USER_VISIT_TRACK', tutor)")
      */
     public function visitWorkcenterSummaryAction(User $tutor)
@@ -101,7 +102,7 @@ class VisitController extends Controller
     }
     
     /**
-     * @Route("/visitas/{id}/modificar/{visit}", name="visit_form", methods={"GET", "POST"})
+     * @Route("/{id}/modificar/{visit}", name="visit_form", methods={"GET", "POST"})
      * @Security("is_granted('USER_VISIT_TRACK', tutor) and visit.getTutor() == tutor")
      */
     public function visitFormAction(User $tutor, Visit $visit, Request $request)
@@ -131,7 +132,43 @@ class VisitController extends Controller
     }
 
     /**
-     * @Route("/visitas/{id}/registrar", name="visit_form_new", methods={"GET", "POST"})
+     * @Route("/{id}/eliminar/{visit}", name="visit_delete", methods={"GET", "POST"})
+     * @Security("is_granted('USER_VISIT_TRACK', tutor) and visit.getTutor() == tutor")
+     */
+    public function visitDeleteAction(User $tutor, Visit $visit, Request $request)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            // Eliminar la visita de la base de datos
+            $em->remove($visit);
+            try {
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'visit'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'visit'));
+            }
+            return $this->redirectToRoute('visit_workcenter_index', ['id' => $tutor->getId()]);
+        }
+
+        $title = $visit->getDate()->format('d/m/Y');
+
+        return $this->render('visit/delete_visit.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('visit_index'),
+            'breadcrumb' => [
+                ['fixed' => (string) $tutor, 'path' => 'visit_workcenter_index', 'options' => ['id' => $tutor->getId()]],
+                ['fixed' => $title, 'path' => 'visit_form', 'options' => ['id' => $tutor->getId(), 'visit' => $visit->getId()]],
+                ['fixed' => $this->get('translator')->trans('form.delete', [], 'visit')]
+            ],
+            'title' => $title,
+            'tutor' => $tutor,
+            'visit' => $visit
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/registrar", name="visit_form_new", methods={"GET", "POST"})
      * @Security("is_granted('USER_VISIT_TRACK', tutor)")
      */
     public function visitNewAction(User $tutor, Request $request)

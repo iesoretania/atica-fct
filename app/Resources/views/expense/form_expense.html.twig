@@ -11,7 +11,7 @@
         {{ form_widget(form) }}
         {{ m.start_button }}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
-        {% if is_granted('ROLE_FINANCIAL_MANAGER') or not expense.isPaid %}
+        {% if expense.id and (is_granted('ROLE_FINANCIAL_MANAGER') or not expense.isPaid) %}
             {{ m.link_button(path('expense_delete', {'id': tutor.id, 'expense': expense.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
         {% endif %}
         {{ m.end_button }}
