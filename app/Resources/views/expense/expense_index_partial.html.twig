@@ -2,7 +2,8 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        <th class="col-md-2">{{ 'form.date'|trans }}</th>
+        <th class="col-md-1"></th>
+        <th class="col-md-1">{{ 'form.date'|trans }}</th>
         <th class="col-md-4">{{ 'form.route'|trans }}</th>
         <th class="col-md-2">{{ 'form.mileage'|trans }}</th>
         <th class="col-md-1">{{ 'form.reviewed'|trans }}</th>
@@ -13,6 +14,7 @@
     <tbody>
     {% for element in elements %}
         <tr>
+            <td>{{ loop.index }}</td>
             <td>{{ element.date|date('d/m/Y') }}</td>
             <td>{{ element.route }}</td>
             <td>{{ element.distance|number_format(2, ',', '.') }} km.</td>

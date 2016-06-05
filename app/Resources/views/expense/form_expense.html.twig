@@ -3,10 +3,17 @@
 {% import '::macros.html.twig' as m %}
 
 {% block content %}
+    {% if expense.reviewed %}
+        <div class="alert alert-info"><i class="fa fa-lock"></i> {{ 'prompt.reviewed'|trans|nl2br }}</div>
+    {% endif %}
+
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ m.start_button }}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+        {% if is_granted('ROLE_FINANCIAL_MANAGER') or not expense.isPaid %}
+            {{ m.link_button(path('expense_delete', {'id': tutor.id, 'expense': expense.id}), 'trash', 'btn-danger', 'form.delete'|trans) }}
+        {% endif %}
         {{ m.end_button }}
     {{ form_end(form) }}
     {{ m.link_button(path('expense_index', {'id': tutor.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}

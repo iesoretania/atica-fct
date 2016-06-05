@@ -41,9 +41,9 @@ class ExpenseController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         if ($this->isGranted('ROLE_FINANCIAL_MANAGER')) {
-            $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsExpenseSummary();
+            $expenses = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsExpenseSummary();
         } elseif ($this->isGranted('ROLE_DEPARTMENT_HEAD')) {
-            $visits = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsByDepartmentsExpenseSummary($user->getDirects());
+            $expenses = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getEducationalTutorsByDepartmentsExpenseSummary($user->getDirects());
         } else {
             return $this->expenseIndexAction($user);
         }
@@ -51,7 +51,7 @@ class ExpenseController extends Controller
         return $this->render('expense/tutor_index.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('expense_tutor_index'),
             'title' => null,
-            'elements' => $visits
+            'elements' => $expenses
         ]);
     }
 
@@ -84,28 +84,70 @@ class ExpenseController extends Controller
     public function expenseFormAction(User $tutor, Expense $expense, Request $request)
     {
         $form = $this->createForm('AppBundle\Form\Type\ExpenseType', $expense, [
-            'admin' => $this->isGranted('ROLE_FINANCIAL_MANAGER')
+            'admin' => $this->isGranted('ROLE_FINANCIAL_MANAGER'),
+            'disabled' => $expense->isReviewed() && !$this->isGranted('ROLE_FINANCIAL_MANAGER')
         ]);
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
             $this->getDoctrine()->getManager()->persist($expense);
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'visit'));
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'expense'));
             return $this->redirectToRoute('expense_index', ['id' => $tutor->getId()]);
         }
-        $title = $this->get('translator')->trans($expense->getId() ? 'form.view' : 'form.new', [], 'visit');
+        $title = $this->get('translator')->trans($expense->getId() ? 'form.view' : 'form.new', [], 'expense');
 
         return $this->render('expense/form_expense.html.twig', [
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('expense_tutor_index'),
             'breadcrumb' => [
-                ['fixed' => (string) $tutor, 'path' => 'visit_workcenter_index', 'options' => ['id' => $tutor->getId()]],
-                ['fixed' => $title]
+                ['fixed' => (string) $tutor, 'path' => 'expense_index', 'options' => ['id' => $tutor->getId()]],
+                ['fixed' => $expense->getId() ? $expense->getDate()->format('d/m/Y') : $title]
             ],
             'title' => $title,
             'expense' => $expense,
             'form' => $form->createView(),
             'tutor' => $tutor
+        ]);
+    }
+
+
+    /**
+     * @Route("/{id}/eliminar/{expense}", name="expense_delete", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or (is_granted('USER_VISIT_TRACK', tutor) and expense.getTeacher() == tutor)")
+     */
+    public function expenseDeleteAction(User $tutor, Expense $expense, Request $request)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            $em = $this->getDoctrine()->getManager();
+            
+            if (!$expense->isPaid() || $this->isGranted('ROLE_FINANCIAL_MANAGER')) {
+                // Eliminar el desplazamiento de la base de datos
+                $em->remove($expense);
+                try {
+                    $em->flush();
+                    $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'expense'));
+                } catch (\Exception $e) {
+                    $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'expense'));
+                }
+            } else {
+                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'expense'));
+            }
+            return $this->redirectToRoute('expense_index', ['id' => $tutor->getId()]);
+        }
+
+        $title = $expense->getDate()->format('d/m/Y');
+
+        return $this->render('expense/delete_expense.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('expense_tutor_index'),
+            'breadcrumb' => [
+                ['fixed' => (string) $tutor, 'path' => 'expense_index', 'options' => ['id' => $tutor->getId()]],
+                ['fixed' => $expense->getDate()->format('d/m/Y'), 'path' => 'expense_form', 'options' => ['id' => $tutor->getId(), 'expense' => $expense->getId()]],
+                ['fixed' => $this->get('translator')->trans('form.delete', [], 'expense')]
+            ],
+            'title' => $title,
+            'tutor' => $tutor,
+            'expense' => $expense
         ]);
     }
 

@@ -34,6 +34,9 @@ alert.not_saved: No se han podido guardar los cambios
 alert.deleted: Desplazamiento eliminado con éxito.
 alert.not_deleted: No se ha podido eliminar el desplazamiento. Compruebe que no esté pagado.
 
+prompt.reviewed: >
+    El desplazamiento ya ha sido revisado y aceptado. No puede modificarse salvo por el responsable económico.
+
 prompt.delete_confirm: >
     ¡ATENCIÓN! El desplazamiento sólo podrá ser eliminado si no ha sido pagado.
 

@@ -180,7 +180,7 @@ class Expense
      *
      * @return boolean
      */
-    public function getReviewed()
+    public function isReviewed()
     {
         return $this->reviewed;
     }
@@ -196,6 +196,11 @@ class Expense
     {
         $this->paid = $paid;
 
+        // si se ha pagado, ha sido revisado
+        if ($paid) {
+            $this->setReviewed(true);
+        }
+
         return $this;
     }
 
@@ -204,7 +209,7 @@ class Expense
      *
      * @return boolean
      */
-    public function getPaid()
+    public function isPaid()
     {
         return $this->paid;
     }
