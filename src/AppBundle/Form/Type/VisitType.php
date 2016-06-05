@@ -82,9 +82,10 @@ class VisitType extends AbstractType
                 'required' => true,
                 'disabled' => true
             ])
-            ->add('date', 'Symfony\Component\Form\Extension\Core\Type\DateType', [
+            ->add('date', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
                 'label' => 'form.date',
-                'widget' => 'single_text',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
                 'required' => true
             ]);
 

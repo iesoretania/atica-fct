@@ -11,7 +11,7 @@
     <tbody>
     {% for element in elements %}
         <tr>
-            <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y') }}</td>
+            <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y H:i') }}</td>
             <td>{{ element.workcenter }}</td>
             <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
             <td class="text-center">

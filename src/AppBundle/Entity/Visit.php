@@ -38,7 +38,7 @@ class Visit
     protected $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @var \DateTime
      */
     protected $date;
