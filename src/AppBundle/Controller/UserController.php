@@ -23,8 +23,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -74,6 +76,43 @@ class UserController extends Controller
             'form' => $form->createView(),
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('personal_form'),
             'title' => null
+        ]);
+    }
+    
+    /**
+     * @Route("/api/usuario/crear", name="api_user_new", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
+     */
+    public function apiNewUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $newUser = new User();
+
+        $form = $this->createForm('AppBundle\Form\Type\NewUserType', $newUser, [
+            'action' => $this->generateUrl('api_user_new'),
+            'method' => 'POST'
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            $newUser
+                ->setEnabled(true)
+                ->setFinancialManager(false)
+                ->setGlobalAdministrator(false);
+
+            $em->persist($newUser);
+            $em->flush();
+
+            return new JsonResponse([
+                'success' => true,
+                'id' => $newUser->getId(),
+                'name' => $newUser->getFullPersonDisplayName()
+            ]);
+        }
+
+        return $this->render('user/new_user_partial.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

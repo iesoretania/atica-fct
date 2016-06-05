@@ -1,4 +1,4 @@
-{% trans_default_domain 'group' %}
+{% trans_default_domain 'user' %}
     function sendForm(form, callback) {
         var values = {};
         $.each(form[0].elements, function(i, field) {
@@ -20,7 +20,7 @@
         });
     }
 
-    my_item = $("select#agreement_workTutor");
+    my_item = $("select").first();
 
     $(function() {
         $("select.person").select2('destroy');

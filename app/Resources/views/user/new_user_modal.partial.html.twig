@@ -1,4 +1,4 @@
-{% trans_default_domain 'group' %}
+{% trans_default_domain 'user' %}
 
     <div class="modal fade" id="new_user" role="dialog" aria-labelledby="new_role-label" aria-hidden="true">
         <div class="modal-dialog">
@@ -8,7 +8,7 @@
                     <h4 class="modal-title" id="new_role-label">{{ 'form.new_user'|trans }}</h4>
                 </div>
                 <div class="modal-body">
-                    {{ render(controller('AppBundle:Group:apiNewUser')) }}
+                    {{ render(controller('AppBundle:User:apiNewUser')) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'form.new_user.close'|trans }}</button>

@@ -23,6 +23,10 @@ form.new_password_repeat: Repita nueva contraseña
 form.submit: Guardar cambios
 form.change_password: Guardar los cambios y cambiar la contraseña
 
+form.new_user: Crear nuevo usuario
+form.new_user.close: Cerrar sin guardar
+form.new_user.save: Guardar cambios
+
 alert.password_changed: Datos guardados correctamente y contraseña cambiada
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios

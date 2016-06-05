@@ -15,7 +15,7 @@
         <div class="alert alert-warning">{{ 'prompt.activity_deletion_warning'|trans|nl2br }}</div>
     {% endif %}
 
-    {% include 'group/form_agreement_modal.partial.html.twig' %}
+    {% include 'user/new_user_modal.partial.html.twig' %}
 
 {% endblock %}
 
@@ -71,6 +71,6 @@
             }
         });
     });
-    {% include 'group/form_agreement_js_partial.js.twig' %}
+    {% include 'user/new_user_js_partial.js.twig' %}
 </script>
 {% endblock %}
