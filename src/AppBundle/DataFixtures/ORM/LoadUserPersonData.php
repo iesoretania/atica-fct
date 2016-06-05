@@ -46,6 +46,7 @@ class LoadUserPersonData extends AbstractFixture implements OrderedFixtureInterf
             ->setReference('admin')
             ->setEnabled(true)
             ->setGlobalAdministrator(true)
+            ->setFinancialManager(false)
             ->setPassword($this->container->get('security.password_encoder')->encodePassword($userAdmin, 'admin'))
             ->setLoginUsername('admin');
 
