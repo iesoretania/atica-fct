@@ -75,7 +75,7 @@ class StudentTrackingMenu implements MenuBuilderInterface
             $menuItem = new MenuItem();
             $menuItem
                 ->setName('travel_expenses')
-                ->setRouteName('my_student_index')
+                ->setRouteName('expense_tutor_index')
                 ->setCaption('menu.travel_expenses')
                 ->setDescription('menu.travel_expenses.detail')
                 ->setColor('dark-teal')

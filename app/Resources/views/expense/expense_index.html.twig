@@ -1,0 +1,9 @@
+{% trans_default_domain 'expense' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    {% include 'expense/expense_index_partial.html.twig' %}
+
+    {{ m.link_button(path(back_route_name), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('expense_form_new', {'id': tutor.id}), 'plus', 'btn-success', 'form.new'|trans) }}
+{% endblock %}

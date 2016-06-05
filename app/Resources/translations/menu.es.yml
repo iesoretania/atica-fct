@@ -67,5 +67,5 @@ menu.student_tracking.detail: Realizar el seguimiento como tutor
 menu.student_visit: Visitas de seguimiento
 menu.student_visit.detail: Gestionar las visitas a los centros de trabajo
 
-menu.travel_expenses: Desplazamientos y dietas
-menu.travel_expenses.detail: Gestionar los desplazamientos y las dietas
+menu.travel_expenses: Desplazamientos
+menu.travel_expenses.detail: Gestionar los desplazamientos fuera de la localidad

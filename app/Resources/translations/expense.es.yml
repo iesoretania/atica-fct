@@ -1,0 +1,41 @@
+browse.title: Resumen de desplazamientos
+browse.expenses: Desplazamientos de %user%
+
+form.educational_tutor: Tutor docente
+form.workcenter: Centro de trabajo
+form.route: Ruta
+form.mileage: Kilometraje
+form.mileage_total: Km. totales
+form.mileage_verified: Km. verificados
+form.mileage_paid: Km. pagados
+form.first_date: Primera visita
+form.last_date: Última visita
+
+form.select: Seleccionar
+form.no_expenses: No hay desplazamientos registrados
+form.no_tutors: No hay tutores docentes para seleccionar
+
+form.submit: Guardar cambios
+form.delete: Eliminar
+form.new: Registrar desplazamiento
+form.view: Modificar desplazamiento
+
+form.date: Fecha
+form.route: Ruta realizada
+form.reviewed: Revisado
+form.paid: Pagado
+form.notes: Observaciones de la visita
+form.yes: Sí
+form.no: No
+
+alert.saved: Datos guardados correctamente
+alert.not_saved: No se han podido guardar los cambios
+
+alert.deleted: Desplazamiento eliminado con éxito.
+alert.not_deleted: No se ha podido eliminar el desplazamiento. Compruebe que no esté pagado.
+
+prompt.delete_confirm: >
+    ¡ATENCIÓN! El desplazamiento sólo podrá ser eliminado si no ha sido pagado.
+
+form.back: Volver
+form.delete_back: Volver sin eliminar

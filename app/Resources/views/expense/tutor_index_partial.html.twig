@@ -1,0 +1,33 @@
+{% trans_default_domain 'expense' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th class="col-md-6">{{ 'form.educational_tutor'|trans }}</th>
+        <th class="col-md-1">{{ 'form.mileage_total'|trans }}</th>
+        <th class="col-md-1">{{ 'form.mileage_verified'|trans }}</th>
+        <th class="col-md-1">{{ 'form.mileage_paid'|trans }}</th>
+        <th class="col-md-3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element[0].lastName }}, {{ element[0].firstName }}</td>
+            <td>{{ element[1]|number_format(2, ',', '.')|default('0,00') }} km.</td>
+            <td>{{ element[3]|number_format(2, ',', '.')|default('0,00') }} km.</td>
+            <td>{{ element[5]|number_format(2, ',', '.')|default('0,00') }} km.</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('expense_index', {'id': element[0].id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.select' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">{{ 'form.no_tutors'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -85,7 +85,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getResult();
     }
 
-    public function getEducationalTutors()
+    public function getEducationalTutorsAgreementSummary()
     {
         $em = $this->getEntityManager();
         return $em->createQuery('SELECT u,
@@ -95,12 +95,35 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getResult();
     }
 
-    public function getEducationalTutorsByDepartments(Collection $departments)
+    public function getEducationalTutorsByDepartmentsAgreementSummary(Collection $departments)
     {
         $em = $this->getEntityManager();
         return $em->createQuery('SELECT u,
               (SELECT COUNT(a1) FROM AppBundle:Agreement a1 WHERE a1.educationalTutor = u),
               (SELECT COUNT(DISTINCT a2.student) FROM AppBundle:Agreement a2 WHERE a2.educationalTutor = u)
+              FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a JOIN AppBundle:User s WITH a.student = s JOIN AppBundle:Group g WITH s.studentGroup = g JOIN AppBundle:Training t WITH g.training = t JOIN AppBundle:Department d WITH t.department = d WHERE d IN (:departments)) ORDER BY u.lastName, u.firstName')
+            ->setParameter('departments', $departments)
+            ->getResult();
+    }
+
+    public function getEducationalTutorsExpenseSummary()
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT u,
+              (SELECT SUM(e1.distance) FROM AppBundle:Expense e1 WHERE e1.teacher = u),
+              (SELECT SUM(e2.distance * e2.reviewed) FROM AppBundle:Expense e2 WHERE e2.teacher = u),
+              (SELECT SUM(e3.distance * e3.paid) FROM AppBundle:Expense e3 WHERE e3.teacher = u)
+              FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a) ORDER BY u.lastName, u.firstName')
+            ->getResult();
+    }
+
+    public function getEducationalTutorsByDepartmentsExpenseSummary(Collection $departments)
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT u,
+              (SELECT SUM(e1.distance) FROM AppBundle:Expense e1 WHERE e1.teacher = u),
+              (SELECT SUM(e2.distance * e2.reviewed) FROM AppBundle:Expense e2 WHERE e2.teacher = u),
+              (SELECT SUM(e3.distance * e3.paid) FROM AppBundle:Expense e3 WHERE e3.teacher = u)
               FROM AppBundle:User u WHERE u IN (SELECT DISTINCT IDENTITY(a.educationalTutor) FROM AppBundle:Agreement a JOIN AppBundle:User s WITH a.student = s JOIN AppBundle:Group g WITH s.studentGroup = g JOIN AppBundle:Training t WITH g.training = t JOIN AppBundle:Department d WITH t.department = d WHERE d IN (:departments)) ORDER BY u.lastName, u.firstName')
             ->setParameter('departments', $departments)
             ->getResult();
