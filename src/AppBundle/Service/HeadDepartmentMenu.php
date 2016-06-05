@@ -44,21 +44,10 @@ class HeadDepartmentMenu implements MenuBuilderInterface
         
         $item = new MenuItem();
         $item
-            ->setName('admin.companies')
+            ->setName('companies')
             ->setRouteName('company_index')
-            ->setCaption('menu.admin.companies')
-            ->setDescription('menu.admin.companies.detail')
-            ->setColor('cyan')
-            ->setIcon('industry');
-
-        $mainItem->addChild($item);
-
-        $item = new MenuItem();
-        $item
-            ->setName('admin.workcenter')
-            ->setRouteName('admin_workcenter')
-            ->setCaption('menu.admin.workcenters')
-            ->setDescription('menu.admin.workcenters.detail')
+            ->setCaption('menu.companies')
+            ->setDescription('menu.companies.detail')
             ->setColor('dark-cyan')
             ->setIcon('building');
 

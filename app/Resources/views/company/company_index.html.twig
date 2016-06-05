@@ -5,5 +5,5 @@
     {% include 'company/company_index_partial.html.twig' %}
 
     {{ m.link_button(back_path is defined ? path(back_path, path_options) : path(menu_item.parent.routeName, menu_item.parent.routeParams), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-    {{ m.link_button(path('company_new', path_options is defined ? path_options : {}), 'plus', 'btn-success', 'form.new'|trans) }}
+    {{ m.link_button(path('company_new'), 'plus', 'btn-success', 'form.new'|trans) }}
 {% endblock %}

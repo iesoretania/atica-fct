@@ -32,13 +32,13 @@ class WorkcenterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
-                'label' => 'form.name',
-                'required' => true
-            ])
             ->add('company', null, [
                 'label' => 'form.company',
                 'disabled' => $options['locked'],
+                'required' => true
+            ])
+            ->add('name', null, [
+                'label' => 'form.name',
                 'required' => true
             ])
             ->add('address', null, [
@@ -67,7 +67,8 @@ class WorkcenterType extends AbstractType
             ])
             ->add('manager', null, [
                 'label' => 'form.manager',
-                'required' => true
+                'required' => true,
+                'attr' => ['class' => 'person']
             ]);
     }
 
@@ -78,7 +79,7 @@ class WorkcenterType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Workcenter',
-            'locked' => false,
+            'locked' => true,
             'translation_domain' => 'workcenter'
         ]);
     }

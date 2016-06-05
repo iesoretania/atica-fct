@@ -22,11 +22,8 @@ menu.impersonate.exit: Volver al usuario normal
 menu.group_admin: Alumnado del grupo
 menu.group_admin.detail: Gestionar el alumnado del grupo
 
-menu.admin.companies: Empresas
-menu.admin.companies.detail: Gestionar empresas de la FCT
-
-menu.admin.workcenters: Sedes
-menu.admin.workcenters.detail: Gestionar centros de trabajo de las empresas
+menu.companies: Empresas y sedes
+menu.companies.detail: Gestionar empresas de la FCT y sus sedes
 
 menu.admin.calendar: Calendario escolar
 menu.admin.calendar.detail: Definir periodos no lectivos

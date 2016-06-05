@@ -82,7 +82,7 @@ class StudentTrackingMenu implements MenuBuilderInterface
                 ->setRouteName('expense_tutor_index')
                 ->setCaption('menu.travel_expenses')
                 ->setDescription('menu.travel_expenses.detail')
-                ->setColor('dark-teal')
+                ->setColor('cyan')
                 ->setIcon('road');
 
             $root->addChild($menuItem, MenuItem::AT_THE_END);

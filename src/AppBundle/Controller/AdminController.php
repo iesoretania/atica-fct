@@ -47,19 +47,6 @@ class AdminController extends Controller
             'data_columns' => ['name', 'head']
         ];
 
-    public static $WORKCENTER_ENTITY_DATA = [
-        'entity' => 'workcenter',
-        'entityClassName' => 'AppBundle\Entity\Workcenter',
-        'entityFormType' => 'AppBundle\Form\Type\WorkcenterType',
-        'query' => 'SELECT w FROM AppBundle:Workcenter w JOIN w.company c',
-        'defaultSortFieldName' => 'c.name',
-        'columns' => [
-            ['size' => '4', 'sort_field' => 'c.name', 'name' => 'form.company'],
-            ['size' => '5', 'sort_field' => 'w.name', 'name' => 'form.name'],
-        ],
-        'data_columns' => ['company', 'name']
-    ];
-
     public static $GROUP_ENTITY_DATA = [
         'entity' => 'group',
         'entityClassName' => 'AppBundle\Entity\Group',
@@ -350,34 +337,6 @@ class AdminController extends Controller
      */
     public function workcenterDeleteAction(Workcenter $element, Request $request)
     {
-        return $this->genericDeleteAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/centros", name="admin_workcenter", methods={"GET"})
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function workcenterIndexAction(Request $request)
-    {
-        return $this->genericIndexAction(self::$WORKCENTER_ENTITY_DATA, $request);
-    }
-
-    /**
-     * @Route("/centros/nuevo", name="admin_workcenter_new", methods={"GET", "POST"})
-     * @Route("/centros/{id}", name="admin_workcenter_form", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function workcenterFormAction(Workcenter $element = null, Request $request)
-    {
-        return $this->genericFormAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
-    }
-
-    /**
-     * @Route("/centros/eliminar/{id}", name="admin_workcenter_delete", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
-     */
-    public function nonSchoolDayDeleteAction(Workcenter $element, Request $request)
-    {
-        return $this->genericDeleteAction(self::$WORKCENTER_ENTITY_DATA, $element, $request);
+        return $this->genericDeleteAction(self::$NON_SCHOOL_DAY_ENTITY_DATA, $element, $request);
     }
 }

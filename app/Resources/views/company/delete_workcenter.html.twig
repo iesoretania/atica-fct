@@ -1,0 +1,11 @@
+{% trans_default_domain 'company' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    <div class="alert alert-warning">{{ 'prompt.workcenter_delete_confirm'|trans|nl2br }}</div>
+    <form method="post">
+        {{ m.link_button(path('workcenter_form', {'id': company.id, 'workcenter': workcenter.id}), 'arrow-left', 'btn-default', 'form.delete_back'|trans) }}
+        {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.delete'|trans) }}
+    </form>
+{% endblock %}

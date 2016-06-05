@@ -1,0 +1,31 @@
+{% trans_default_domain 'company' %}
+<table class="table table-bordered table-condensed table-hover table-responsive">
+    <thead>
+    <tr>
+        <th class="col-md-5">{{ 'form.workcenter'|trans }}</th>
+        <th class="col-md-2">{{ 'form.city'|trans }}</th>
+        <th class="col-md-3">{{ 'form.manager'|trans }}</th>
+        <th class="col-md-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in elements %}
+        <tr>
+            <td>{{ element.name }}</td>
+            <td>{{ element.city }}</td>
+            <td>{{ element.manager }}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs btn-block" role="group">
+                {% block buttons %}
+                    <a href="{{ path('workcenter_form', {'id': company.id, 'workcenter': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
+                {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">{{ 'form.no_workcenters'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

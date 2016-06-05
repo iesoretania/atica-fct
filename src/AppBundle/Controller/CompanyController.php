@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Company;
+use AppBundle\Entity\Workcenter;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -86,35 +87,9 @@ class CompanyController extends BaseController
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
             'breadcrumb' => [
                 ['fixed' => $title, 'path' => 'company_form', 'options' => ['id' => $company->getId()]],
-                ['fixed' => $this->get('translator')->trans('form.delete', [], 'expense')]
+                ['fixed' => $this->get('translator')->trans('form.delete', [], 'company')]
             ],
             'title' => $title,
-            'company' => $company
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="company_form", methods={"GET", "POST"})
-     */
-    public function companyFormAction(Company $company, Request $request)
-    {
-        $form = $this->createForm('AppBundle\Form\Type\CompanyType', $company);
-        $form->handleRequest($request);
-
-        if ($form->isValid() && $form->isSubmitted()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'visit'));
-            return $this->redirectToRoute('company_index');
-        }
-        $title = $company->getId() ? (string) $company : $this->get('translator')->trans('form.new', [], 'visit');
-
-        return $this->render('company/form_company.html.twig', [
-            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
-            'breadcrumb' => [
-                ['fixed' => $title]
-            ],
-            'title' => $title,
-            'form' => $form->createView(),
             'company' => $company
         ]);
     }
@@ -128,5 +103,129 @@ class CompanyController extends BaseController
         $this->getDoctrine()->getManager()->persist($company);
 
         return $this->companyFormAction($company, $request);
+    }
+
+    /**
+     * @Route("/{id}", name="company_form", methods={"GET", "POST"})
+     */
+    public function companyFormAction(Company $company, Request $request)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\CompanyType', $company);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'company'));
+            return $this->redirectToRoute('company_index');
+        }
+        $title = $company->getId() ? (string) $company : $this->get('translator')->trans('form.new', [], 'company');
+
+        return $this->render('company/form_company.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
+            'breadcrumb' => [
+                ['fixed' => $title]
+            ],
+            'title' => $title,
+            'form' => $form->createView(),
+            'company' => $company
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/sedes", name="workcenter_index", methods={"GET"})
+     */
+    public function workcenterIndexAction(Company $company)
+    {
+        $items = $company->getWorkcenters();
+
+        $title = $this->get('translator')->trans('browse.workcenter', ['%company%' => (string) $company], 'company');
+
+        return $this->render('company/workcenter_index.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
+                'breadcrumb' => [
+                    ['fixed' => (string) $company],
+                    ['fixed' => $this->get('translator')->trans('form.workcenters', [], 'company')]
+                ],
+                'title' => $title,
+                'elements' => $items,
+                'company' => $company
+            ]);
+    }
+
+
+    /**
+     * @Route("/{id}/sedes/modificar/{workcenter}", name="workcenter_form", methods={"GET", "POST"})
+     */
+    public function workcenterFormAction(Company $company, Workcenter $workcenter, Request $request)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\WorkcenterType', $workcenter);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'company'));
+            return $this->redirectToRoute('workcenter_index', ['id' => $workcenter->getCompany()->getId()]);
+        }
+        $title = $workcenter->getId() ? $workcenter->getName() : $this->get('translator')->trans('form.new_workcenter', [], 'company');
+
+        return $this->render('company/form_workcenter.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
+            'breadcrumb' => [
+                ['fixed' => (string) $workcenter->getCompany(), 'path' => 'workcenter_index', 'options' => ['id' => $workcenter->getCompany()->getId()]],
+                ['fixed' => $title]
+            ],
+            'title' => $title,
+            'form' => $form->createView(),
+            'company' => $company,
+            'workcenter' => $workcenter
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/sedes/nueva", name="workcenter_new", methods={"GET", "POST"})
+     */
+    public function workcenterNewFormAction(Company $company, Request $request)
+    {
+        $workcenter = new Workcenter();
+        $workcenter->setCompany($company);
+        $this->getDoctrine()->getManager()->persist($workcenter);
+
+        return $this->workcenterFormAction($company, $workcenter, $request);
+    }
+
+    /**
+     * @Route("/{id}/sedes/eliminar/{workcenter}", name="workcenter_delete", methods={"GET", "POST"})
+     */
+    public function workcenterDeleteAction(Company $company, Workcenter $workcenter, Request $request)
+    {
+        if ('POST' === $request->getMethod() && $request->request->has('delete')) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            // Eliminar el desplazamiento de la base de datos
+            $em->remove($workcenter);
+            try {
+                $em->flush();
+                $this->addFlash('success', $this->get('translator')->trans('alert.workcenter_deleted', [], 'company'));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->get('translator')->trans('alert.workcenter_not_deleted', [], 'company'));
+            }
+            return $this->redirectToRoute('workcenter_index', ['id' => $company->getId()]);
+        }
+
+        $title = (string) $workcenter->getName();
+
+        return $this->render('company/delete_workcenter.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('company_index'),
+            'breadcrumb' => [
+                ['fixed' => (string) $workcenter->getCompany(), 'path' => 'workcenter_index', 'options' => ['id' => $workcenter->getCompany()->getId()]],
+                ['fixed' => $title, 'path' => 'workcenter_form', 'options' => ['id' => $workcenter->getCompany()->getId(), 'workcenter' => $workcenter->getId()]],
+                ['fixed' => $this->get('translator')->trans('form.delete', [], 'company')]
+            ],
+            'title' => $title,
+            'company' => $company,
+            'workcenter' => $workcenter
+        ]);
     }
 }

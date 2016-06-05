@@ -1,0 +1,9 @@
+{% trans_default_domain 'company' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    {% include 'company/workcenter_index_partial.html.twig' %}
+
+    {{ m.link_button(path('company_index'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('workcenter_new', {'id': company.id}), 'plus', 'btn-success', 'form.new_workcenter'|trans) }}
+{% endblock %}
