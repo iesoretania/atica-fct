@@ -196,6 +196,7 @@ class WorkdayRepository extends EntityRepository
     public function getWorkdaysInWeek(Agreement $agreement, $week, $year)
     {
         $date = new \DateTime();
+        $date->setTime(0, 0, 0);
         $start = $date->setISODate($year, $week);
         $end = clone $date;
         $end = $end->modify('+6 days');
