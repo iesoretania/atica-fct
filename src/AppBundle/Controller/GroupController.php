@@ -359,12 +359,12 @@ class GroupController extends BaseController
 
     /**
      * @Route("/seguimiento/acuerdo/nuevo/{id}", name="admin_group_student_agreement_new", methods={"GET", "POST"})
-     * @Security("is_granted('GROUP_CREATE_AGREEMENT', user.getStudentGroup())")
+     * @Security("is_granted('GROUP_CREATE_AGREEMENT', student.getStudentGroup())")
      */
-    public function agreementNewFormAction(User $user, Request $request)
+    public function agreementNewFormAction(User $student, Request $request)
     {
         $agreement = new Agreement();
-        $agreement->setStudent($user);
+        $agreement->setStudent($student);
         $this->getDoctrine()->getManager()->persist($agreement);
 
         return $this->agreementFormAction($agreement, $request);
