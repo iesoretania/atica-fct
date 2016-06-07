@@ -103,7 +103,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $studentGroup;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Group", mappedBy="tutors")
+     * @ORM\ManyToMany(targetEntity="Group", mappedBy="tutors", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="tutorized_groups")
      *
      * @var Collection
@@ -111,14 +111,14 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $tutorizedGroups;
 
     /**
-     * @ORM\OneToMany(targetEntity="Department", mappedBy="head")
+     * @ORM\OneToMany(targetEntity="Department", mappedBy="head", fetch="EXTRA_LAZY")
      *
      * @var Collection
      */
     protected $directs;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="student", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"fromDate": "ASC"})
      *
      * @var Collection
@@ -126,7 +126,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $studentAgreements;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="educationalTutor")
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="educationalTutor", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"fromDate": "ASC"})
      *
      * @var Collection
@@ -134,7 +134,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $educationalTutorAgreements;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="workTutor")
+     * @ORM\OneToMany(targetEntity="Agreement", mappedBy="workTutor", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"fromDate": "ASC"})
      *
      * @var Collection
@@ -142,7 +142,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $workTutorAgreements;
 
     /**
-     * @ORM\OneToMany(targetEntity="Expense", mappedBy="teacher")
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="teacher", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"date": "ASC"})
      *
      * @var Collection
@@ -150,7 +150,7 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     protected $expenses;
 
     /**
-     * @ORM\OneToMany(targetEntity="Visit", mappedBy="tutor")
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="tutor", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"date": "ASC"})
      * @var Collection
      */
