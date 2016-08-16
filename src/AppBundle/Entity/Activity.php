@@ -56,13 +56,6 @@ class Activity
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Training", inversedBy="activities")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Training
-     */
-    protected $training;
-
-    /**
      * @ORM\ManyToOne(targetEntity="LearningOutcome", inversedBy="activities")
      * @ORM\JoinColumn(nullable=false)
      * @var LearningOutcome
@@ -71,7 +64,7 @@ class Activity
 
     /**
      * @ORM\OneToMany(targetEntity="Criterion", mappedBy="activity")
-     * @var Criterion
+     * @var Collection
      */
     protected $criteria;
 
@@ -153,30 +146,6 @@ class Activity
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set training
-     *
-     * @param Training $training
-     *
-     * @return Activity
-     */
-    public function setTraining(Training $training = null)
-    {
-        $this->training = $training;
-
-        return $this;
-    }
-
-    /**
-     * Get training
-     *
-     * @return Training
-     */
-    public function getTraining()
-    {
-        return $this->training;
     }
 
     /**

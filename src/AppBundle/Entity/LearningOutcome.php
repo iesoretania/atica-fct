@@ -21,6 +21,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,8 +56,15 @@ class LearningOutcome
     protected $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Training", inversedBy="learningOutcomes")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Training
+     */
+    protected $training;
+
+    /**
      * @ORM\OneToMany(targetEntity="Activity", mappedBy="learningOutcome")
-     * @var Activity
+     * @var Collection
      */
     protected $activities;
 
@@ -220,5 +228,29 @@ class LearningOutcome
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * Set training
+     *
+     * @param Training $training
+     *
+     * @return LearningOutcome
+     */
+    public function setTraining(Training $training)
+    {
+        $this->training = $training;
+
+        return $this;
+    }
+
+    /**
+     * Get training
+     *
+     * @return Training
+     */
+    public function getTraining()
+    {
+        return $this->training;
     }
 }

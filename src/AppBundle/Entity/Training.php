@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -64,10 +65,10 @@ class Training
     protected $department;
 
     /**
-     * @ORM\OneToMany(targetEntity="Activity", mappedBy="training")
+     * @ORM\OneToMany(targetEntity="LearningOutcome", mappedBy="training")
      * @var Collection
      */
-    protected $activities;
+    protected $learningOutcomes;
 
     /**
      * @ORM\Column(type="integer")
@@ -80,8 +81,8 @@ class Training
      */
     public function __construct()
     {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->activities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new ArrayCollection();
+        $this->learningOutcomes = new ArrayCollection();
     }
 
     public function __toString()
@@ -182,40 +183,6 @@ class Training
     }
 
     /**
-     * Add activity
-     *
-     * @param Activity $activity
-     *
-     * @return Training
-     */
-    public function addActivity(Activity $activity)
-    {
-        $this->activities[] = $activity;
-
-        return $this;
-    }
-
-    /**
-     * Remove activity
-     *
-     * @param Activity $activity
-     */
-    public function removeActivity(Activity $activity)
-    {
-        $this->activities->removeElement($activity);
-    }
-
-    /**
-     * Get activities
-     *
-     * @return Collection
-     */
-    public function getActivities()
-    {
-        return $this->activities;
-    }
-
-    /**
      * Set programHours
      *
      * @param integer $programHours
@@ -261,5 +228,58 @@ class Training
     public function getStage()
     {
         return $this->stage;
+    }
+
+    /**
+     * Add learningOutcome
+     *
+     * @param LearningOutcome $learningOutcome
+     *
+     * @return Training
+     */
+    public function addLearningOutcome(LearningOutcome $learningOutcome)
+    {
+        $this->learningOutcomes[] = $learningOutcome;
+
+        return $this;
+    }
+
+    /**
+     * Remove learningOutcome
+     *
+     * @param LearningOutcome $learningOutcome
+     */
+    public function removeLearningOutcome(LearningOutcome $learningOutcome)
+    {
+        $this->learningOutcomes->removeElement($learningOutcome);
+    }
+
+    /**
+     * Get learningOutcomes
+     *
+     * @return Collection
+     */
+    public function getLearningOutcomes()
+    {
+        return $this->learningOutcomes;
+    }
+
+    /**
+     * Get activities
+     *
+     * @return Collection
+     */
+    public function getActivities()
+    {
+        $activities = new ArrayCollection();
+        /** @var LearningOutcome $learningOutcome */
+        foreach ($this->getLearningOutcomes() as $learningOutcome) {
+            /** @var Activity $activity */
+            foreach ($learningOutcome->getActivities() as $activity) {
+                $activities->add($activity);
+            }
+        }
+
+        return $activities;
     }
 }
