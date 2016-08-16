@@ -24,7 +24,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActivityType extends AbstractType
+class LearningOutcomeType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -32,8 +32,8 @@ class ActivityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('learningOutcome', null, [
-                'label' => 'form.learning_outcome',
+            ->add('training', null, [
+                'label' => 'form.training',
                 'required' => true,
                 'disabled' => $options['fixed']
             ])
@@ -42,7 +42,7 @@ class ActivityType extends AbstractType
                 'required' => false
             ])
             ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
-                'label' => 'form.name',
+                'label' => 'form.learning_outcome',
                 'required' => true
             ])
             ->add('description', null, [
@@ -57,7 +57,7 @@ class ActivityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Activity',
+            'data_class' => 'AppBundle\Entity\LearningOutcome',
             'translation_domain' => 'activity',
             'fixed' => false
         ]);

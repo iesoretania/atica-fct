@@ -13,7 +13,7 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('admin_program_training', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.training.select' | trans }}</a>
+                    <a href="{{ path('admin_program_training_learning_outcomes', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.training.select' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

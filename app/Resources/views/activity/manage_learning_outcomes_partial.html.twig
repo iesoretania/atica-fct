@@ -2,9 +2,9 @@
 <table class="table table-bordered table-condensed table-hover table-responsive">
     <thead>
     <tr>
-        {{ m.paginator_th(elements, 'col-md-1', 'a.code', 'form.code'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-9', 'a.name', 'form.name'|trans) }}
-        <th class="col-md-2"></th>
+        {{ m.paginator_th(elements, 'col-md-1', 'l.code', 'form.code'|trans) }}
+        {{ m.paginator_th(elements, 'col-md-7', 'l.name', 'form.learning_outcome'|trans) }}
+        <th class="col-md-4"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,14 +15,15 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('admin_program_activity_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
+                    <a href="{{ path('admin_program_training_activities', {'id': element.id}) }}" class="btn btn-info col-xs-6 col-sm-6"><i class="fa fa-list-ol"></i> {{ 'form.activities' | trans }}</a>
+                    <a href="{{ path('admin_program_learning_outcome_form', {'id': element.id}) }}" class="btn btn-default col-xs-6 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="3">{{ 'form.no_activities'|trans }}</td>
+            <td colspan="3">{{ 'form.no_learning_outcomes'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>

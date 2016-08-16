@@ -5,6 +5,6 @@
     <h2>{{ 'browse.title'|trans }}</h2>
     {% include 'activity/manage_activities_partial.html.twig' with {'elements': pagination } %}
 
-    {{ m.link_button(path('admin_program'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-    {{ m.link_button(path('admin_program_activity_new', {'training': training.id}), 'plus', 'btn-success', 'form.new'|trans) }}
+    {{ m.link_button(path('admin_program_training_learning_outcomes', {'id': learning_outcome.training.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('admin_program_activity_new', {'id': learning_outcome.id}), 'plus', 'btn-success', 'form.new'|trans) }}
 {% endblock %}

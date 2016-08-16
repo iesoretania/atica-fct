@@ -1,18 +1,24 @@
 activity.training.title: Seleccione enseñanza
-browse.title: Actividades del programa
+browse.title: Actividades formativo/productivas
+browse.learning_outcome.title: Resultados de aprendizaje
 
 form.order_nr: Orden
 form.code: Código
 form.name: Actividad
-form.description: Descripción
+form.learning_outcome: Resultado de aprendizaje
+form.description: Descripción detallada opcional
 form.detail: Modificar
 
 form.training: Enseñanza
 form.training.select: Seleccionar
+form.activities: Actividades asociadas
 form.no_trainings: No hay enseñanzas definidas.
+form.no_learning_outcomes: No hay resultados de aprendizaje definidos.
+form.no_activities: No hay actividades formativo/productivas definidas.
 
 form.submit: Guardar cambios
 form.new: Nueva actividad
+form.learning_outcome.new: Nuevo resultado de aprendizaje
 form.delete: Eliminar
 form.back: Volver
 
@@ -22,7 +28,13 @@ alert.not_saved: No se han podido guardar los cambios
 alert.deleted: Actividad eliminada con éxito
 alert.not_deleted: No se ha podido eliminar la actividad. Compruebe que no hay elementos asociados a la misma.
 
+alert.learning_outcome.deleted: Resultado de aprendizaje eliminado con éxito
+alert.learning_outcome.not_deleted: No se ha podido eliminar el resultado de aprendizaje. Compruebe que no hay elementos asociados al mismo.
+
 prompt.delete_confirm: >
     ¡ATENCIÓN! La actividad sólo podrá ser eliminada si no existen datos asociados a la misma.
+
+prompt.learning_outcome.delete_confirm: >
+    ¡ATENCIÓN! El resultado de aprendizaje sólo podrá ser eliminado si no existen datos asociados al mismo.
 
 form.delete_back: Volver sin eliminar

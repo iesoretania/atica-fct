@@ -1,0 +1,10 @@
+{% trans_default_domain 'activity' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'browse.learning_outcome.title'|trans }}</h2>
+    {% include 'activity/manage_learning_outcomes_partial.html.twig' with {'elements': pagination } %}
+
+    {{ m.link_button(path('admin_program'), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('admin_program_learning_outcome_new', {'training': training.id}), 'plus', 'btn-success', 'form.learning_outcome.new'|trans) }}
+{% endblock %}
