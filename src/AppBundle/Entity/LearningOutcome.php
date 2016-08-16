@@ -21,13 +21,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  */
-class Activity
+class LearningOutcome
 {
     /**
      * @ORM\Id
@@ -56,24 +55,10 @@ class Activity
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Training", inversedBy="activities")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Training
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="learningOutcome")
+     * @var Activity
      */
-    protected $training;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="LearningOutcome", inversedBy="activities")
-     * @ORM\JoinColumn(nullable=false)
-     * @var LearningOutcome
-     */
-    protected $learningOutcome;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Criterion", mappedBy="activity")
-     * @var Criterion
-     */
-    protected $criteria;
+    protected $activities;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -86,7 +71,7 @@ class Activity
      */
     public function __construct()
     {
-        $this->criteria = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     /**
@@ -112,7 +97,7 @@ class Activity
      *
      * @param string $name
      *
-     * @return Activity
+     * @return LearningOutcome
      */
     public function setName($name)
     {
@@ -136,7 +121,7 @@ class Activity
      *
      * @param string $description
      *
-     * @return Activity
+     * @return LearningOutcome
      */
     public function setDescription($description)
     {
@@ -156,35 +141,11 @@ class Activity
     }
 
     /**
-     * Set training
-     *
-     * @param Training $training
-     *
-     * @return Activity
-     */
-    public function setTraining(Training $training = null)
-    {
-        $this->training = $training;
-
-        return $this;
-    }
-
-    /**
-     * Get training
-     *
-     * @return Training
-     */
-    public function getTraining()
-    {
-        return $this->training;
-    }
-
-    /**
      * Set order
      *
      * @param integer $orderNr
      *
-     * @return Activity
+     * @return LearningOutcome
      */
     public function setOrderNr($orderNr)
     {
@@ -208,7 +169,7 @@ class Activity
      *
      * @param string $code
      *
-     * @return Activity
+     * @return LearningOutcome
      */
     public function setCode($code)
     {
@@ -227,61 +188,37 @@ class Activity
         return $this->code;
     }
 
-    /**
-     * Set learningOutcome
+     /**
+     * Add activity
      *
-     * @param LearningOutcome $learningOutcome
-     *
-     * @return Activity
-     */
-    public function setLearningOutcome(LearningOutcome $learningOutcome)
-    {
-        $this->learningOutcome = $learningOutcome;
-
-        return $this;
-    }
-
-    /**
-     * Get learningOutcome
+     * @param Activity $activity
      *
      * @return LearningOutcome
      */
-    public function getLearningOutcome()
+    public function addActivity(Activity $activity)
     {
-        return $this->learningOutcome;
-    }
-
-    /**
-     * Add criterion
-     *
-     * @param Criterion $criterion
-     *
-     * @return Activity
-     */
-    public function addCriterium(Criterion $criterion)
-    {
-        $this->criteria[] = $criterion;
+        $this->activities[] = $activity;
 
         return $this;
     }
 
     /**
-     * Remove criterion
+     * Remove activity
      *
-     * @param Criterion $criterion
+     * @param Activity $activity
      */
-    public function removeCriterium(Criterion $criterion)
+    public function removeActivity(Activity $activity)
     {
-        $this->criteria->removeElement($criterion);
+        $this->activities->removeElement($activity);
     }
 
     /**
-     * Get criteria
+     * Get activities
      *
-     * @return Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCriteria()
+    public function getActivities()
     {
-        return $this->criteria;
+        return $this->activities;
     }
 }
