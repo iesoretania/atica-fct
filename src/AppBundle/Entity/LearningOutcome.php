@@ -196,7 +196,7 @@ class LearningOutcome
         return $this->code;
     }
 
-     /**
+    /**
      * Add activity
      *
      * @param Activity $activity
