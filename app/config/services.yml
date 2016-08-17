@@ -57,7 +57,7 @@ services:
 
     AppBundle\Form\Type\VisitType:
         class: AppBundle\Form\Type\VisitType
-        arguments: ['@security.token_storage', '@doctrine']
+        arguments: ['@doctrine']
         tags:
             - { name: form.type }
 

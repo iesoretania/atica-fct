@@ -29,17 +29,14 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class VisitType extends AbstractType
 {
 
-    private $tokenStorage;
     private $managerRegistry;
 
-    public function __construct(TokenStorageInterface $tokenStorage, ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->tokenStorage = $tokenStorage;
         $this->managerRegistry = $managerRegistry;
     }
 
