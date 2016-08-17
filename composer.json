@@ -1,10 +1,11 @@
 {
-    "name": "lrlopez/atica.fct",
-    "license": "proprietary",
+    "name": "iesoretania/atica-fct",
+    "license": "AGPL-3.0",
     "type": "project",
+    "description": "Aplicación web para facilitar el seguimiento de la formación en centros de trabajo en la FP",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "AppBundle\\": "src/AppBundle"
         },
         "classmap": [
             "app/AppKernel.php",
