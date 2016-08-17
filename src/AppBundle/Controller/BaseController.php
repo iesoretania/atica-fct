@@ -23,7 +23,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
-use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 

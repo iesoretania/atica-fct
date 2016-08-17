@@ -23,7 +23,6 @@ namespace AppBundle\Service;
 use AppBundle\Entity\User;
 use AppBundle\Menu\MenuItem;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class StudentMenu implements MenuBuilderInterface
 {

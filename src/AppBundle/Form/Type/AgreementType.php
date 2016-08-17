@@ -20,7 +20,6 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
