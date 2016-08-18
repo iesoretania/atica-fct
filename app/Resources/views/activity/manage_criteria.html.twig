@@ -1,0 +1,10 @@
+{% trans_default_domain 'activity' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+{% block content %}
+    <h2>{{ 'browse.criteria.title'|trans }}</h2>
+    {% include 'activity/manage_criteria_partial.html.twig' with {'elements': pagination } %}
+
+    {{ m.link_button(path('admin_program_activities', {'id': activity.learningOutcome.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('admin_program_criterion_new', {'activity': activity.id}), 'plus', 'btn-success', 'form.criterion.new'|trans) }}
+{% endblock %}

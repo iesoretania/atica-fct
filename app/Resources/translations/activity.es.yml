@@ -1,24 +1,30 @@
 activity.training.title: Seleccione enseñanza
 browse.title: Actividades formativo/productivas
 browse.learning_outcome.title: Resultados de aprendizaje
+browse.criteria.title: Criterios de evaluación
 
 form.order_nr: Orden
 form.code: Código
 form.name: Actividad
 form.learning_outcome: Resultado de aprendizaje
+form.criterion: Criterio de evaluación
 form.description: Descripción detallada opcional
 form.detail: Modificar
 
 form.training: Enseñanza
 form.training.select: Seleccionar
 form.activities: Actividades asociadas
+form.activity: Actividad formativo/productiva
+form.criteria: Criterios de evaluación
 form.no_trainings: No hay enseñanzas definidas.
 form.no_learning_outcomes: No hay resultados de aprendizaje definidos.
 form.no_activities: No hay actividades formativo/productivas definidas.
+form.no_criteria: No hay criterios de evaluación definidos.
 
 form.submit: Guardar cambios
 form.new: Nueva actividad
 form.learning_outcome.new: Nuevo resultado de aprendizaje
+form.criterion.new: Nuevo criterio de evaluación
 form.delete: Eliminar
 form.back: Volver
 
@@ -31,10 +37,16 @@ alert.not_deleted: No se ha podido eliminar la actividad. Compruebe que no hay e
 alert.learning_outcome.deleted: Resultado de aprendizaje eliminado con éxito
 alert.learning_outcome.not_deleted: No se ha podido eliminar el resultado de aprendizaje. Compruebe que no hay elementos asociados al mismo.
 
+alert.criterion.deleted: Criterio de evaluación eliminado con éxito
+alert.criterion.not_deleted: No se ha podido eliminar el criterio de evaluación. Compruebe que no hay elementos asociados al mismo.
+
 prompt.delete_confirm: >
     ¡ATENCIÓN! La actividad sólo podrá ser eliminada si no existen datos asociados a la misma.
 
 prompt.learning_outcome.delete_confirm: >
     ¡ATENCIÓN! El resultado de aprendizaje sólo podrá ser eliminado si no existen datos asociados al mismo.
+
+prompt.criterion.delete_confirm: >
+    ¡ATENCIÓN! El criterio de evaluación sólo podrá ser eliminado si no existen datos asociados al mismo.
 
 form.delete_back: Volver sin eliminar

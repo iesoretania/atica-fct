@@ -36,7 +36,7 @@ class ActivityController extends Controller
 {
 
     /**
-     * @Route("/actividades/{id}", name="admin_program_training_activities", methods={"GET"})
+     * @Route("/actividades/{id}", name="admin_program_activities", methods={"GET"})
      */
     public function activitiesIndexAction(LearningOutcome $learningOutcome, Request $request)
     {
@@ -102,7 +102,7 @@ class ActivityController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'activity'));
-                return $this->redirectToRoute('admin_program_training_activities', ['id' => $activity->getLearningOutcome()->getId()]);
+                return $this->redirectToRoute('admin_program_activities', ['id' => $activity->getLearningOutcome()->getId()]);
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'activity'));
             }
@@ -115,7 +115,7 @@ class ActivityController extends Controller
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_program'),
             'breadcrumb' => [
                 ['fixed' => $activity->getLearningOutcome()->getTraining(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $activity->getLearningOutcome()->getTraining()->getId()]],
-                ['fixed' => $activity->getLearningOutcome(), 'path' => 'admin_program_training_activities', 'options' => ['id' => $activity->getLearningOutcome()->getId()]],
+                ['fixed' => $activity->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $activity->getLearningOutcome()->getId()]],
                 ['fixed' => $title]
             ],
             'new' => $activity->getId() == 0,
@@ -139,14 +139,14 @@ class ActivityController extends Controller
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'activity'));
             }
-            return $this->redirectToRoute('admin_program_training_activities', ['id' => $activity->getLearningOutcome()->getId()]);
+            return $this->redirectToRoute('admin_program_activities', ['id' => $activity->getLearningOutcome()->getId()]);
         }
 
         $title = (string) $activity->getName();
 
         $breadcrumb = [
             ['fixed' => $activity->getLearningOutcome()->getTraining(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $activity->getLearningOutcome()->getTraining()->getId()]],
-            ['fixed' => $activity->getLearningOutcome(), 'path' => 'admin_program_training_activities', 'options' => ['id' => $activity->getLearningOutcome()->getId()]],
+            ['fixed' => $activity->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $activity->getLearningOutcome()->getId()]],
             ['fixed' => (string) $activity, 'path' => 'admin_program_activity_form', 'options' => ['id' => $activity->getId()]],
             ['caption' => 'menu.delete']
         ];
