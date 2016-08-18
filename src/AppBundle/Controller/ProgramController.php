@@ -27,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/programa")
- * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
+ * @Security("is_granted('ROLE_ADMIN')")
  */
 class ProgramController extends Controller
 {

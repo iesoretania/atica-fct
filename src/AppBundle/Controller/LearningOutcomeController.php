@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/programa")
- * @Security("is_granted('ROLE_DEPARTMENT_HEAD')")
+ * @Security("is_granted('ROLE_ADMIN')")
  */
 class LearningOutcomeController extends Controller
 {
