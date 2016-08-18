@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/iesoretania/atica-fct.svg?branch=master)](https://travis-ci.org/iesoretania/atica-fct)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iesoretania/atica-fct/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iesoretania/atica-fct/?branch=master)
 [![Code Climate](https://codeclimate.com/github/iesoretania/atica-fct/badges/gpa.svg)](https://codeclimate.com/github/iesoretania/atica-fct)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4bb0a4d5-d6d4-46c8-b51d-97b37ab2f5f2/mini.png)](https://insight.sensiolabs.com/projects/4bb0a4d5-d6d4-46c8-b51d-97b37ab2f5f2)
 
 Aplicación web para la gestión de la formación en centros de trabajo (en desarrollo, aún no está lista para producción).
 
