@@ -146,6 +146,7 @@ class MyStudentController extends BaseController
         $em = $this->getDoctrine()->getManager();
         if (null === $agreement->getReport()) {
             $report = new Report();
+            $report->setSignDate(new \DateTime());
             $report->setAgreement($agreement);
             $em->persist($report);
         } else {
@@ -156,7 +157,6 @@ class MyStudentController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $report->setSignDate(new \DateTime());
             $em->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
             return $this->redirectToRoute('my_student_agreement_calendar', ['id' => $agreement->getId()]);

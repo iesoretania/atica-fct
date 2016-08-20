@@ -77,6 +77,11 @@ class ReportType extends AbstractType
             ->add('proposedChanges', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
                 'label' => 'form.proposed_changes',
                 'required' => false
+            ])
+            ->add('signDate', 'Symfony\Component\Form\Extension\Core\Type\DateType', [
+                'label' => 'form.sign_date',
+                'widget' => 'single_text',
+                'required' => true
             ]);
     }
 
