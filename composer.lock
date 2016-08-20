@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1a56b3d47f8929b659b39daf460da41",
-    "content-hash": "72175fe0bb6f469254e760caabcd373d",
+    "hash": "069b4ff14002e3f4682c4abbda63db77",
+    "content-hash": "50cd9908e614c74d951ae6ed59957119",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1243,6 +1243,49 @@
             "time": "2016-07-29 03:23:52"
         },
         {
+            "name": "mpdf/mpdf",
+            "version": "v6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpdf/mpdf.git",
+                "reference": "a15743d030ce3b5b7be36c6e83f76589b27c3f2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/a15743d030ce3b5b7be36c6e83f76589b27c3f2c",
+                "reference": "a15743d030ce3b5b7be36c6e83f76589b27c3f2c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=4.3.10"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "mpdf.php",
+                    "classes"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-1.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Back"
+                }
+            ],
+            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
+            "homepage": "http://www.mpdf1.com/mpdf/index.php",
+            "keywords": [
+                "pdf",
+                "php",
+                "utf-8"
+            ],
+            "time": "2015-03-01 10:27:49"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v2.0.2",
             "source": {
@@ -1327,6 +1370,59 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "sasedev/mpdf-bundle",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sasedev/mpdf-bundle.git",
+                "reference": "d010d4ca257a18750b0d6a2dfc9a1cef62f040ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sasedev/mpdf-bundle/zipball/d010d4ca257a18750b0d6a2dfc9a1cef62f040ee",
+                "reference": "d010d4ca257a18750b0d6a2dfc9a1cef62f040ee",
+                "shasum": ""
+            },
+            "require": {
+                "mpdf/mpdf": "6.0.*",
+                "php": ">=5.5",
+                "symfony/config": "~2.8|~3.0",
+                "symfony/dependency-injection": "~2.8|~3.0",
+                "symfony/http-foundation": "~2.8|~3.0",
+                "symfony/http-kernel": "~2.8|~3.0",
+                "symfony/monolog-bridge": "~2.8|~3.0",
+                "symfony/twig-bridge": "~2.8|~3.0",
+                "symfony/yaml": "~2.8|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Salah Abdelkader Seif Eddine",
+                    "email": "seif.salah@gmail.com"
+                }
+            ],
+            "description": "Mpdf for Symfony2 (3.0)",
+            "keywords": [
+                "Symfony2",
+                "form"
+            ],
+            "time": "2016-02-15 09:47:17"
         },
         {
             "name": "sensio/distribution-bundle",
