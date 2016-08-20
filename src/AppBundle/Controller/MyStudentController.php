@@ -182,13 +182,13 @@ class MyStudentController extends BaseController
      */
     public function downloadStudentReportAction(Agreement $agreement)
     {
-        $title = $this->get('translator')->trans('form.report', [], 'student') . ' ' . $agreement->getStudent();
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.report', [], 'student') . ' ' . $agreement->getStudent();
 
         $mpdf = $this->get('sasedev_mpdf');
-
-        $mpdf->useTwigTemplate('student/pdf_report.html.twig', [
-            'title' => $title
-        ]);
+        $mpdf->init();
+        $this->fillReport($mpdf, $translator, $agreement, $title);
 
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');

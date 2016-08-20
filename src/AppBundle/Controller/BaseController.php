@@ -23,8 +23,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
+use Sasedev\MpdfBundle\Service\MpdfService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class BaseController extends Controller
 {
@@ -128,5 +130,45 @@ class BaseController extends Controller
         }
 
         return $this->redirectToRoute($routeName, ['id' => $agreement->getId()]);
+    }
+
+
+    /**
+     * @param MpdfService $mpdf
+     * @param TranslatorInterface $translator
+     * @param Agreement $agreement
+     * @param string $title
+     */
+    public function fillReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $title)
+    {
+        $obj = $mpdf->getMpdf();
+        $obj->SetTitle($title);
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/Informe_tutor_laboral_seneca_rellenable.pdf');
+        $obj->AddPage();
+        $obj->SetFont('DejaVuSansCondensed');
+        $obj->SetFontSize(9);
+        $obj->WriteText(40, 40.8, (string) $agreement->getStudent());
+        $obj->WriteText(40, 46.6, $this->getParameter('organization.name'));
+        $obj->WriteText(40, 53, (string) $agreement->getStudent()->getStudentGroup()->getTraining());
+        $obj->WriteText(179, 53, (string) $agreement->getStudent()->getStudentGroup()->getTraining()->getStage());
+        $obj->WriteText(40, 59.1, (string) $agreement->getWorkcenter());
+        $obj->WriteText(165, 59.1, (string) $agreement->getTrackedHours());
+        $obj->WriteText(82, 65.1, (string) $agreement->getWorkTutor());
+        $obj->WriteText(68, 71.6, (string) $agreement->getEducationalTutor());
+
+        $obj->WriteText(108 + $agreement->getReport()->getProfessionalCompetence() * 35.0, 137, 'X');
+        $obj->WriteText(108 + $agreement->getReport()->getOrganizationalCompetence() * 35.0, 143.5, 'X');
+        $obj->WriteText(108 + $agreement->getReport()->getRelationalCompetence() * 35.0, 149.5, 'X');
+        $obj->WriteText(108 + $agreement->getReport()->getContingencyResponse() * 35.0, 155.5, 'X');
+
+        $obj->WriteFixedPosHTML('<div style="font-family: sans-serif; font-size: 12px;">' . nl2br(htmlentities($agreement->getReport()->getWorkActivities())) . '</div>', 18, 80, 179, 41.6, 'auto');
+        $obj->WriteFixedPosHTML('<div style="font-family: sans-serif; font-size: 12px;">' . nl2br(htmlentities($agreement->getReport()->getProposedChanges())) . '</div>', 18, 195, 179, 43, 'auto');
+
+        $obj->WriteText(61, 247.6, $agreement->getWorkcenter()->getCity());
+        $obj->WriteText(104.5, 247.6, $agreement->getReport()->getSignDate()->format('d'));
+        $obj->WriteText(116, 247.6, $translator->trans('month' . ($agreement->getReport()->getSignDate()->format('n') - 1), [], 'calendar'));
+        $obj->WriteText(153, 247.6, $agreement->getReport()->getSignDate()->format('y'));
+        $obj->WriteText(89, 275.6, (string) $agreement->getWorkTutor());
     }
 }
