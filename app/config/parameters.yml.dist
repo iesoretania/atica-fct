@@ -45,3 +45,6 @@ parameters:
 
     # Nombre de la organización que se mostrará
     organization.name: "I.E.S. Test"
+
+    # Localidad de la organización
+    organization.city: "Linares"
