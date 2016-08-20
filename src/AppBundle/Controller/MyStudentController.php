@@ -159,7 +159,9 @@ class MyStudentController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
-            return $this->redirectToRoute('my_student_agreement_calendar', ['id' => $agreement->getId()]);
+            return $this->redirectToRoute(
+                $request->request->has('submit') ? 'my_student_agreement_calendar' : 'my_student_agreement_report_download',
+                ['id' => $agreement->getId()]);
         }
 
         return $this->render('student/report_form.html.twig', [
@@ -172,5 +174,23 @@ class MyStudentController extends BaseController
             'form' => $form->createView(),
             'agreement' => $agreement
         ]);
+    }
+
+    /**
+     * @Route("/estudiantes/informe/descargar/{id}", name="my_student_agreement_report_download", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function downloadStudentReportAction(Agreement $agreement)
+    {
+        $title = $this->get('translator')->trans('form.report', [], 'student') . ' ' . $agreement->getStudent();
+
+        $mpdf = $this->get('sasedev_mpdf');
+
+        $mpdf->useTwigTemplate('student/pdf_report.html.twig', [
+            'title' => $title
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
     }
 }
