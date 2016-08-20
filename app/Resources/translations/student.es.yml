@@ -36,6 +36,7 @@ form.workday_unlock: Desbloquear jornadas
 form.select_deselect: Seleccionar/deseleccionar jornadas
 
 form.submit: Guardar cambios
+form.generate_report: Guardar cambios y generar informe
 form.previous: Jornada anterior
 form.next: Siguiente jornada
 
@@ -54,6 +55,7 @@ form.organizational_competence: Valoración de la competencia organizacional
 form.relational_competence: Valoración de la competencia relacional
 form.contingency_response: Valoración de la capacidad de respuesta ante contingencias
 form.proposed_changes: Modificaciones a introducir en el programa formativo (opcional)
+form.sign_date: Fecha del informe
 
 form.grade_negative: Negativo
 form.grade_positive: Positivo
@@ -73,3 +75,6 @@ prompt.match: >
 
 prompt.unsaved_changes: >
   Se han realizado cambios en la jornada actuales que no se han guardado.
+
+prompt.report.unsaved_changes: >
+  Se han realizado cambios en el informe que no se han guardado.
