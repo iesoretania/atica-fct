@@ -36,7 +36,7 @@ class WorkdayTrackingType extends AbstractType
                 'label' => false,
                 'entry_type' => 'AppBundle\Form\Type\TrackingType',
                 'required' => true,
-                'options' => [
+                'entry_options' => [
                     'label' => false
                 ]
             ])
