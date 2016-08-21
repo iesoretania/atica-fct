@@ -20,7 +20,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\Report;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -144,5 +146,46 @@ class GroupController extends BaseController
                 'user' => $student,
                 'form' => $form->createView()
             ]);
+    }
+    /**
+     * @Route("/seguimiento/informe/{id}", name="admin_group_agreement_report_form", methods={"GET", "POST"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function studentReportAction(Agreement $agreement, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (null === $agreement->getReport()) {
+            $report = new Report();
+            $report->setSignDate(new \DateTime());
+            $report->setAgreement($agreement);
+            $em->persist($report);
+        } else {
+            $report = $agreement->getReport();
+        }
+
+        $form = $this->createForm('AppBundle\Form\Type\ReportType', $report);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            if ($request->request->has('submit')) {
+                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
+            }
+            return $this->redirectToRoute(
+                $request->request->has('submit') ? 'admin_group_student_calendar' : 'admin_group_agreement_report_download',
+                ['id' => $agreement->getId()]);
+        }
+
+        return $this->render('group/report_form.html.twig', [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+            'breadcrumb' => [
+                ['fixed' => $agreement->getStudent()->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $agreement->getStudent()->getStudentGroup()->getId()]],
+                ['fixed' => (string) $agreement->getStudent(), 'path' => 'admin_group_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                ['fixed' => $this->get('translator')->trans('form.report', [], 'student')]
+            ],
+            'form' => $form->createView(),
+            'agreement' => $agreement
+        ]);
     }
 }

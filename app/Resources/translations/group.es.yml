@@ -21,6 +21,7 @@ form.delete_confirm: Confirmar eliminación
 form.new: Nuevo grupo
 form.view: Modificar
 
+form.report: Informe del tutor laboral
 form.workday_lock: Bloquear
 form.workday_unlock: Desbloquear
 form.workday_add: Añadir jornadas

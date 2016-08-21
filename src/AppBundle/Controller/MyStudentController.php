@@ -179,6 +179,7 @@ class MyStudentController extends BaseController
     }
 
     /**
+     * @Route("/alumnado/seguimiento/informe/descargar/{id}", name="admin_group_agreement_report_download", methods={"GET"})
      * @Route("/estudiantes/informe/descargar/{id}", name="my_student_agreement_report_download", methods={"GET"})
      * @Security("is_granted('AGREEMENT_REPORT', agreement)")
      */

@@ -8,6 +8,9 @@
         {% include 'group/calendar_agreement_graphic_partial.html.twig' %}
 
         {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+        {% if is_granted('AGREEMENT_REPORT', agreement) %}
+            {{ m.link_button(path('admin_group_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
+        {% endif %}
         {% if is_granted('AGREEMENT_MANAGE', agreement) %}
             {{ m.link_button(path('admin_group_student_workday_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-info', 'form.workday_add'|trans) }}
         {% endif %}
