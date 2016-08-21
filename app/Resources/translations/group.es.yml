@@ -27,7 +27,7 @@ form.workday_unlock: Desbloquear
 form.workday_add: Añadir jornadas
 form.select_deselect: Seleccionar/deseleccionar jornadas
 
-student.detail: Gestionar
+student.detail: Datos personales
 student.agreements: Acuerdos
 student.tracking: Seguimiento
 
