@@ -191,12 +191,14 @@ class BaseController extends Controller
     protected function fillWorkingTutorReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $title)
     {
         $obj = $mpdf->getMpdf();
-        $obj->SetTitle($title);
         $obj->SetImportUse();
         $obj->SetDocTemplate('pdf/Informe_tutor_laboral_seneca_rellenable.pdf');
-        $obj->AddPage();
+
         $obj->SetFont('DejaVuSansCondensed');
         $obj->SetFontSize(9);
+        $obj->SetTitle($title);
+
+        $obj->AddPage();
         $obj->WriteText(40, 40.8, (string) $agreement->getStudent());
         $obj->WriteText(40, 46.6, $this->getParameter('organization.name'));
         $obj->WriteText(40, 53, (string) $agreement->getStudent()->getStudentGroup()->getTraining());
