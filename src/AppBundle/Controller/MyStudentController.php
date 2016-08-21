@@ -158,7 +158,9 @@ class MyStudentController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
+            if ($request->request->has('submit')) {
+                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
+            }
             return $this->redirectToRoute(
                 $request->request->has('submit') ? 'my_student_agreement_calendar' : 'my_student_agreement_report_download',
                 ['id' => $agreement->getId()]);
@@ -188,7 +190,7 @@ class MyStudentController extends BaseController
 
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init();
-        $this->fillReport($mpdf, $translator, $agreement, $title);
+        $this->fillWorkingTutorReport($mpdf, $translator, $agreement, $title);
 
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');
