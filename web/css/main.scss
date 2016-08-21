@@ -67,3 +67,11 @@ $breadcrumb-separator: ">";
     margin-bottom: 0.1em;
   }
 }
+
+/* Separador de meses en el calendario */
+th.calendar-month {
+    text-align: center;
+    font-variant: small-caps;
+    background-color: $navbar-default-bg;
+    color: $navbar-default-brand-color;
+}

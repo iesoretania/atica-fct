@@ -440,9 +440,3 @@ form[role=login] button {
         display: none !important;
     }
 }
-
-th.calendar-month {
-    text-align: center;
-    font-variant: small-caps;
-    background-color: #00ccff;
-}
