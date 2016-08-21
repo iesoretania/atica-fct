@@ -24,6 +24,7 @@ use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Report;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
+use Doctrine\Common\Collections\Collection;
 use Sasedev\MpdfBundle\Service\MpdfService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -212,12 +213,16 @@ class BaseController extends Controller
      * @param $h
      * @param string $overflow
      * @param string $align
+     * @param bool $escape
      */
-    private function pdfWriteFixedPosHTML(MpdfService $mpdf, $text, $x, $y, $w, $h, $overflow = 'auto', $align = 'left')
+    private function pdfWriteFixedPosHTML(MpdfService $mpdf, $text, $x, $y, $w, $h, $overflow = 'auto', $align = 'left', $escape = true)
     {
         $obj = $mpdf->getMpdf();
 
-        $obj->WriteFixedPosHTML('<div style="font-family: sans-serif; font-size: 12px; text-align: ' . $align . ';">' . nl2br(htmlentities($text)) . '</div>', $x, $y, $w, $h, $overflow);
+        if ($escape) {
+            $text = nl2br(htmlentities($text));
+        }
+        $obj->WriteFixedPosHTML('<div style="font-family: sans-serif; font-size: 12px; text-align: ' . $align . ';">' . $text . '</div>', $x, $y, $w, $h, $overflow);
     }
 
     /**
@@ -259,5 +264,90 @@ class BaseController extends Controller
         $this->pdfWriteFixedPosHTML($mpdf, $translator->trans('r_month' . ($agreement->getReport()->getSignDate()->format('n') - 1), [], 'calendar'), 116, 244.4, 26, 5, 'auto', 'center');
         $this->pdfWriteFixedPosHTML($mpdf, $agreement->getReport()->getWorkActivities(), 18, 80, 179, 40.5, 'auto', 'justify');
         $this->pdfWriteFixedPosHTML($mpdf, $agreement->getReport()->getProposedChanges(), 18, 195, 179, 43, 'auto', 'justify');
+    }
+
+    /**
+     * @param MpdfService $mpdf
+     * @param TranslatorInterface $translator
+     * @param Agreement $agreement
+     * @param $weekDays
+     * @param string $title
+     */
+    protected function fillWeeklyReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $weekDays, $title)
+    {
+        $activities = [];
+        $hours = [];
+        $notes = [];
+        $noActivity = htmlentities($translator->trans('form.no_activities', [], 'calendar'));
+        $noWorkday = htmlentities($translator->trans('form.no_workday', [], 'calendar'));
+
+        /** @var Workday $workDay */
+        foreach($weekDays as $workDay) {
+            $day = $workDay->getDate()->format('N');
+            $activities[$day] = '';
+            $hours[$day] = '';
+
+            /** @var Tracking $trackingActivity */
+            foreach($workDay->getTrackingActivities() as $trackingActivity) {
+                $activities[$day] .= '<li style="list-style-position: inside; list-style: square;">';
+                if ($trackingActivity->getActivity()->getCode()) {
+                    $activities[$day] .= '<b>' . htmlentities($trackingActivity->getActivity()->getCode()) . ': </b>';
+                }
+                $activities[$day] .= htmlentities($trackingActivity->getActivity()->getName()) . '</li>';
+                $hours[$day] .= '<li style="list-style-position: inside; list-style: square;">' . $translator->transChoice('form.r_hours', $trackingActivity->getHours(), ['%hours%' => $trackingActivity->getHours()], 'calendar') . '</li>';
+            }
+
+            if ('' === $activities[$day]) {
+                $activities[$day] = '<i>' . $noActivity . '</i>';
+            }
+            $notes[$day] = $workDay->getNotes();
+        }
+
+        $obj = $mpdf->getMpdf();
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/Ficha_semanal_alumno_seneca_rellenable.pdf');
+
+        $obj->SetTitle($title);
+
+        $obj->AddPage('L');
+
+        /** @var Workday $first */
+        $first = end($weekDays);
+
+        /** @var Workday $last */
+        $last = reset($weekDays);
+
+        $this->pdfWriteFixedPosHTML($mpdf, $first->getDate()->format('j'), 54.5, 33.5, 8, 5, 'auto', 'center');
+        $this->pdfWriteFixedPosHTML($mpdf, $last->getDate()->format('j'), 67.5, 33.5, 10, 5, 'auto', 'center');
+        $this->pdfWriteFixedPosHTML($mpdf, $translator->trans('r_month' . ($last->getDate()->format('n') - 1), [], 'calendar'), 85, 33.5, 23.6, 5, 'auto', 'center');
+        $this->pdfWriteFixedPosHTML($mpdf, $last->getDate()->format('y'), 118.5, 33.5, 6, 5, 'auto', 'center');
+
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkcenter(), 192, 40.8, 72, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, $this->getParameter('organization.name'), 62.7, 40.9, 80, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getEducationalTutor(), 97.5, 46.5, 46, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkTutor(), 198, 46.5, 66, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent()->getStudentGroup()->getTraining(), 172, 54, 61, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent()->getStudentGroup()->getTraining()->getStage(), 244, 54, 20, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent(), 63, 54, 80, 5, 'auto', 'left');
+
+        for ($n = 1; $n < 6; $n++) {
+            if (isset($activities[$n])) {
+                $activity = $activities[$n];
+                $hour = $hours[$n];
+                $note = $notes[$n];
+            } else {
+                $activity = '<i>' . $noWorkday . '</i>';
+                $hour = '';
+                $note = '';
+            }
+            $this->pdfWriteFixedPosHTML($mpdf, $activity, 58, 73.0 + ($n - 1) * 17.8, 128, 15.8, 'auto', 'left', false);
+            $this->pdfWriteFixedPosHTML($mpdf, $hour, 189, 73.0 + ($n - 1) * 17.8, 25, 15.8, 'auto', 'left', false);
+            $this->pdfWriteFixedPosHTML($mpdf, $note, 217.5, 73.0 + ($n - 1) * 17.8, 46, 15.8, 'auto', 'justify', true);
+        }
+
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent(), 68, 185.4, 53, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getEducationalTutor(), 136, 186.9, 53, 5, 'auto', 'left');
+        $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkTutor(), 204, 184.9, 53, 5, 'auto', 'left');
+
     }
 }

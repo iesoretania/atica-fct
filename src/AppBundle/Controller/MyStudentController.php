@@ -23,6 +23,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -167,6 +168,39 @@ class MyStudentController extends BaseController
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init();
         $this->fillWorkingTutorReport($mpdf, $translator, $agreement, $title);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
+    }
+
+    /**
+     * @Route("/estudiantes/ficha/descargar/{id}/{year}/{week}", name="my_student_weekly_report_download", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function downloadWeeklyReportAction(Agreement $agreement, $year, $week)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $isLocked = $em->getRepository('AppBundle:Workday')->isWeekLocked($agreement, $week, $year);
+
+        if (false === $isLocked) {
+            $this->denyAccessUnlessGranted('AGREEMENT_LOCK', $agreement);
+        }
+
+        $weekDays = $em->getRepository('AppBundle:Workday')->getWorkdaysInWeek($agreement, $week, $year);
+
+        if (0 === count($weekDays)) {
+            throw $this->createNotFoundException();
+        }
+
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.weekly_report', [], 'student') . ' - ' . $agreement->getStudent();
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init();
+        $this->fillWeeklyReport($mpdf, $translator, $agreement, $weekDays, $title);
 
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');
