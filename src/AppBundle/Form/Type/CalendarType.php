@@ -64,14 +64,6 @@ class CalendarType extends AbstractType
             ->add('hours_fri', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
                 'label' => 'form.hours_fri',
                 'required' => true
-            ])
-            ->add('hours_sat', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'label' => 'form.hours_sat',
-                'required' => true
-            ])
-            ->add('hours_sun', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
-                'label' => 'form.hours_sun',
-                'required' => true
             ]);
     }
 

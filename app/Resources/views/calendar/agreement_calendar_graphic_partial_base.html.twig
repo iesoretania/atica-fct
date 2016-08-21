@@ -5,29 +5,27 @@
     <thead>
         <tr>
             {% set year = num//12 %}
-            <th colspan="8" class="calendar-month">{{ ('month'~(num % 12))|trans }} {{ year }}</th>
+            <th colspan="6" class="calendar-month">{{ ('month'~(num % 12))|trans }} {{ year }}</th>
         </tr>
         <tr>
-            <th class="col-md-1">{{ 'dow0'|trans }}</th>
-            <th class="col-md-1">{{ 'dow1'|trans }}</th>
-            <th class="col-md-1">{{ 'dow2'|trans }}</th>
-            <th class="col-md-1">{{ 'dow3'|trans }}</th>
-            <th class="col-md-1">{{ 'dow4'|trans }}</th>
-            <th class="col-md-1">{{ 'dow5'|trans }}</th>
-            <th class="col-md-1">{{ 'dow6'|trans }}</th>
-            <th class="col-md-1"></th>
+            <th class="col-md-2">{{ 'dow0'|trans }}</th>
+            <th class="col-md-2">{{ 'dow1'|trans }}</th>
+            <th class="col-md-2">{{ 'dow2'|trans }}</th>
+            <th class="col-md-2">{{ 'dow3'|trans }}</th>
+            <th class="col-md-2">{{ 'dow4'|trans }}</th>
+            <th class="col-md-2"></th>
         </tr>
     </thead>
     <tbody>
         {% for n, week in month %}
         <tr>
-            {% for day in week.days %}
+            {% for day in week.days[0:5] %}
                 <td {% if day.data is defined %}class="{{ day.data.trackedHours == 0 ? 'info' : (day.data.trackedHours == day.data.hours ? 'success' : 'danger') }}"{% endif %}>
                 {% block day %}
                 {% endblock %}
                 </td>
             {% endfor %}
-            {% set fill = 7 - (week.days|length) %}
+            {% set fill = 5 - (min((week.days)|length, 5)) %}
             {% if fill %}
                 {% for i in 1..fill %}
                     <td></td>
