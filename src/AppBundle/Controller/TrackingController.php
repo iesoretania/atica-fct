@@ -83,44 +83,6 @@ class TrackingController extends BaseController
             ]);
     }
 
-    public function deleteWorkdayAction(Agreement $agreement, Request $request)
-    {
-        $this->denyAccessUnlessGranted('AGREEMENT_MANAGE', $agreement);
-
-        $em = $this->getDoctrine()->getManager();
-
-        if ($request->request->has('ids')) {
-            try {
-                $ids = $request->request->get('ids');
-
-                $dates = $em->getRepository('AppBundle:Workday')->createQueryBuilder('w')
-                    ->where('w.id IN (:ids)')
-                    ->andWhere('w.agreement = :agreement')
-                    ->setParameter('ids', $ids)
-                    ->setParameter('agreement', $agreement)
-                    ->getQuery()
-                    ->getResult();
-
-                /** @var Workday $date */
-                foreach ($dates as $date) {
-                    if ($date->getTrackedHours() === 0.0) {
-                        $em->remove($date);
-                    }
-                }
-                $em->flush();
-
-                $agreement->setFromDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealFromDate($agreement));
-                $agreement->setToDate($this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealToDate($agreement));
-
-                $em->flush();
-                $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'calendar'));
-            } catch (\Exception $e) {
-                $this->addFlash('error', $this->get('translator')->trans('alert.not_deleted', [], 'calendar'));
-            }
-        }
-        return $this->redirectToRoute('admin_group_student_calendar', ['id' => $agreement->getId()]);
-    }
-
     /**
      * @Route("/seguimiento/acuerdo/{id}/operacion", name="admin_group_student_workday_operation", methods={"POST"})
      * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
