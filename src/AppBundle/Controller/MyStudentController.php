@@ -194,13 +194,16 @@ class MyStudentController extends BaseController
             throw $this->createNotFoundException();
         }
 
+        $weekInfo = $em->getRepository('AppBundle:Workday')->getWeekInformation($weekDays[0]);
+
         $translator = $this->get('translator');
 
-        $title = $translator->trans('form.weekly_report', [], 'student') . ' - ' . $agreement->getStudent();
+        $title = $translator->trans('form.weekly_report', [], 'student') . ' - ' . $agreement->getStudent() . ' - Semana ' . str_pad($weekInfo['current'], 2, '0', STR_PAD_LEFT);
 
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init();
-        $this->fillWeeklyReport($mpdf, $translator, $agreement, $weekDays, $title, $isLocked);
+
+        $this->fillWeeklyReport($mpdf, $translator, $agreement, $weekDays, $title, $isLocked, $weekInfo);
 
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');

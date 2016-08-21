@@ -272,8 +272,9 @@ class BaseController extends Controller
      * @param Workday[] $weekDays
      * @param string $title
      * @param boolean $isLocked
+     * @param array $weekCounter
      */
-    protected function fillWeeklyReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $weekDays, $title, $isLocked)
+    protected function fillWeeklyReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $weekDays, $title, $isLocked, $weekCounter)
     {
         $activities = [];
         $hours = [];
@@ -310,10 +311,8 @@ class BaseController extends Controller
 
         $obj->AddPage('L');
 
-        /** @var Workday $first */
+        // añadir fecha a la ficha
         $first = end($weekDays);
-
-        /** @var Workday $last */
         $last = reset($weekDays);
 
         $this->pdfWriteFixedPosHTML($mpdf, $first->getDate()->format('j'), 54.5, 33.5, 8, 5, 'auto', 'center');
@@ -321,6 +320,11 @@ class BaseController extends Controller
         $this->pdfWriteFixedPosHTML($mpdf, $translator->trans('r_month' . ($last->getDate()->format('n') - 1), [], 'calendar'), 85, 33.5, 23.6, 5, 'auto', 'center');
         $this->pdfWriteFixedPosHTML($mpdf, $last->getDate()->format('y'), 118.5, 33.5, 6, 5, 'auto', 'center');
 
+        // añadir números de página
+        $this->pdfWriteFixedPosHTML($mpdf, $weekCounter['current'], 245.5, 21.9, 6, 5, 'auto', 'center');
+        $this->pdfWriteFixedPosHTML($mpdf, $weekCounter['total'], 254.8, 21.9, 6, 5, 'auto', 'center');
+
+        // añadir campos de la cabecera
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkcenter(), 192, 40.8, 72, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, $this->getParameter('organization.name'), 62.7, 40.9, 80, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getEducationalTutor(), 97.5, 46.5, 46, 5, 'auto', 'left');
@@ -329,6 +333,7 @@ class BaseController extends Controller
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent()->getStudentGroup()->getTraining()->getStage(), 244, 54, 20, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent(), 63, 54, 80, 5, 'auto', 'left');
 
+        // añadir actividades semanales
         for ($n = 1; $n < 6; $n++) {
             if (isset($activities[$n])) {
                 $activity = $activities[$n];
@@ -344,10 +349,12 @@ class BaseController extends Controller
             $this->pdfWriteFixedPosHTML($mpdf, $note, 217.5, 73.0 + ($n - 1) * 17.8, 46, 15.8, 'auto', 'justify', true);
         }
 
+        // añadir pie de firmas
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getStudent(), 68, 185.4, 53, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getEducationalTutor(), 136, 186.9, 53, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkTutor(), 204, 184.9, 53, 5, 'auto', 'left');
 
+        // si no está bloqueada la semana, agregar la marca de agua de borrador
         if (!$isLocked) {
             $obj->SetWatermarkText($translator->trans('form.draft', [], 'calendar'), 0.1);
             $obj->showWatermarkText = true;

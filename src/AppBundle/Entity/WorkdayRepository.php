@@ -222,4 +222,30 @@ class WorkdayRepository extends EntityRepository
         // la semana está bloqueada si hay días de trabajo y todos están bloqueados
         return $count && ($count === $locked);
     }
+
+    public function getWeekInformation(Workday $workday)
+    {
+        $total = 0;
+        $current = 0;
+
+        $oldNumWeek = NAN;
+
+        $workDays = $workday->getAgreement()->getWorkdays();
+
+        /** @var Workday $day */
+        foreach($workDays as $day) {
+            $numWeek = $day->getDate()->format('W');
+
+            if ($numWeek != $oldNumWeek) {
+                $total++;
+                $oldNumWeek = $numWeek;
+            }
+
+            if ($workday->getDate() == $day->getDate()) {
+                $current = $total;
+            }
+        }
+
+        return ['total' => $total, 'current' => $current];
+    }
 }
