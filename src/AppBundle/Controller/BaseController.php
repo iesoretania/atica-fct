@@ -24,7 +24,6 @@ use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Report;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
-use Doctrine\Common\Collections\Collection;
 use Sasedev\MpdfBundle\Service\MpdfService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -270,10 +269,11 @@ class BaseController extends Controller
      * @param MpdfService $mpdf
      * @param TranslatorInterface $translator
      * @param Agreement $agreement
-     * @param $weekDays
+     * @param Workday[] $weekDays
      * @param string $title
+     * @param boolean $isLocked
      */
-    protected function fillWeeklyReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $weekDays, $title)
+    protected function fillWeeklyReport(MpdfService $mpdf, TranslatorInterface $translator, Agreement $agreement, $weekDays, $title, $isLocked)
     {
         $activities = [];
         $hours = [];
@@ -281,13 +281,11 @@ class BaseController extends Controller
         $noActivity = htmlentities($translator->trans('form.no_activities', [], 'calendar'));
         $noWorkday = htmlentities($translator->trans('form.no_workday', [], 'calendar'));
 
-        /** @var Workday $workDay */
         foreach($weekDays as $workDay) {
             $day = $workDay->getDate()->format('N');
             $activities[$day] = '';
             $hours[$day] = '';
 
-            /** @var Tracking $trackingActivity */
             foreach($workDay->getTrackingActivities() as $trackingActivity) {
                 $activities[$day] .= '<li style="list-style-position: inside; list-style: square;">';
                 if ($trackingActivity->getActivity()->getCode()) {
@@ -304,6 +302,7 @@ class BaseController extends Controller
         }
 
         $obj = $mpdf->getMpdf();
+
         $obj->SetImportUse();
         $obj->SetDocTemplate('pdf/Ficha_semanal_alumno_seneca_rellenable.pdf');
 
@@ -349,5 +348,10 @@ class BaseController extends Controller
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getEducationalTutor(), 136, 186.9, 53, 5, 'auto', 'left');
         $this->pdfWriteFixedPosHTML($mpdf, (string) $agreement->getWorkTutor(), 204, 184.9, 53, 5, 'auto', 'left');
 
+        if (!$isLocked) {
+            $obj->SetWatermarkText($translator->trans('form.draft', [], 'calendar'), 0.1);
+            $obj->showWatermarkText = true;
+            $obj->watermark_font = 'DejaVuSansCondensed';
+        }
     }
 }

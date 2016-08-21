@@ -200,7 +200,7 @@ class MyStudentController extends BaseController
 
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init();
-        $this->fillWeeklyReport($mpdf, $translator, $agreement, $weekDays, $title);
+        $this->fillWeeklyReport($mpdf, $translator, $agreement, $weekDays, $title, $isLocked);
 
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');
