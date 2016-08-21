@@ -21,9 +21,9 @@
 {% endmacro %}
 
 {% macro submit_button(name, icon = null, class = 'btn-success', caption) %}
-    <button type="submit" name="{{ name }}" class="btn {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</button>
+    <button type="submit" name="{{ name }}" class="btn btn-sm-block {{ class }}">{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</button>
 {% endmacro %}
 
 {% macro link_button(href, icon = null, class = 'btn-success', caption, id = null) %}
-    <a href="{{ href }}" class="btn {{ class }}"{% if id %} id="{{ id }}"{% endif %}>{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</a>
+    <a href="{{ href }}" class="btn btn-sm-block {{ class }}"{% if id %} id="{{ id }}"{% endif %}>{% if icon %}<i class="fa fa-{{ icon }}"></i> {% endif %}{{ caption }}</a>
 {% endmacro %}

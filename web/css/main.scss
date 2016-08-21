@@ -59,3 +59,11 @@ $breadcrumb-separator: ">";
     @extend .fa-exclamation-triangle;
   }
 }
+
+/* Botones adaptativos */
+@media (max-width: $screen-sm-min) {
+  .btn-sm-block {
+    width: 100%;
+    margin-bottom: 0.1em;
+  }
+}
