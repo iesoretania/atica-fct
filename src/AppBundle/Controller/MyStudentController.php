@@ -85,7 +85,7 @@ class MyStudentController extends BaseController
         $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getAgreementRelatedStudents($this->getUser());
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
         $agreements = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getTutorizedAgreements($agreement->getStudent(), $this->getUser());
-        $title = (string) $agreement->getWorkcenter();
+        $title = (string) $agreement;
 
         $parent = (count($users) === 1 ? 'frontpage' : 'my_student_index');
 
@@ -94,7 +94,7 @@ class MyStudentController extends BaseController
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
                     ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
-                    ['fixed' => $title],
+                    ['fixed' => (string) $agreement->getWorkcenter()],
                 ],
                 'title' => $title,
                 'user' => $this->getUser(),

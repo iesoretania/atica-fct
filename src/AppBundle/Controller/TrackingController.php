@@ -65,7 +65,7 @@ class TrackingController extends BaseController
         $student = $agreement->getStudent();
 
         $calendar = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->getArrayCalendar($agreement->getWorkdays());
-        $title = (string) $agreement->getWorkcenter();
+        $title = (string) $agreement;
 
         return $this->render('group/calendar_agreement.html.twig',
             [
@@ -73,13 +73,14 @@ class TrackingController extends BaseController
                 'breadcrumb' => [
                     ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
                     ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
-                    ['fixed' => $title],
+                    ['fixed' => (string) $agreement->getWorkcenter()],
                 ],
                 'title' => $title,
                 'user' => $this->getUser(),
                 'calendar' => $calendar,
                 'agreement' => $agreement,
-                'route_name' => 'admin_group_student_tracking'
+                'route_name' => 'admin_group_student_tracking',
+                'activities_stats' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement)
             ]);
     }
 

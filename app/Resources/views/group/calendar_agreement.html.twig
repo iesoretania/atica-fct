@@ -2,6 +2,10 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
+    {% if activities_stats %}
+        {% include 'calendar/agreement_activities_stats_partial.html.twig' %}
+    {% endif %}
+
     <h2>{{ 'calendar.title'|trans }}</h2>
 
     <form method="post" action="{{ path('admin_group_student_workday_operation', {'id': agreement.id}) }}">

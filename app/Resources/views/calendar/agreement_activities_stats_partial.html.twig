@@ -1,0 +1,9 @@
+{% trans_default_domain 'student' %}
+<h2>{{ 'form.agreement_stats'|trans }}</h2>
+<dl class="dl">
+    {% set agreement_hours = agreement.totalHours %}
+    {% for activity in activities_stats %}
+        <dt>{{ activity[0] }}</dt>
+        <dd>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
+    {% endfor %}
+</dl>
