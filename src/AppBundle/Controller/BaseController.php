@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
+use AppBundle\Entity\Report;
 use AppBundle\Entity\Tracking;
 use AppBundle\Entity\Workday;
 use Sasedev\MpdfBundle\Service\MpdfService;
@@ -129,6 +130,39 @@ class BaseController extends Controller
         }
 
         return $this->redirectToRoute($routeName, ['id' => $agreement->getId()]);
+    }
+
+    protected function workTutorReportAction(Agreement $agreement, Request $request, $breadcrumb, $routes, $template)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (null === $agreement->getReport()) {
+            $report = new Report();
+            $report->setSignDate(new \DateTime());
+            $report->setAgreement($agreement);
+            $em->persist($report);
+        } else {
+            $report = $agreement->getReport();
+        }
+
+        $form = $this->createForm('AppBundle\Form\Type\ReportType', $report);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            if ($request->request->has('submit')) {
+                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
+            }
+            return $this->redirectToRoute(
+                $request->request->has('submit') ? $routes[0] : $routes[1],
+                ['id' => $agreement->getId()]);
+        }
+
+        return $this->render($template, [
+            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+            'breadcrumb' => $breadcrumb,
+            'form' => $form->createView(),
+            'agreement' => $agreement
+        ]);
     }
 
     /**

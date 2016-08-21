@@ -21,7 +21,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Agreement;
-use AppBundle\Entity\Report;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -143,39 +142,16 @@ class MyStudentController extends BaseController
      */
     public function studentReportAction(Agreement $agreement, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        if (null === $agreement->getReport()) {
-            $report = new Report();
-            $report->setSignDate(new \DateTime());
-            $report->setAgreement($agreement);
-            $em->persist($report);
-        } else {
-            $report = $agreement->getReport();
-        }
+        $breadcrumb = [
+            ['fixed' => $agreement->getStudent()->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $agreement->getStudent()->getStudentGroup()->getId()]],
+            ['fixed' => (string) $agreement->getStudent(), 'path' => 'admin_group_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+            ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+            ['fixed' => $this->get('translator')->trans('form.report', [], 'student')]
+        ];
 
-        $form = $this->createForm('AppBundle\Form\Type\ReportType', $report);
-        $form->handleRequest($request);
+        $routes = ['my_student_agreement_calendar', 'my_student_agreement_report_download'];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            if ($request->request->has('submit')) {
-                $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'student'));
-            }
-            return $this->redirectToRoute(
-                $request->request->has('submit') ? 'my_student_agreement_calendar' : 'my_student_agreement_report_download',
-                ['id' => $agreement->getId()]);
-        }
-
-        return $this->render('student/report_form.html.twig', [
-            'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
-            'breadcrumb' => [
-                ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
-                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
-                ['fixed' => $this->get('translator')->trans('form.report', [], 'student')]
-            ],
-            'form' => $form->createView(),
-            'agreement' => $agreement
-        ]);
+        return $this->workTutorReportAction($agreement, $request, $breadcrumb, $routes, 'student/report_form.html.twig');
     }
 
     /**
