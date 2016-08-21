@@ -163,7 +163,7 @@ class MyStudentController extends BaseController
     {
         $translator = $this->get('translator');
 
-        $title = $translator->trans('form.report', [], 'student') . ' ' . $agreement->getStudent();
+        $title = $translator->trans('form.report', [], 'student') . ' - ' . $agreement->getStudent();
 
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init();
