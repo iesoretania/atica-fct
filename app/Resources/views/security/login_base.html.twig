@@ -34,5 +34,5 @@
     </section>
 
     <hr/>
-    <p class="text-muted text-center">{{ 'form.login.footer'|trans({'{{ link }}': '<a href="{{ app_repository }}">' ~ ('form.login.footer.link.caption'|trans) ~ '</a>'}) | raw }}</p>
+    <p class="text-muted text-center">{{ 'form.login.footer'|trans({'{{ link }}': '<a href="' ~ app_repository ~ '">' ~ ('form.login.footer.link.caption'|trans) ~ '</a>'}) | raw }}</p>
 {% endblock %}
