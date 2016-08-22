@@ -1,6 +1,7 @@
 browse.title: Listado de empresas
 browse.workcenter: Sedes de %company%
 
+form.company: Empresa
 form.name: Nombre de la empresa
 form.code: CIF
 

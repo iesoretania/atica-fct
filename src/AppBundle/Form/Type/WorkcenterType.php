@@ -80,7 +80,7 @@ class WorkcenterType extends AbstractType
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Workcenter',
             'locked' => true,
-            'translation_domain' => 'workcenter'
+            'translation_domain' => 'company'
         ]);
     }
 }
