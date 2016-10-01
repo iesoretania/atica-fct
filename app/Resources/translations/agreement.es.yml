@@ -10,6 +10,11 @@ form.select_company: Seleccione una empresa
 form.workcenter: Sede
 form.activities: Programa formativo
 
+form.quarter: Trimestre
+form.1Q: Primer trimestre
+form.2Q: Segundo trimestre
+form.3Q: Tercer trimestre
+
 form.submit: Guardar cambios
 
 form.back: Volver

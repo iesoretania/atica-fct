@@ -20,6 +20,7 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
@@ -48,7 +49,20 @@ class AgreementType extends AbstractType
         $activities = null === $student ? [] : $student->getStudentGroup()->getTraining()->getActivities();
         $workcenters = null === $company ? [] : $company->getWorkcenters();
 
+        $quarters = [
+            'form.1Q' => Agreement::FIRST_QUARTER,
+            'form.2Q' => Agreement::SECOND_QUARTER,
+            'form.3Q' => Agreement::THIRD_QUARTER
+        ];
+
         $form
+            ->add('quarter', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                'label' => 'form.quarter',
+                'expanded' => true,
+                'choices_as_values' => true,
+                'choices' => $quarters,
+                'required' => true
+            ])
             ->add('company', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
                 'label' => 'form.company',
                 'class' => 'AppBundle\Entity\Company',

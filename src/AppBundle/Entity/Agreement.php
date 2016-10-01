@@ -30,6 +30,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Agreement
 {
+    const FIRST_QUARTER = 1;
+    const SECOND_QUARTER = 2;
+    const THIRD_QUARTER = 3;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -55,6 +59,12 @@ class Agreement
      * @var \DateTime
      */
     protected $toDate;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $quarter;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="studentAgreements")
@@ -427,4 +437,28 @@ class Agreement
         return $total;
     }
 
+
+    /**
+     * Set quarter
+     *
+     * @param integer $quarter
+     *
+     * @return Agreement
+     */
+    public function setQuarter($quarter)
+    {
+        $this->quarter = $quarter;
+
+        return $this;
+    }
+
+    /**
+     * Get quarter
+     *
+     * @return integer
+     */
+    public function getQuarter()
+    {
+        return $this->quarter;
+    }
 }
