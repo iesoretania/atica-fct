@@ -208,4 +208,33 @@ class MyStudentController extends BaseController
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');
     }
+
+    /**
+     * @Route("/alumnado/seguimiento/programa/descargar/{id}", name="admin_group_teaching_program_report_download", methods={"GET"})
+     * @Route("/estudiantes/programa/descargar/{id}", name="my_student_teaching_program_report_download", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function downloadTeachingProgramReportAction(Agreement $agreement)
+    {
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.training_program', [], 'report') . ' - ' . $agreement->getStudent() . ' - ' . $agreement->getWorkcenter();
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4-L');
+
+        $obj = $mpdf->getMpdf();
+        //$obj->setAutoTopMargin = 'stretch';
+        //$obj->setAutoBottomMargin = 'stretch';
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/Programa_Formativo_seneca_vacio.pdf', true);
+        $mpdf->useTwigTemplate('student/training_program_report.html.twig', [
+            'agreement' => $agreement,
+            'title' => $title,
+            'learning_program' => $this->getDoctrine()->getRepository('AppBundle:LearningOutcome')->getLearningProgramFromAgreement($agreement)
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
+    }
 }

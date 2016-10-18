@@ -37,7 +37,7 @@ class BaseController extends Controller
         $agreementHours = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->countHours($agreement);
 
         $dow = ((6 + (int) $workday->getDate()->format('w')) % 7);
-        
+
         $title = $this->get('translator')->trans('dow' . $dow, [], 'calendar') . ', ' . $workday->getDate()->format('d/m/Y');
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('AppBundle:Tracking')->updateTrackingByWorkday($workday);
@@ -63,7 +63,7 @@ class BaseController extends Controller
         $activitiesStats = $em->getRepository('AppBundle:Agreement')->getActivitiesStats($agreement);
         $next = $em->getRepository('AppBundle:Workday')->getNext($workday);
         $previous = $em->getRepository('AppBundle:Workday')->getPrevious($workday);
-        
+
         return $this->render('student/tracking_form.html.twig',
             [
                 'menu_item' => $options['menu_item'],

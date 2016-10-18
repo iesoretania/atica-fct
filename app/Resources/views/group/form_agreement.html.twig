@@ -7,6 +7,7 @@
         {{ form_widget(form) }}
         {{ m.start_button }}
         {{ m.submit_button('submit', 'check', 'btn-success', 'form.submit'|trans) }}
+        {{ m.submit_button('report', 'print', 'btn-info', 'form.generate_report'|trans) }}
         {{ m.end_button }}
     {{ form_end(form) }}
     {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}

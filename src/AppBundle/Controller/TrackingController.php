@@ -234,8 +234,12 @@ class TrackingController extends BaseController
             // Probar a guardar los cambios
             try {
                 $this->getDoctrine()->getManager()->flush();
+                if ($request->request->has('report')) {
+                    return $this->redirectToRoute('admin_group_teaching_program_report_download', ['id' => $agreement->getId()]);
+                }
                 $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'group'));
                 return $this->redirectToRoute('admin_group_student_agreements', ['id' => $student->getId()]);
+
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'group'));
             }

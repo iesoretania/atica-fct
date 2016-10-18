@@ -39,6 +39,8 @@ form.no_workcenters: No hay acuerdos de colaboración
 form.training_hours: "Horas totales de la enseñanza: %hours%"
 form.calendar: Seguimiento
 
+form.generate_report: Guardar cambios y generar programa formativo
+
 alert.saved: Datos guardados correctamente
 alert.not_saved: No se han podido guardar los cambios
 
