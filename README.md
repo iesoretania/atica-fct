@@ -12,7 +12,7 @@ Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las d
 
 ## Requisitos
 
-- PHP 5.5.x o superior
+- PHP 5.6.x o superior
 - Servidor web Apache2 (podría funcionar con nginx, pero no se ha probado aún)
 - Cualquier sistema gestor de bases de datos que funcione bajo Doctrine (p.ej. MySQL, MariaDB, PosgreSQL, SQLite, etc.)
 - PHP [Composer]
