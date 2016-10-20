@@ -23,7 +23,7 @@ namespace AppBundle\Security;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class UserVoter extends Voter
@@ -33,7 +33,7 @@ class UserVoter extends Voter
 
     private $decisionManager;
 
-    public function __construct(AccessDecisionManagerInterface $decisionManager) {
+    public function __construct(AccessDecisionManager $decisionManager) {
         $this->decisionManager = $decisionManager;
     }
 

@@ -62,7 +62,6 @@ class StudentUserType extends AbstractType
             ])
             ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.gender',
-                'choices_as_values' => true,
                 'choices' => [
                     'form.gender_unknown' => Person::GENDER_UNKNOWN,
                     'form.gender_male' => Person::GENDER_MALE,

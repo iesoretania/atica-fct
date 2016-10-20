@@ -23,7 +23,7 @@ form.locked: La jornada está bloqueada y el estudiante no podrá realizar cambi
 
 form.date: Fecha
 form.hours: Horas
-form.r_hours: %hours% hora|%hours% horas
+form.r_hours: "%hours% hora|%hours% horas"
 form.no_sessions: No hay sesiones
 form.notes: Anotaciones sobre la jornada
 form.no_activities: Sin actividad registrada

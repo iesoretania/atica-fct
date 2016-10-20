@@ -22,10 +22,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserRepository extends EntityRepository implements UserProviderInterface
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     public function loadUserByUsername($username) {
 

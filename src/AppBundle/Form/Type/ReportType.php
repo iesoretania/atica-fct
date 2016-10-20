@@ -49,28 +49,24 @@ class ReportType extends AbstractType
             ->add('professionalCompetence', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.professional_competence',
                 'expanded' => true,
-                'choices_as_values' => true,
                 'choices' => $aspects,
                 'required' => true
             ])
             ->add('organizationalCompetence', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.organizational_competence',
                 'expanded' => true,
-                'choices_as_values' => true,
                 'choices' => $aspects,
                 'required' => true
             ])
             ->add('relationalCompetence', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.relational_competence',
                 'expanded' => true,
-                'choices_as_values' => true,
                 'choices' => $aspects,
                 'required' => true
             ])
             ->add('contingencyResponse', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.contingency_response',
                 'expanded' => true,
-                'choices_as_values' => true,
                 'choices' => $aspects,
                 'required' => true
             ])

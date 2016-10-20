@@ -59,7 +59,6 @@ class AgreementType extends AbstractType
             ->add('quarter', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.quarter',
                 'expanded' => true,
-                'choices_as_values' => true,
                 'choices' => $quarters,
                 'required' => true
             ])
