@@ -71,6 +71,6 @@ class SecurityControllerTest extends WebTestCase
 
         static::assertEquals(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
-        static::assertTrue($client->getResponse()->isRedirect($frontpageUrl));
+        static::assertEquals($client->getRequest()->getUri(), $frontpageUrl);
     }
 }
