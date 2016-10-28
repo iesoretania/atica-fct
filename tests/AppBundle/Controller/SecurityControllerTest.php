@@ -21,6 +21,7 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\Router;
 
 class SecurityControllerTest extends WebTestCase
 {
@@ -38,7 +39,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $loginUrl = $client->getContainer()->get('router')->generate('login', [], true);
+        $loginUrl = $client->getContainer()->get('router')->generate('login', [], Router::ABSOLUTE_URL);
         $client->request('GET', $loginUrl);
         $form = $client->getCrawler()->selectButton('login')->form();
         $form->setValues([
@@ -56,8 +57,8 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $loginUrl = $client->getContainer()->get('router')->generate('login', [], true);
-        $frontpageUrl = $client->getContainer()->get('router')->generate('frontpage', [], true);
+        $loginUrl = $client->getContainer()->get('router')->generate('login', [], Router::ABSOLUTE_URL);
+        $frontpageUrl = $client->getContainer()->get('router')->generate('frontpage', [], Router::ABSOLUTE_URL);
 
         $client->request('GET', $loginUrl);
         $form = $client->getCrawler()->selectButton('login')->form();
@@ -69,6 +70,7 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
 
         static::assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
         static::assertTrue($client->getResponse()->isRedirect($frontpageUrl));
     }
 }
