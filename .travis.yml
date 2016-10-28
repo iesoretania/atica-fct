@@ -1,5 +1,11 @@
 language: php
 
+sudo: false
+
+cache:
+  directory:
+    - $HOME/.composer/cache
+
 php:
   - "7"
   - "5.6"
