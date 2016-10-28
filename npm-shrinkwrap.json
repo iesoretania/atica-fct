@@ -3,9 +3,9 @@
   "version": "6.0.0",
   "dependencies": {
     "autoprefixer": {
-      "version": "6.5.0",
-      "from": "autoprefixer@6.5.0",
-      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-6.5.0.tgz",
+      "version": "6.5.1",
+      "from": "autoprefixer@6.5.1",
+      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-6.5.1.tgz",
       "dependencies": {
         "postcss-value-parser": {
           "version": "3.3.0",
@@ -28,14 +28,14 @@
           "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-1.4.0.tgz"
         },
         "caniuse-db": {
-          "version": "1.0.30000541",
-          "from": "caniuse-db@>=1.0.30000540 <2.0.0",
-          "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000541.tgz"
+          "version": "1.0.30000570",
+          "from": "caniuse-db@>=1.0.30000554 <2.0.0",
+          "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000570.tgz"
         },
         "postcss": {
-          "version": "5.2.4",
-          "from": "postcss@>=5.2.2 <6.0.0",
-          "resolved": "https://registry.npmjs.org/postcss/-/postcss-5.2.4.tgz",
+          "version": "5.2.5",
+          "from": "postcss@>=5.2.4 <6.0.0",
+          "resolved": "https://registry.npmjs.org/postcss/-/postcss-5.2.5.tgz",
           "dependencies": {
             "supports-color": {
               "version": "3.1.2",
@@ -115,9 +115,9 @@
       "resolved": "https://registry.npmjs.org/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz"
     },
     "font-awesome": {
-      "version": "4.6.3",
-      "from": "font-awesome@4.6.3",
-      "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.6.3.tgz"
+      "version": "4.7.0",
+      "from": "font-awesome@4.7.0",
+      "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz"
     },
     "gulp": {
       "version": "3.9.1",
