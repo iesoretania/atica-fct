@@ -17,16 +17,13 @@
     <form method="post" action="{{ path('admin_group_student_workday_operation', {'id': agreement.id}) }}">
         {% include 'group/calendar_agreement_graphic_partial.html.twig' %}
 
-        {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-        {% if agreement_report %}
-            {{ m.link_button(path('admin_group_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
-        {% endif %}
-        {% if agreement_manage %}
-            {{ m.link_button(path('admin_group_student_workday_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-info', 'form.workday_add'|trans) }}
-        {% endif %}
         {% if calendar is not empty %}
+            <div class="well well-sm">
             {% if agreement_manage %}
-                {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.delete'|trans) }}
+                {% if agreement_manage %}
+                    <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>
+                {% endif %}
+                {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.workday_delete'|trans) }}
             {% endif %}
             {% if agreement_lock %}
                 {{ m.submit_button('lock', 'lock', 'btn-primary', 'form.workday_lock'|trans) }}
@@ -37,11 +34,16 @@
             {% if agreement_manage or agreement_lock or agreement_unlock %}
                 {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}
             {% endif %}
-            {% if agreement_manage %}
-                <p></p>
-                <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>
-            {% endif %}
+            </div>
         {% endif %}
+        {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+        {% if agreement_report %}
+            {{ m.link_button(path('admin_group_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
+        {% endif %}
+        {% if agreement_manage %}
+            {{ m.link_button(path('admin_group_student_workday_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-info', 'form.workday_add'|trans) }}
+        {% endif %}
+
     </form>
 {% endblock %}
 

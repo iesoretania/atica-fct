@@ -22,9 +22,10 @@ form.new: Nuevo grupo
 form.view: Modificar
 
 form.report: Informe del tutor laboral
-form.workday_lock: Bloquear
-form.workday_unlock: Desbloquear
+form.workday_lock: Bloquear seleccionadas
+form.workday_unlock: Desbloquear seleccionadas
 form.workday_add: Añadir jornadas
+form.workday_delete: Eliminar jornadas seleccionadas
 form.select_deselect: Seleccionar/deseleccionar jornadas
 
 student.detail: Datos personales
@@ -57,7 +58,7 @@ prompt.activity_deletion_warning: >
     ¡ATENCIÓN! No se podrá eliminar una actividad del programa formativo si el estudiante la ha incluido en alguna de sus fichas de seguimiento.
 
 prompt.session_deletion_warning: >
-    ¡ATENCIÓN! No se podrá eliminar una jornada del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento o se han registrado visitas.
+    ¡ATENCIÓN! No se podrá eliminar una jornada del calendario del programa formativo si el estudiante la ha cumplimentado en alguna de sus fichas de seguimiento o se han registrado visitas en la misma.
 
 prompt.delete_agreement_confirm: >
     ¡ATENCIÓN! El acuerdo sólo podrá ser eliminado si no hay hojas de seguimiento y/o visitas asociadas al mismo.
