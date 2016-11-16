@@ -1,7 +1,7 @@
 {% trans_default_domain 'menu' %}
 <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ 'navbar.logged.as'|trans({'{{ user }}': app.user }) }}<span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle-o"></i> {{ 'navbar.logged.as'|trans({'{{ user }}': app.user }) }}<span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ path('personal_form') }}"><i class="fa fa-cog"></i> {{ 'menu.personal'|trans }}</a></li>
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}

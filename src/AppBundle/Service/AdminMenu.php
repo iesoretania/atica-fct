@@ -61,7 +61,7 @@ class AdminMenu implements MenuBuilderInterface
             ->setCaption('menu.admin.manage.users')
             ->setDescription('menu.admin.manage.users.detail')
             ->setColor('amber')
-            ->setIcon('user');
+            ->setIcon('id-badge');
 
         $mainItem->addChild($item);
 

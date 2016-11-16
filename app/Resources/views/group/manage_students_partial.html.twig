@@ -19,7 +19,7 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('admin_group_student_agreements', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-6"><i class="fa fa-link"></i> {{ 'student.agreements' | trans }}</a>
+                    <a href="{{ path('admin_group_student_agreements', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-6"><i class="fa fa-handshake-o"></i> {{ 'student.agreements' | trans }}</a>
                     <a href="{{ path('student_detail', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'student.detail' | trans }}</a>
                 {% endblock %}
                 </div>
