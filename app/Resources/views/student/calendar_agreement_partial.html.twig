@@ -17,7 +17,7 @@
                 <button type="submit" name="week_unlock" value="{{ n + year * 100 }}" class="btn btn-xs btn-default col-xs-12 col-sm-12"><i class="fa fa-unlock"></i> {{ 'form.week_unlock_action'|trans }}</button>
             {% endif %}
         {% endif %}
-        {% if is_granted('AGREEMENT_LOCK', agreement) or week.count == week.locked %}
+        {% if agreement_lock or week.count == week.locked %}
             <a href="{{ path('my_student_weekly_report_download', {'id': agreement.id, 'week': n, 'year': year}) }}" class="btn btn-xs btn-warning col-xs-12 col-sm-12"><i class="fa fa-print"></i> {{ 'form.print' | trans }}</a>
         {% endif %}
     {% endif %}

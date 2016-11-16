@@ -2,12 +2,12 @@
 {% extends 'calendar/agreement_calendar_graphic_partial_base.html.twig' %}
 
 {% block day %}
-    {% if is_granted('AGREEMENT_MANAGE', agreement) and day.data is defined %}<a href="{{ path('admin_group_student_workday_form', {'id': day.data.id}) }}" title="{{ 'form.edit'|trans }}">{% endif %}
+    {% if agreement_manage and day.data is defined %}<a href="{{ path('admin_group_student_workday_form', {'id': day.data.id}) }}" title="{{ 'form.edit'|trans }}">{% endif %}
         <strong>{{ day.day }}</strong><br/>
-        {% if is_granted('AGREEMENT_MANAGE', agreement) %}</a>{% endif %}
+        {% if agreement_manage %}</a>{% endif %}
     {% if day.data is defined %}
         {% block detail %}
-            {% if is_granted('AGREEMENT_MANAGE', agreement) or is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement) %}
+            {% if agreement_manage or agreement_lock or agreement_unlock %}
                 <input type="checkbox" class="check" name="ids[]" value="{{ day.data.id }}" title="{{ 'form.select'|trans }}"> {% endif %}
             <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}" title="{{ 'form.tracking'|trans }}">
                 {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}

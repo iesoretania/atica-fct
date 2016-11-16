@@ -2,25 +2,31 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
+
+    {% set agreement_lock = is_granted('AGREEMENT_LOCK', agreement) %}
+    {% set agreement_unlock = is_granted('AGREEMENT_UNLOCK', agreement) %}
+    {% set agreement_manage = is_granted('AGREEMENT_MANAGE', agreement) %}
+    {% set agreement_report = is_granted('AGREEMENT_REPORT', agreement) %}
+
     {% if activities_stats %}
         {% include 'calendar/agreement_activities_stats_partial.html.twig' %}
     {% endif %}
 
     <h2>{{ 'calendar.title'|trans }}</h2>
-    {% set buttons = is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement) %}
+    {% set buttons = agreement_lock or agreement_unlock %}
 
     <form method="post" action="{{ path('my_student_agreement_calendar_operation', {'id': agreement.id}) }}">
         {% include 'student/calendar_agreement_partial.html.twig' %}
 
         {{ m.link_button(path(back_route_name, back_route_params), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-        {% if is_granted('AGREEMENT_REPORT', agreement) %}
+        {% if agreement_report %}
             {{ m.link_button(path('my_student_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
         {% endif %}
         {% if buttons %}
-            {% if is_granted('AGREEMENT_LOCK', agreement) %}
+            {% if agreement_lock %}
                 {{ m.submit_button('lock', 'lock', 'btn-primary', 'form.workday_lock'|trans) }}
             {% endif %}
-            {% if is_granted('AGREEMENT_UNLOCK', agreement) %}
+            {% if agreement_unlock %}
                 {{ m.submit_button('unlock', 'unlock', 'btn-primary', 'form.workday_unlock'|trans) }}
             {% endif %}
             {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}

@@ -2,6 +2,12 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
+
+    {% set agreement_lock = is_granted('AGREEMENT_LOCK', agreement) %}
+    {% set agreement_unlock = is_granted('AGREEMENT_UNLOCK', agreement) %}
+    {% set agreement_manage = is_granted('AGREEMENT_MANAGE', agreement) %}
+    {% set agreement_report = is_granted('AGREEMENT_REPORT', agreement) %}
+
     {% if activities_stats %}
         {% include 'calendar/agreement_activities_stats_partial.html.twig' %}
     {% endif %}
@@ -12,26 +18,26 @@
         {% include 'group/calendar_agreement_graphic_partial.html.twig' %}
 
         {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
-        {% if is_granted('AGREEMENT_REPORT', agreement) %}
+        {% if agreement_report %}
             {{ m.link_button(path('admin_group_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
         {% endif %}
-        {% if is_granted('AGREEMENT_MANAGE', agreement) %}
+        {% if agreement_manage %}
             {{ m.link_button(path('admin_group_student_workday_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-info', 'form.workday_add'|trans) }}
         {% endif %}
         {% if calendar is not empty %}
-            {% if is_granted('AGREEMENT_MANAGE', agreement) %}
+            {% if agreement_manage %}
                 {{ m.submit_button('delete', 'trash', 'btn-danger', 'form.delete'|trans) }}
             {% endif %}
-            {% if is_granted('AGREEMENT_LOCK', agreement) %}
+            {% if agreement_lock %}
                 {{ m.submit_button('lock', 'lock', 'btn-primary', 'form.workday_lock'|trans) }}
             {% endif %}
-            {% if is_granted('AGREEMENT_UNLOCK', agreement) %}
+            {% if agreement_unlock %}
                 {{ m.submit_button('unlock', 'unlock', 'btn-primary', 'form.workday_unlock'|trans) }}
             {% endif %}
-            {% if is_granted('AGREEMENT_MANAGE', agreement) or is_granted('AGREEMENT_LOCK', agreement) or is_granted('AGREEMENT_UNLOCK', agreement) %}
+            {% if agreement_manage or agreement_lock or agreement_unlock %}
                 {{ m.link_button('', 'check-square', 'btn-default', 'form.select_deselect'|trans, 'toggle') }}
             {% endif %}
-            {% if is_granted('AGREEMENT_MANAGE', agreement) %}
+            {% if agreement_manage %}
                 <p></p>
                 <div class="alert alert-warning">{{ 'prompt.session_deletion_warning'|trans|nl2br }}</div>
             {% endif %}
