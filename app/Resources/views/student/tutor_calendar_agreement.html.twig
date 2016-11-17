@@ -34,7 +34,7 @@
         {% if agreement_report %}
             {{ m.link_button(path('my_student_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
             {% if calendar is not empty %}
-                {{ m.link_button(path('my_student_activity_report_download', {'id': agreement.id}), 'print', 'btn-info', 'form.activity_report'|trans) }}
+                {{ m.link_button(path('my_student_activity_report_download', {'id': agreement.id}), 'print', 'btn-success', 'form.activity_report'|trans) }}
             {% endif %}
         {% endif %}
     </form>
