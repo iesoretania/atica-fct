@@ -256,6 +256,8 @@ class MyStudentController extends BaseController
 
         $agreements = $agreement->getStudent()->getStudentAgreements();
 
+        $educationalTutors = $this->getDoctrine()->getRepository('AppBundle:User')->getEducationalTutorsByStudent($agreement->getStudent());
+
         $activities = [];
         foreach($agreements as $a) {
             $activities[] = [$a, $this->getDoctrine()->getRepository('AppBundle:Agreement')->getActivitiesStats($a)];
@@ -264,7 +266,8 @@ class MyStudentController extends BaseController
         $mpdf->useTwigTemplate('student/activity_report.html.twig', [
             'agreement' => $agreement,
             'title' => $title,
-            'activities' => $activities
+            'activities' => $activities,
+            'educational_tutors' => $educationalTutors
         ]);
 
         $title = str_replace(' ', '_', $title);
