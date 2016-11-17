@@ -3,7 +3,7 @@
 <dl class="dl">
     {% set agreement_hours = agreement.totalHours %}
     {% for activity in activities_stats %}
-        <dt>{{ activity[0] }}</dt>
-        <dd>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }}{% if agreement_hours > 0 %} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%){% endif %}</dd>
+        <dt {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[0] }}</dt>
+        <dd {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }}{% if agreement_hours > 0 %} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%){% endif %}</dd>
     {% endfor %}
 </dl>
