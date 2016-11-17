@@ -19,9 +19,10 @@ form.submit: Guardar cambios
 form.delete: Eliminar
 form.delete_confirm: Confirmar eliminación
 form.new: Nuevo grupo
-form.view: Modificar
+form.view: Programa
 
 form.report: Informe del tutor laboral
+form.activity_report: Imprimir registro de actividades
 form.workday_lock: Bloquear seleccionadas
 form.workday_unlock: Desbloquear seleccionadas
 form.workday_add: Añadir jornadas

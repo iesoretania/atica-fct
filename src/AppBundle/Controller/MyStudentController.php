@@ -218,20 +218,53 @@ class MyStudentController extends BaseController
     {
         $translator = $this->get('translator');
 
-        $title = $translator->trans('form.training_program', [], 'report') . ' - ' . $agreement->getStudent() . ' - ' . $agreement->getWorkcenter();
+        $title = $translator->trans('form.training_program', [], 'training_program_report') . ' - ' . $agreement->getStudent() . ' - ' . $agreement->getWorkcenter();
 
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init('', 'A4-L');
 
         $obj = $mpdf->getMpdf();
-        //$obj->setAutoTopMargin = 'stretch';
-        //$obj->setAutoBottomMargin = 'stretch';
         $obj->SetImportUse();
         $obj->SetDocTemplate('pdf/Programa_Formativo_seneca_vacio.pdf', true);
         $mpdf->useTwigTemplate('student/training_program_report.html.twig', [
             'agreement' => $agreement,
             'title' => $title,
             'learning_program' => $this->getDoctrine()->getRepository('AppBundle:LearningOutcome')->getLearningProgramFromAgreement($agreement)
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
+    }
+
+    /**
+     * @Route("/alumnado/seguimiento/actividades/descargar/{id}", name="admin_group_activity_report_download", methods={"GET"})
+     * @Route("/estudiantes/actividades/descargar/{id}", name="my_student_activity_report_download", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function downloadActivityReportAction(Agreement $agreement)
+    {
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.activity_report', [], 'activity_report') . ' - ' . $agreement->getStudent();
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4');
+
+        $obj = $mpdf->getMpdf();
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/A4_vacio.pdf', true);
+
+        $agreements = $agreement->getStudent()->getStudentAgreements();
+
+        $activities = [];
+        foreach($agreements as $a) {
+            $activities[] = [$a, $this->getDoctrine()->getRepository('AppBundle:Agreement')->getActivitiesStats($a)];
+        }
+
+        $mpdf->useTwigTemplate('student/activity_report.html.twig', [
+            'agreement' => $agreement,
+            'title' => $title,
+            'activities' => $activities
         ]);
 
         $title = str_replace(' ', '_', $title);

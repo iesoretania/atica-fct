@@ -39,6 +39,9 @@
         {{ m.link_button(path('admin_group_student_agreements', {'id': agreement.student.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
         {% if agreement_report %}
             {{ m.link_button(path('admin_group_agreement_report_form', {'id': agreement.id}), 'file-o', 'btn-success', 'form.report'|trans) }}
+            {% if calendar is not empty %}
+                {{ m.link_button(path('admin_group_activity_report_download', {'id': agreement.id}), 'print', 'btn-info', 'form.activity_report'|trans) }}
+            {% endif %}
         {% endif %}
         {% if agreement_manage %}
             {{ m.link_button(path('admin_group_student_workday_add', {'id': agreement.id}), 'calendar-plus-o', 'btn-info', 'form.workday_add'|trans) }}
