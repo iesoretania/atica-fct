@@ -79,9 +79,6 @@ class SecurityController extends Controller
                     $validity->add(new \DateInterval('PT' . $expire . 'M'));
                     $user->setTokenValidity($validity);
 
-                    // guardar token
-                    $this->get('doctrine')->getManager()->flush();
-
                     // enviar correo
                     if (0 === $this->get('app.mailer')->sendEmail([$user],
                             ['id' => 'form.reset.email.subject', 'parameters' => []],
@@ -98,6 +95,10 @@ class SecurityController extends Controller
                     ) {
                         $this->addFlash('error', $this->get('translator')->trans('form.reset.error', [], 'security'));
                     } else {
+
+                        // guardar token
+                        $this->get('doctrine')->getManager()->flush();
+
                         $this->addFlash('success',
                             $this->get('translator')->trans('form.reset.sent', ['%email%' => $email], 'security'));
                         return $this->redirectToRoute('login');
