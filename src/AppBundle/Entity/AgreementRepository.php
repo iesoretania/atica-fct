@@ -39,7 +39,7 @@ class AgreementRepository extends EntityRepository
         $activities = $agreement->getActivities();
 
         $result = $this->getEntityManager()
-            ->createQuery('SELECT a, SUM(t.hours), COUNT(a) FROM AppBundle:Activity a LEFT JOIN AppBundle:Tracking t WITH t.activity = a.id LEFT JOIN t.workday w WITH w.agreement = :agreement WHERE a.id IN (:activities) GROUP BY a.code, a.id')
+            ->createQuery('SELECT a, SUM(t.hours), COUNT(a) FROM AppBundle:Activity a LEFT JOIN AppBundle:Tracking t WITH t.activity = a.id LEFT JOIN AppBundle:Workday w WITH t.workday = w WHERE w.agreement = :agreement AND a.id IN (:activities) GROUP BY a.code, a.id')
             ->setParameter('agreement', $agreement)
             ->setParameter('activities', $activities)
             ->getResult();
