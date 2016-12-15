@@ -3,13 +3,12 @@
 {% import '::macros.html.twig' as m %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block content %}
-    <h2>{{ 'form.agreement_stats'|trans }}</h2>
-    <dl class="dl">
-        {% for activity in activities_stats %}
-            <dt>{{ activity[0] }}</dt>
-            <dd>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%)</dd>
-        {% endfor %}
-    </dl>
+    {% if previous or next %}
+        <div class="well well-sm">
+            {% if previous %}{{ m.link_button(path(app.request.get('_route'), {'id': previous.id}), 'arrow-circle-left', 'btn-info', 'form.previous'|trans~' - '~previous.date|date('d/m/Y')) }}{% endif %}
+            {% if next %}{{ m.link_button(path(app.request.get('_route'), {'id': next.id}), 'arrow-circle-right', 'btn-info', 'form.next'|trans~' - '~next.date|date('d/m/Y')) }}{% endif %}
+        </div>
+    {% endif %}
     {% if workday.locked %}
         <div class="alert alert-info"><i class="fa fa-lock"></i> {{ 'prompt.locked'|trans|nl2br }}</div>
     {% else %}
@@ -20,7 +19,6 @@
             <div class="alert alert-success"><i class="fa fa-check"></i> {{ 'prompt.match'|trans|nl2br }}</div>
         {% endif %}
     {% endif %}
-
     <h2>{{ 'form.daily_activities'|trans({ '%hours%': workday.hours }) }}</h2>
     {{ form_start(form) }}
         {{ form_widget(form) }}
