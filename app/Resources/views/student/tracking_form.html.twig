@@ -10,7 +10,7 @@
         </div>
     {% endif %}
     {% if workday.locked %}
-        <div class="alert alert-info"><i class="fa fa-lock"></i> {{ 'prompt.locked'|trans|nl2br }}</div>
+        <div class="alert alert-warning"><i class="fa fa-lock"></i> {{ 'prompt.locked'|trans|nl2br }}</div>
     {% else %}
         {% if workday.trackedHours != 0 and workday.trackedHours != workday.hours %}
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ 'prompt.no_hours_match'|trans({ '%hours%': workday.hours, '%count%': workday.trackedHours })|nl2br }}</div>
