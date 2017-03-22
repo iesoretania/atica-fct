@@ -63,7 +63,7 @@ class Activity
     protected $learningOutcome;
 
     /**
-     * @ORM\OneToMany(targetEntity="Criterion", mappedBy="activity")
+     * @ORM\ManyToMany(targetEntity="Criterion")
      * @var Collection
      */
     protected $criteria;
@@ -227,7 +227,7 @@ class Activity
      *
      * @return Activity
      */
-    public function addCriterium(Criterion $criterion)
+    public function addCriterion(Criterion $criterion)
     {
         $this->criteria[] = $criterion;
 
@@ -239,7 +239,7 @@ class Activity
      *
      * @param Criterion $criterion
      */
-    public function removeCriterium(Criterion $criterion)
+    public function removeCriterion(Criterion $criterion)
     {
         $this->criteria->removeElement($criterion);
     }

@@ -75,11 +75,18 @@ class LearningOutcome
     protected $orderNr;
 
     /**
+     * @ORM\OneToMany(targetEntity="Criterion", mappedBy="learningOutcome")
+     * @var Collection
+     */
+    protected $criteria;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->activities = new ArrayCollection();
+        $this->criteria = new ArrayCollection();
     }
 
     /**
@@ -252,5 +259,39 @@ class LearningOutcome
     public function getTraining()
     {
         return $this->training;
+    }
+
+    /**
+     * Add criterion
+     *
+     * @param Criterion $criterion
+     *
+     * @return LearningOutcome
+     */
+    public function addCriterion(Criterion $criterion)
+    {
+        $this->criteria[] = $criterion;
+
+        return $this;
+    }
+
+    /**
+     * Remove criterion
+     *
+     * @param Criterion $criterion
+     */
+    public function removeCriterion(Criterion $criterion)
+    {
+        $this->criteria->removeElement($criterion);
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
     }
 }

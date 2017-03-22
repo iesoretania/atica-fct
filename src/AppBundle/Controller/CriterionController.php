@@ -20,8 +20,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Activity;
 use AppBundle\Entity\Criterion;
+use AppBundle\Entity\LearningOutcome;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -37,13 +37,13 @@ class CriterionController extends Controller
     /**
      * @Route("/criterios/{id}", name="admin_program_criteria", methods={"GET"})
      */
-    public function criteriaIndexAction(Activity $activity, Request $request)
+    public function criteriaIndexAction(LearningOutcome $learningOutcome, Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $usersQuery = $em->createQuery('SELECT c FROM AppBundle:Criterion c WHERE c.activity = :activity')
-            ->setParameter('activity', $activity);
+        $usersQuery = $em->createQuery('SELECT c FROM AppBundle:Criterion c WHERE c.learningOutcome = :learningOutcome')
+            ->setParameter('learningOutcome', $learningOutcome);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -60,23 +60,22 @@ class CriterionController extends Controller
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_program'),
                 'breadcrumb' => [
-                    ['fixed' => $activity->getLearningOutcome()->getTraining()->getName(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $activity->getLearningOutcome()->getTraining()->getId()]],
-                    ['fixed' => (string) $activity->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $activity->getLearningOutcome()->getId()]],
-                    ['fixed' => (string) $activity],
+                    ['fixed' => $learningOutcome->getTraining()->getName(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $learningOutcome->getTraining()->getId()]],
+                    ['fixed' => (string) $learningOutcome, 'path' => 'admin_program_activities', 'options' => ['id' => $learningOutcome->getId()]]
                 ],
-                'title' => $activity->getName(),
+                'title' => $learningOutcome->getName(),
                 'pagination' => $pagination,
-                'activity' => $activity
+                'learning_outcome' => $learningOutcome
             ]);
     }
 
     /**
-     * @Route("/criterio/nuevo/{activity}", name="admin_program_criterion_new", methods={"GET", "POST"}, requirements={"activity": "\d+"})
+     * @Route("/criterio/nuevo/{id}", name="admin_program_criterion_new", methods={"GET", "POST"}, requirements={"activity": "\d+"})
      */
-    public function formNewCriterionAction(Activity $activity, Request $request)
+    public function formNewCriterionAction(LearningOutcome $learningOutcome, Request $request)
     {
         $criterion = new Criterion();
-        $criterion->setActivity($activity);
+        $criterion->setLearningOutcome($learningOutcome);
         $this->getDoctrine()->getManager()->persist($criterion);
 
         return $this->formCriterionAction($criterion, $request);
@@ -102,7 +101,7 @@ class CriterionController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'activity'));
-                return $this->redirectToRoute('admin_program_criteria', ['id' => $criterion->getActivity()->getId()]);
+                return $this->redirectToRoute('admin_program_criteria', ['id' => $criterion->getLearningOutcome()->getId()]);
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'activity'));
             }
@@ -110,14 +109,13 @@ class CriterionController extends Controller
 
         $title = $criterion->getId() ? (string) $criterion : $this->get('translator')->trans('form.criterion.new', [], 'activity');
 
-        $training = $criterion->getActivity()->getLearningOutcome()->getTraining();
+        $training = $criterion->getLearningOutcome()->getTraining();
         return $this->render('activity/form_criterion.html.twig', [
             'form' => $form->createView(),
             'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_program'),
             'breadcrumb' => [
                 ['fixed' => $training->getName(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $training->getId()]],
-                ['fixed' => (string) $criterion->getActivity()->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getActivity()->getLearningOutcome()->getId()]],
-                ['fixed' => (string) $criterion->getActivity(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getActivity()->getId()]],
+                ['fixed' => (string) $criterion->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getLearningOutcome()->getId()]],
                 ['fixed' => $title]
             ],
             'new' => ($criterion->getId() == 0),
@@ -142,16 +140,15 @@ class CriterionController extends Controller
             } catch (\Exception $e) {
                 $this->addFlash('error', $this->get('translator')->trans('alert.criterion.not_deleted', [], 'activity'));
             }
-            return $this->redirectToRoute('admin_program_criteria', ['id' => $criterion->getActivity()->getId()]);
+            return $this->redirectToRoute('admin_program_criteria', ['id' => $criterion->getLearningOutcome()->getId()]);
         }
 
         $title = (string) $criterion->getName();
 
-        $training = $criterion->getActivity()->getLearningOutcome()->getTraining();
+        $training = $criterion->getLearningOutcome()->getTraining();
         $breadcrumb = [
             ['fixed' => $training->getName(), 'path' => 'admin_program_training_learning_outcomes', 'options' => ['id' => $training->getId()]],
-            ['fixed' => (string) $criterion->getActivity()->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getActivity()->getLearningOutcome()->getId()]],
-            ['fixed' => (string) $criterion->getActivity(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getActivity()->getId()]],
+            ['fixed' => (string) $criterion->getLearningOutcome(), 'path' => 'admin_program_activities', 'options' => ['id' => $criterion->getLearningOutcome()->getId()]],
             ['fixed' => (string) $criterion, 'path' => 'admin_program_criterion_form', 'options' => ['id' => $criterion->getId()]],
             ['caption' => 'menu.delete']
         ];

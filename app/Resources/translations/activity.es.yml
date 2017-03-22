@@ -13,9 +13,10 @@ form.detail: Modificar
 
 form.training: Enseñanza
 form.training.select: Seleccionar
-form.activities: Actividades asociadas
+form.activities: Actividades
 form.activity: Actividad formativo/productiva
-form.criteria: Criterios de evaluación
+form.criteria: Criterios de ev.
+form.criteria.assoc: Criterios de evaluación asociados
 form.no_trainings: No hay enseñanzas definidas.
 form.no_learning_outcomes: No hay resultados de aprendizaje definidos.
 form.no_activities: No hay actividades formativo/productivas definidas.

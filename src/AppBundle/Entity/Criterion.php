@@ -54,11 +54,11 @@ class Criterion
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Activity", inversedBy="criteria")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Activity
+     * @ORM\ManyToOne(targetEntity="LearningOutcome", inversedBy="criteria")
+     * @ORM\JoinColumn(nullable=true)
+     * @var LearningOutcome
      */
-    protected $activity;
+    protected $learningOutcome;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -133,30 +133,6 @@ class Criterion
     }
 
     /**
-     * Set activity
-     *
-     * @param Activity $activity
-     *
-     * @return Criterion
-     */
-    public function setActivity(Activity $activity = null)
-    {
-        $this->activity = $activity;
-
-        return $this;
-    }
-
-    /**
-     * Get criterion
-     *
-     * @return Activity
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
-
-    /**
      * Set order
      *
      * @param integer $orderNr
@@ -202,5 +178,29 @@ class Criterion
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set learningOutcome
+     *
+     * @param \AppBundle\Entity\LearningOutcome $learningOutcome
+     *
+     * @return Criterion
+     */
+    public function setLearningOutcome(\AppBundle\Entity\LearningOutcome $learningOutcome = null)
+    {
+        $this->learningOutcome = $learningOutcome;
+
+        return $this;
+    }
+
+    /**
+     * Get learningOutcome
+     *
+     * @return \AppBundle\Entity\LearningOutcome
+     */
+    public function getLearningOutcome()
+    {
+        return $this->learningOutcome;
     }
 }

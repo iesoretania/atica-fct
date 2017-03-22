@@ -15,8 +15,9 @@
             <td class="text-center">
                 <div class="btn-group btn-group-xs btn-block" role="group">
                 {% block buttons %}
-                    <a href="{{ path('admin_program_activities', {'id': element.id}) }}" class="btn btn-info col-xs-6 col-sm-6"><i class="fa fa-list-ol"></i> {{ 'form.activities' | trans }}</a>
-                    <a href="{{ path('admin_program_learning_outcome_form', {'id': element.id}) }}" class="btn btn-default col-xs-6 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
+                    <a href="{{ path('admin_program_activities', {'id': element.id}) }}" class="btn btn-info col-xs-4"><i class="fa fa-list-ol"></i> {{ 'form.activities' | trans }}</a>
+                    <a href="{{ path('admin_program_criteria', {'id': element.id}) }}" class="btn btn-warning col-xs-4"><i class="fa fa-check-square"></i> {{ 'form.criteria' | trans }}</a>
+                    <a href="{{ path('admin_program_learning_outcome_form', {'id': element.id}) }}" class="btn btn-default col-xs-4"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
                 {% endblock %}
                 </div>
             </td>

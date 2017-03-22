@@ -20,8 +20,12 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Activity;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractType
@@ -49,6 +53,28 @@ class ActivityType extends AbstractType
                 'label' => 'form.description',
                 'required' => false
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var Activity $activity */
+            $activity = $event->getData();
+
+            $event->getForm()
+                ->add('criteria', null, [
+                    'label' => 'form.criteria.assoc',
+                    'expanded' => true,
+                    'query_builder' => function(EntityRepository $er) use ($activity) {
+                        return $er
+                            ->createQueryBuilder('c')
+                            ->where('c.learningOutcome = :lo')
+                            ->setParameter('lo', $activity->getLearningOutcome())
+                            ->orderBy('c.orderNr')
+                            ->addOrderBy('c.code')
+                            ->addOrderBy('c.name')
+                            ;
+                    },
+                    'required' => false
+                ]);
+        });
     }
 
     /**

@@ -32,8 +32,8 @@ class CriterionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('activity', null, [
-                'label' => 'form.activity',
+            ->add('learningOutcome', null, [
+                'label' => 'form.learning_outcome',
                 'required' => true,
                 'disabled' => $options['fixed']
             ])
