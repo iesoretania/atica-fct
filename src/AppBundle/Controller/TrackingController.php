@@ -92,11 +92,11 @@ class TrackingController extends BaseController
     {
         if ($request->request->has('delete')) {
             return $this->deleteWorkdayAction($agreement, $request);
-        } elseif ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
-            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'admin_group_student_calendar');
-        } else {
-            return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'admin_group_student_calendar');
         }
+        if ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
+            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'admin_group_student_calendar');
+        }
+        return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'admin_group_student_calendar');
     }
 
     /**
@@ -119,7 +119,7 @@ class TrackingController extends BaseController
 
         $workdays = new ArrayCollection();
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $workdays = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workday')->createCalendar($calendar, $agreement);
 
             if ($request->request->has('submit')) {
@@ -182,7 +182,7 @@ class TrackingController extends BaseController
         $form = $this->createForm('AppBundle\Form\Type\WorkdayType', $workday);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'calendar'));
             return $this->redirectToRoute('admin_group_student_calendar', ['id' => $workday->getAgreement()->getId()]);
@@ -230,7 +230,7 @@ class TrackingController extends BaseController
 
         $student = $agreement->getStudent();
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Probar a guardar los cambios
             try {
                 $this->getDoctrine()->getManager()->flush();

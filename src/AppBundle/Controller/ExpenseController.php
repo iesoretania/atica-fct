@@ -89,7 +89,7 @@ class ExpenseController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->persist($expense);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'expense'));

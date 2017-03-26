@@ -113,7 +113,7 @@ class CompanyController extends BaseController
         $form = $this->createForm('AppBundle\Form\Type\CompanyType', $company);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'company'));
             return $this->redirectToRoute('company_index');
@@ -162,7 +162,7 @@ class CompanyController extends BaseController
         $form = $this->createForm('AppBundle\Form\Type\WorkcenterType', $workcenter);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'company'));
             return $this->redirectToRoute('workcenter_index', ['id' => $workcenter->getCompany()->getId()]);

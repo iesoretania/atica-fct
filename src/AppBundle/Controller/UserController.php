@@ -52,7 +52,7 @@ class UserController extends Controller
             // Si es solicitado, cambiar la contraseña
             $passwordSubmit = $form->get('changePassword');
             if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
-                $user->setPassword($this->container->get('security.password_encoder')
+                $user->setPassword($this->get('security.password_encoder')
                     ->encodePassword($user, $form->get('newPassword')->get('first')->getData()));
                 $message = $this->get('translator')->trans('alert.password_changed', [], 'user');
             } else {
@@ -94,7 +94,7 @@ class UserController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $newUser
                 ->setEnabled(true)
                 ->setFinancialManager(false)

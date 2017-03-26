@@ -109,7 +109,7 @@ class VisitController extends Controller
         $form = $this->createForm('AppBundle\Form\Type\VisitType', $visit);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->persist($visit);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'visit'));
