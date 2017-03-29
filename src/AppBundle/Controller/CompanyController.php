@@ -108,7 +108,7 @@ class CompanyController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (null === $company) {
+            if (null === $company->getId()) {
                 $workcenter = new Workcenter();
                 $workcenter
                     ->setName($this->get('translator')->trans('default.workcenter', [], 'company'))
