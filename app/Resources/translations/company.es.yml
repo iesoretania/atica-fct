@@ -25,6 +25,8 @@ form.students: Estudiantes
 form.no_workcenters: No hay sedes registradas
 form.new_workcenter: Nueva sede
 
+default.workcenter: Sede principal
+
 alert.workcenter_deleted: Sede eliminada con éxito.
 alert.workcenter_not_deleted: No se ha podido eliminar la sede. Compruebe que no hay elementos asociados a la misma.
 

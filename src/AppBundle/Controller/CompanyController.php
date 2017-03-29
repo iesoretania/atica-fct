@@ -96,20 +96,26 @@ class CompanyController extends BaseController
 
     /**
      * @Route("/nueva", name="company_new", methods={"GET", "POST"})
-     */
-    public function companyNewFormAction(Request $request)
-    {
-        $company = new Company();
-        $this->getDoctrine()->getManager()->persist($company);
-
-        return $this->companyFormAction($company, $request);
-    }
-
-    /**
      * @Route("/{id}", name="company_form", methods={"GET", "POST"})
      */
-    public function companyFormAction(Company $company, Request $request)
+    public function companyFormAction(Request $request, Company $company = null)
     {
+        if (null === $company) {
+            $company = new Company();
+            $this->getDoctrine()->getManager()->persist($company);
+            $workcenter = new Workcenter();
+            $workcenter
+                ->setName($this->get('translator')->trans('default.workcenter', [], 'company'))
+                ->setCompany($company)
+                ->setAddress($company->getAddress())
+                ->setCity($company->getCity())
+                ->setProvince($company->getProvince())
+                ->setZipCode($company->getZipCode())
+                ->setPhoneNumber($company->getPhoneNumber())
+                ->setEmail($company->getEmail())
+                ->setManager($company->getManager());
+            $this->getDoctrine()->getManager()->persist($workcenter);
+        }
         $form = $this->createForm('AppBundle\Form\Type\CompanyType', $company);
         $form->handleRequest($request);
 
@@ -188,7 +194,16 @@ class CompanyController extends BaseController
     public function workcenterNewFormAction(Company $company, Request $request)
     {
         $workcenter = new Workcenter();
-        $workcenter->setCompany($company);
+        $workcenter
+            ->setCompany($company)
+            ->setAddress($company->getAddress())
+            ->setCity($company->getCity())
+            ->setProvince($company->getProvince())
+            ->setZipCode($company->getZipCode())
+            ->setPhoneNumber($company->getPhoneNumber())
+            ->setEmail($company->getEmail())
+            ->setManager($company->getManager())
+        ;
         $this->getDoctrine()->getManager()->persist($workcenter);
 
         return $this->workcenterFormAction($company, $workcenter, $request);
