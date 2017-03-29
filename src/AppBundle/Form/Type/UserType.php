@@ -38,11 +38,13 @@ class UserType extends AbstractType
         $builder
             ->add('loginUsername', null, [
                 'label' => 'form.login_username',
-                'required' => false
+                'required' => false,
+                'disabled' => !$options['admin']
             ])
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => 'form.email',
-                'required' => false
+                'required' => false,
+                'disabled' => !$options['admin']
             ])
             ->add('reference', null, [
                 'label' => 'form.reference',
