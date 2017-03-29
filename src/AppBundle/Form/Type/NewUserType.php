@@ -33,9 +33,13 @@ class NewUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('loginUsername', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                'label' => 'form.login_username',
+                'required' => false
+            ])
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => 'form.email',
-                'required' => true
+                'required' => false
             ])
             ->add('reference', null, [
                 'label' => 'form.reference',
