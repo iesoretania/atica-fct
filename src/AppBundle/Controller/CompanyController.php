@@ -103,23 +103,25 @@ class CompanyController extends BaseController
         if (null === $company) {
             $company = new Company();
             $this->getDoctrine()->getManager()->persist($company);
-            $workcenter = new Workcenter();
-            $workcenter
-                ->setName($this->get('translator')->trans('default.workcenter', [], 'company'))
-                ->setCompany($company)
-                ->setAddress($company->getAddress())
-                ->setCity($company->getCity())
-                ->setProvince($company->getProvince())
-                ->setZipCode($company->getZipCode())
-                ->setPhoneNumber($company->getPhoneNumber())
-                ->setEmail($company->getEmail())
-                ->setManager($company->getManager());
-            $this->getDoctrine()->getManager()->persist($workcenter);
         }
         $form = $this->createForm('AppBundle\Form\Type\CompanyType', $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $company) {
+                $workcenter = new Workcenter();
+                $workcenter
+                    ->setName($this->get('translator')->trans('default.workcenter', [], 'company'))
+                    ->setCompany($company)
+                    ->setAddress($company->getAddress())
+                    ->setCity($company->getCity())
+                    ->setProvince($company->getProvince())
+                    ->setZipCode($company->getZipCode())
+                    ->setPhoneNumber($company->getPhoneNumber())
+                    ->setEmail($company->getEmail())
+                    ->setManager($company->getManager());
+                $this->getDoctrine()->getManager()->persist($workcenter);
+            }
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'company'));
             return $this->redirectToRoute('company_index');
