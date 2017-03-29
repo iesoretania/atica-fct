@@ -160,8 +160,8 @@ class BaseController extends Controller
 
                 $from = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealFromDate($agreement);
                 $to = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agreement')->getRealToDate($agreement);
-                $agreement->setFromDate($from ?: null);
-                $agreement->setToDate($to ?: null);
+                $agreement->setFromDate($from);
+                $agreement->setToDate($to);
 
                 $em->flush();
                 $this->addFlash('success', $this->get('translator')->trans('alert.deleted', [], 'calendar'));

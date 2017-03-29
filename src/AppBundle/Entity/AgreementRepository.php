@@ -21,7 +21,7 @@ class AgreementRepository extends EntityRepository
             ->setParameter('agreement', $agreement)
             ->getSingleScalarResult();
 
-        return $date ?: new \DateTime($date);
+        return null === $date ?: new \DateTime($date);
     }
 
     public function getRealToDate(Agreement $agreement)
@@ -31,7 +31,7 @@ class AgreementRepository extends EntityRepository
             ->setParameter('agreement', $agreement)
             ->getSingleScalarResult();
 
-        return $date ?: new \DateTime($date);
+        return null === $date ?: new \DateTime($date);
     }
 
     public function getActivitiesStats(Agreement $agreement)
