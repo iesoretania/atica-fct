@@ -4,7 +4,7 @@ form.first_name: Nombre
 form.last_name: Apellidos
 form.display_name: Nombre mostrado
 form.gender: Sexo
-form.gender_unknown: Desconocido
+form.gender_unknown: No especificado
 form.gender_male: Hombre
 form.gender_female: Mujer
 form.email: Correo electrónico
