@@ -256,7 +256,7 @@ class MyStudentController extends BaseController
 
         $agreements = $agreement->getStudent()->getStudentAgreements();
 
-        $educationalTutors = $this->getDoctrine()->getRepository('AppBundle:User')->getEducationalTutorsByStudent($agreement->getStudent());
+        $educationalTutors = [$agreement->getEducationalTutor()];
         $totalHours = $this->getDoctrine()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
 
         $activities = [];
