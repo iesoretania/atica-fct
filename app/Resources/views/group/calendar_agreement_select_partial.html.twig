@@ -45,7 +45,7 @@
         <tfoot>
             <tr>
                 <td colspan="3">{{ 'form.training_hours'|trans({'%hours%': student.studentGroup.training.programHours}) }}</td>
-                <td>{% if sumTotalHours %}{{ sumTrackedHours|number_format(2, ',', '.') }}/{{ student.studentGroup.training.programHours|number_format(2, ',', '.') }} ({{ (100.0 * sumTrackedHours / sumTotalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
+                <td>{% if sumTotalHours %}{{ sumTrackedHours|number_format(2, ',', '.') }}/{{ sumTotalHours|number_format(2, ',', '.') }} ({{ (100.0 * sumTrackedHours / sumTotalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
                 <td></td>
             </tr>
         </tfoot>
