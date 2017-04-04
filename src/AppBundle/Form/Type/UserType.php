@@ -57,11 +57,17 @@ class UserType extends AbstractType
             ->add('lastName', null, [
                 'label' => 'form.last_name',
                 'required' => true
-            ])
-            ->add('displayName', null, [
-                'label' => 'form.display_name',
-                'required' => false
-            ])
+            ]);
+
+        if ($options['admin']) {
+            $builder
+                ->add('displayName', null, [
+                    'label' => 'form.display_name',
+                    'required' => false
+                ]);
+        }
+
+        $builder
             ->add('gender', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => 'form.gender',
                 'choices' => [
