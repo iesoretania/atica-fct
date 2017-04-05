@@ -24,7 +24,10 @@ form.training_hours: "Horas totales de la enseñanza: %hours%"
 
 form.daily_activities: Actividades del día (previstas %hours% horas)
 form.agreement_stats: Estado del programa
+form.agreement_stats.activity_bar: "%count%/%total% actividades"
+form.agreement_stats.hours_bar: "%count%/%total% horas"
 form.agreement_hours: Horas totales del acuerdo
+form.show_stats: Mostrar detalles
 form.activity: Actividad
 form.description: Descripción
 form.hours: Horas realizadas

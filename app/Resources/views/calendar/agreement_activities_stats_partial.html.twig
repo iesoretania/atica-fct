@@ -1,9 +1,38 @@
 {% trans_default_domain 'student' %}
 <h2>{{ 'form.agreement_stats'|trans }}</h2>
-<dl class="dl">
-    {% set agreement_hours = agreement.totalHours %}
-    {% for activity in activities_stats %}
-        <dt {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[0] }}</dt>
-        <dd {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }}{% if agreement_hours > 0 %} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%){% endif %}</dd>
-    {% endfor %}
-</dl>
+{% set total_activities = activities_stats|length %}
+{% set activities_done = 0 %}
+{% set agreement_hours = agreement.totalHours %}
+{% set hours_done = 0 %}
+{% for activity in activities_stats %}
+    {% if activity[1] %}{% set activities_done = activities_done + 1 %}{% set hours_done = hours_done + activity[1] %}{% endif %}
+{% endfor %}
+{% set percentage = 100 * activities_done / total_activities %}
+<div class="progress">
+    <div class="progress-bar progress-bar-{{ percentage == 100 ? 'success' : 'warning' }}" role="progressbar" aria-valuenow="{{ percentage }}"
+         aria-valuemin="0" aria-valuemax="100" style="width:{{ percentage }}%">
+        {{ 'form.agreement_stats.activity_bar' | trans({'%count%' : activities_done, '%total%' : total_activities}) }}
+    </div>
+</div>
+{% if agreement_hours %}
+    {% set percentage = 100 * hours_done / agreement_hours %}
+    <div class="progress">
+        <div class="progress-bar progress-bar-{{ percentage == 100 ? 'success' : 'warning' }}" role="progressbar" aria-valuenow="{{ percentage }}"
+             aria-valuemin="0" aria-valuemax="100" style="width:{{ percentage }}%">
+            {{ 'form.agreement_stats.hours_bar' | trans({'%count%' : hours_done, '%total%' : agreement_hours}) }}
+        </div>
+    </div>
+{% endif %}
+
+<button class="btn btn-info btn-xs" data-toggle="collapse" data-target="#stats"><i class="fa fa-list-ul"></i> {{ 'form.show_stats'|trans }}</button>
+
+<div id="stats" class="collapse">
+    <div class="well">
+        <dl class="dl">
+            {% for activity in activities_stats %}
+                <dt {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[0] }}</dt>
+                <dd {% if not activity[1] %}class="text-danger"{% endif %}>{{ activity[1] | number_format(2, ',', '.') | default('0,00') }}/{{ agreement_hours | number_format(2, ',', '.') | default('0,00') }}{% if agreement_hours > 0 %} ({{ (100 * activity[1]/agreement_hours) | number_format(2, ',', '.') }}%){% endif %}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+</div>
