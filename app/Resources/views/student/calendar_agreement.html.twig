@@ -2,6 +2,8 @@
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
 {% block content %}
+    {% set agreement_lock = is_granted('AGREEMENT_LOCK', agreement) %}
+
     {% if activities_stats %}
         {% include 'calendar/agreement_activities_stats_partial.html.twig' %}
     {% endif %}
