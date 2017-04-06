@@ -6,7 +6,7 @@
     {% if day.data is defined %}
         {% block detail %}
             {% if buttons is defined and buttons %}<input type="checkbox" class="remove" name="ids[]" value="{{ day.data.id }}"  title="{{ 'form.select'|trans }}"> <a href="{{ path(route_name is defined ? route_name : 'agreement_calendar_form', {'id': day.data.id}) }}">{% endif %}
-            {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours }}/{% endif %}{{ day.data.hours }} {{ 'caption.hours'|trans }}
+            {% if day.data.trackedHours > 0 and day.data.trackedHours != day.data.hours %}{{ day.data.trackedHours | replace({'.': ','}) }}/{% endif %}{{ day.data.hours | replace({'.': ','} }} {{ 'caption.hours'|trans }}
             {% if buttons is defined and buttons %}</a>{% endif %}
             {% if day.data.locked %}&nbsp;<i class="fa fa-lock"></i>{% endif %}
         {% endblock %}

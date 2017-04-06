@@ -19,7 +19,7 @@
     <div class="progress">
         <div class="progress-bar progress-bar-{{ percentage == 100 ? 'success' : 'warning' }}" role="progressbar" aria-valuenow="{{ percentage }}"
              aria-valuemin="0" aria-valuemax="100" style="width:{{ percentage }}%">
-            {{ 'form.agreement_stats.hours_bar' | trans({'%count%' : hours_done, '%total%' : agreement_hours}) }}
+            {{ 'form.agreement_stats.hours_bar' | trans({'%count%' : hours_done | number_format(2, ',', '.'), '%total%' : agreement_hours | number_format(2, ',', '.')}) }}
         </div>
     </div>
 {% endif %}
