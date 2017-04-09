@@ -33,7 +33,7 @@ class WorkdayTrackingType extends AbstractType
     {
         $builder
             ->add('trackingActivities', 'Symfony\Component\Form\Extension\Core\Type\CollectionType', [
-                'label' => false,
+                'label' => 'form.tracking',
                 'entry_type' => 'AppBundle\Form\Type\TrackingType',
                 'required' => true,
                 'entry_options' => [

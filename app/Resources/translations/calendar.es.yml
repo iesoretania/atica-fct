@@ -31,7 +31,7 @@ form.no_workday: No incluido en el plan de formación
 form.draft: BORRADOR
 
 form.edit: Modificar
-form.tracking: Seguimiento
+form.tracking: Seguimiento (en horas)
 form.select: Seleccionar jornada
 form.delete_item: Eliminar
 form.delete: Eliminar jornadas seleccionadas

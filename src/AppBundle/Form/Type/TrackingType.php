@@ -22,6 +22,8 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrackingType extends AbstractType
@@ -31,15 +33,22 @@ class TrackingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        /*$builder
             ->add('activity', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
                 'label' => 'form.activity',
                 'disabled' => true
-            ])
-            ->add('hours', null, [
-                'label' => 'form.hours',
+            ]);*/
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $form->add('hours', null, [
+                'label' => $data->getActivity(),
+                'translation_domain' => false,
                 'required' => true
             ]);
+        });
     }
 
     /**
