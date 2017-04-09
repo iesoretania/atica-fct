@@ -1,7 +1,7 @@
 {% trans_default_domain 'student' %}
 {% extends 'layout.html.twig' %}
 {% import '::macros.html.twig' as m %}
-{#% form_theme form 'bootstrap_3_layout.html.twig' %#}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block content %}
     {% if previous or next %}
         <div class="well well-sm">
