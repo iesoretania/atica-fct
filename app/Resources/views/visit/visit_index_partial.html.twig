@@ -1,31 +1,33 @@
 {% trans_default_domain 'visit' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        <th class="col-md-2">{{ 'form.date'|trans }}</th>
-        <th class="col-md-3">{{ 'form.workcenter'|trans }}</th>
-        <th class="col-md-5">{{ 'form.students'|trans }}</th>
-        <th class="col-md-2"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y H:i') }}</td>
-            <td>{{ element.workcenter }}</td>
-            <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% block buttons %}
-                    <a href="{{ path('visit_form', {'id': tutor.id, 'visit': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
-                {% endblock %}
-                </div>
-            </td>
+            <th class="col-md-2">{{ 'form.date'|trans }}</th>
+            <th class="col-md-3">{{ 'form.workcenter'|trans }}</th>
+            <th class="col-md-5">{{ 'form.students'|trans }}</th>
+            <th class="col-md-2"></th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">{{ 'form.no_visits'|trans }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y H:i') }}</td>
+                <td>{{ element.workcenter }}</td>
+                <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% block buttons %}
+                        <a href="{{ path('visit_form', {'id': tutor.id, 'visit': element.id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
+                    {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{{ 'form.no_visits'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

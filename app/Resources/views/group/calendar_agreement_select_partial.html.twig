@@ -1,53 +1,55 @@
 {% trans_default_domain 'group' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        <th class="col-md-1">{{ 'form.from_date'|trans }}</th>
-        <th class="col-md-1">{{ 'form.to_date'|trans }}</th>
-        <th class="col-md-4">{{ 'form.workcenter'|trans }}</th>
-        <th class="col-md-2">{{ 'form.hours'|trans }}</th>
-        <th class="col-md-4"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% set sumTotalHours = 0.0 %}
-    {% set sumTrackedHours = 0.0 %}
-    {% for element in elements %}
-        {% set totalHours = element.totalHours %}
-        {% set trackedHours = element.trackedHours %}
-        {% set sumTotalHours = sumTotalHours + totalHours %}
-        {% set sumTrackedHours = sumTrackedHours + trackedHours %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element.fromDate|date('d/m/Y') }}</td>
-            <td>{{ element.toDate|date('d/m/Y') }}</td>
-            <td>{{ element.workcenter }}</td>
-            <td>{% if totalHours %}{{ trackedHours|number_format(2, ',', '.') }}/{{ totalHours|number_format(2, ',', '.') }} ({{ (100.0 * trackedHours / totalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% set manage = is_granted('GROUP_CREATE_AGREEMENT', student.studentGroup) %}
-                {% block buttons %}
-                    <a href="{{ path('admin_group_student_calendar', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-{{ manage ? 4 : 12 }}"><i class="fa fa-calendar"></i> {{ 'form.calendar' | trans }}</a>
-                    {% if manage %}
-                        <a href="{{ path('admin_group_student_agreement_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-4"><i class="fa fa-book"></i> {{ 'form.view' | trans }}</a>
-                        <a href="{{ path('admin_group_student_agreement_delete', {'id': element.id}) }}" class="btn btn-danger col-xs-12 col-sm-4"{% if trackedHours %} disabled="1"{% endif %}><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
-                    {% endif %}
-                {% endblock %}
-                </div>
-            </td>
+            <th class="col-md-1">{{ 'form.from_date'|trans }}</th>
+            <th class="col-md-1">{{ 'form.to_date'|trans }}</th>
+            <th class="col-md-4">{{ 'form.workcenter'|trans }}</th>
+            <th class="col-md-2">{{ 'form.hours'|trans }}</th>
+            <th class="col-md-4"></th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">{{ 'form.no_workcenters'|trans }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    {% if elements %}
-        <tfoot>
+        </thead>
+        <tbody>
+        {% set sumTotalHours = 0.0 %}
+        {% set sumTrackedHours = 0.0 %}
+        {% for element in elements %}
+            {% set totalHours = element.totalHours %}
+            {% set trackedHours = element.trackedHours %}
+            {% set sumTotalHours = sumTotalHours + totalHours %}
+            {% set sumTrackedHours = sumTrackedHours + trackedHours %}
             <tr>
-                <td colspan="3">{{ 'form.training_hours'|trans({'%hours%': student.studentGroup.training.programHours}) }}</td>
-                <td>{% if sumTotalHours %}{{ sumTrackedHours|number_format(2, ',', '.') }}/{{ sumTotalHours|number_format(2, ',', '.') }} ({{ (100.0 * sumTrackedHours / sumTotalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
-                <td></td>
+                <td>{{ element.fromDate|date('d/m/Y') }}</td>
+                <td>{{ element.toDate|date('d/m/Y') }}</td>
+                <td>{{ element.workcenter }}</td>
+                <td>{% if totalHours %}{{ trackedHours|number_format(2, ',', '.') }}/{{ totalHours|number_format(2, ',', '.') }} ({{ (100.0 * trackedHours / totalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% set manage = is_granted('GROUP_CREATE_AGREEMENT', student.studentGroup) %}
+                    {% block buttons %}
+                        <a href="{{ path('admin_group_student_calendar', {'id': element.id}) }}" class="btn btn-info col-xs-12 col-sm-{{ manage ? 4 : 12 }}"><i class="fa fa-calendar"></i> {{ 'form.calendar' | trans }}</a>
+                        {% if manage %}
+                            <a href="{{ path('admin_group_student_agreement_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-4"><i class="fa fa-book"></i> {{ 'form.view' | trans }}</a>
+                            <a href="{{ path('admin_group_student_agreement_delete', {'id': element.id}) }}" class="btn btn-danger col-xs-12 col-sm-4"{% if trackedHours %} disabled="1"{% endif %}><i class="fa fa-trash"></i> {{ 'form.delete' | trans }}</a>
+                        {% endif %}
+                    {% endblock %}
+                    </div>
+                </td>
             </tr>
-        </tfoot>
-    {% endif %}
-</table>
+        {% else %}
+            <tr>
+                <td colspan="5">{{ 'form.no_workcenters'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        {% if elements %}
+            <tfoot>
+                <tr>
+                    <td colspan="3">{{ 'form.training_hours'|trans({'%hours%': student.studentGroup.training.programHours}) }}</td>
+                    <td>{% if sumTotalHours %}{{ sumTrackedHours|number_format(2, ',', '.') }}/{{ sumTotalHours|number_format(2, ',', '.') }} ({{ (100.0 * sumTrackedHours / sumTotalHours)|number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        {% endif %}
+    </table>
+</div>

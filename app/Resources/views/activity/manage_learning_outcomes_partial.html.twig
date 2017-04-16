@@ -1,39 +1,41 @@
 {% trans_default_domain 'activity' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        {{ m.paginator_th(elements, 'col-md-1', 'l.code', 'form.code'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-7', 'l.name', 'form.learning_outcome'|trans) }}
-        <th class="col-md-4"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element.code }}</td>
-            <td>{{ element.name }}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% block buttons %}
-                    <a href="{{ path('admin_program_activities', {'id': element.id}) }}" class="btn btn-info col-xs-4"><i class="fa fa-list-ol"></i> {{ 'form.activities' | trans }}</a>
-                    <a href="{{ path('admin_program_criteria', {'id': element.id}) }}" class="btn btn-warning col-xs-4"><i class="fa fa-check-square"></i> {{ 'form.criteria' | trans }}</a>
-                    <a href="{{ path('admin_program_learning_outcome_form', {'id': element.id}) }}" class="btn btn-default col-xs-4"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
-                {% endblock %}
-                </div>
-            </td>
+            {{ m.paginator_th(elements, 'col-md-1', 'l.code', 'form.code'|trans) }}
+            {{ m.paginator_th(elements, 'col-md-7', 'l.name', 'form.learning_outcome'|trans) }}
+            <th class="col-md-4"></th>
         </tr>
-    {% else %}
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element.code }}</td>
+                <td>{{ element.name }}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% block buttons %}
+                        <a href="{{ path('admin_program_activities', {'id': element.id}) }}" class="btn btn-info col-xs-4"><i class="fa fa-list-ol"></i> {{ 'form.activities' | trans }}</a>
+                        <a href="{{ path('admin_program_criteria', {'id': element.id}) }}" class="btn btn-warning col-xs-4"><i class="fa fa-check-square"></i> {{ 'form.criteria' | trans }}</a>
+                        <a href="{{ path('admin_program_learning_outcome_form', {'id': element.id}) }}" class="btn btn-default col-xs-4"><i class="fa fa-pencil"></i> {{ 'form.detail' | trans }}</a>
+                    {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">{{ 'form.no_learning_outcomes'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
         <tr>
-            <td colspan="3">{{ 'form.no_learning_outcomes'|trans }}</td>
+            <th colspan="3">{{ m.paginator_stats(elements) }}</th>
         </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="3">{{ m.paginator_stats(elements) }}</th>
-    </tr>
-    </tfoot>
-</table>
+        </tfoot>
+    </table>
+</div>
 <div class="navigation">
     {{ knp_pagination_render(elements) }}
 </div>

@@ -1,25 +1,27 @@
 {% trans_default_domain 'visit' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        <th class="col-md-7">{{ 'form.workcenter'|trans }}</th>
-        <th class="col-md-1">{{ 'form.agreements'|trans }}</th>
-        <th class="col-md-1">{{ 'form.students'|trans }}</th>
-        <th class="col-md-1">{{ 'form.visits'|trans }}</th>
-        <th class="col-md-1">{{ 'form.first_date'|trans }}</th>
-        <th class="col-md-1">{{ 'form.last_date'|trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element[0] }}</td>
-            <td>{{ element[1] }}</td>
-            <td>{{ element[3] }}</td>
-            <td>{{ element[5] }}</td>
-            <td>{{ element[9] ? element[9]|date('d/m/y') }}</td>
-            <td>{{ element[7] ? element[7]|date('d/m/y') }}</td>
+            <th class="col-md-7">{{ 'form.workcenter'|trans }}</th>
+            <th class="col-md-1">{{ 'form.agreements'|trans }}</th>
+            <th class="col-md-1">{{ 'form.students'|trans }}</th>
+            <th class="col-md-1">{{ 'form.visits'|trans }}</th>
+            <th class="col-md-1">{{ 'form.first_date'|trans }}</th>
+            <th class="col-md-1">{{ 'form.last_date'|trans }}</th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element[0] }}</td>
+                <td>{{ element[1] }}</td>
+                <td>{{ element[3] }}</td>
+                <td>{{ element[5] }}</td>
+                <td>{{ element[9] ? element[9]|date('d/m/y') }}</td>
+                <td>{{ element[7] ? element[7]|date('d/m/y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

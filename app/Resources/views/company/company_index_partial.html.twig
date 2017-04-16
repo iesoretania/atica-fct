@@ -1,38 +1,40 @@
 {% trans_default_domain 'company' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        {{ m.paginator_th(elements, 'col-md-1', 'c.code', 'form.code'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-3', 'c.name', 'form.name'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-2', 'c.city', 'form.city'|trans) }}
-        {{ m.paginator_th(elements, 'col-md-3', 'u.lastName', 'form.manager'|trans) }}
-        <th class="col-md-3"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element.code }}</td>
-            <td>{{ element.name }}</td>
-            <td>{{ element.city }}</td>
-            <td>{{ element.manager }}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% block buttons %}
-                    <a href="{{ path('workcenter_index', {'id': element.id}) }}" class="btn btn-primary col-xs-12 col-sm-6" ><i class="fa fa-industry"></i> {{ 'form.workcenters' | trans }}</a>
-                    <a href="{{ path('company_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
-                {% endblock %}
-                </div>
-            </td>
+            {{ m.paginator_th(elements, 'col-md-1', 'c.code', 'form.code'|trans) }}
+            {{ m.paginator_th(elements, 'col-md-3', 'c.name', 'form.name'|trans) }}
+            {{ m.paginator_th(elements, 'col-md-2', 'c.city', 'form.city'|trans) }}
+            {{ m.paginator_th(elements, 'col-md-3', 'u.lastName', 'form.manager'|trans) }}
+            <th class="col-md-3"></th>
         </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="5">{{ m.paginator_stats(elements) }}</th>
-    </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element.code }}</td>
+                <td>{{ element.name }}</td>
+                <td>{{ element.city }}</td>
+                <td>{{ element.manager }}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% block buttons %}
+                        <a href="{{ path('workcenter_index', {'id': element.id}) }}" class="btn btn-primary col-xs-12 col-sm-6" ><i class="fa fa-industry"></i> {{ 'form.workcenters' | trans }}</a>
+                        <a href="{{ path('company_form', {'id': element.id}) }}" class="btn btn-default col-xs-12 col-sm-6"><i class="fa fa-pencil"></i> {{ 'form.view' | trans }}</a>
+                    {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">{{ m.paginator_stats(elements) }}</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <div class="navigation">
     {{ knp_pagination_render(elements) }}
 </div>

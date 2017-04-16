@@ -1,31 +1,33 @@
 {% trans_default_domain 'visit' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        <th class="col-md-7">{{ 'form.educational_tutor'|trans }}</th>
-        <th class="col-md-1">{{ 'form.agreements'|trans }}</th>
-        <th class="col-md-1">{{ 'form.students'|trans }}</th>
-        <th class="col-md-3"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element[0].lastName }}, {{ element[0].firstName }}</td>
-            <td>{{ element[1] }}</td>
-            <td>{{ element[3] }}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% block buttons %}
-                    <a href="{{ path('visit_workcenter_index', {'id': element[0].id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.select' | trans }}</a>
-                {% endblock %}
-                </div>
-            </td>
+            <th class="col-md-7">{{ 'form.educational_tutor'|trans }}</th>
+            <th class="col-md-1">{{ 'form.agreements'|trans }}</th>
+            <th class="col-md-1">{{ 'form.students'|trans }}</th>
+            <th class="col-md-3"></th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="4">{{ 'form.no_tutors'|trans }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element[0].lastName }}, {{ element[0].firstName }}</td>
+                <td>{{ element[1] }}</td>
+                <td>{{ element[3] }}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% block buttons %}
+                        <a href="{{ path('visit_workcenter_index', {'id': element[0].id}) }}" class="btn btn-default col-xs-12 col-sm-12"><i class="fa fa-check-square-o"></i> {{ 'form.select' | trans }}</a>
+                    {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'form.no_tutors'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

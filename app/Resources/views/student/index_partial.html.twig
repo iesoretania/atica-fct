@@ -1,29 +1,31 @@
 {% trans_default_domain 'student' %}
-<table class="table table-bordered table-condensed table-hover table-responsive">
-    <thead>
-    <tr>
-        <th class="col-md-3">{{ 'form.last_name'|trans }}</th>
-        <th class="col-md-3">{{ 'form.first_name'|trans }}</th>
-        <th class="col-md-1">{{ 'form.group'|trans }}</th>
-        <th class="col-md-2">{{ 'form.tracked_hours'|trans }}</th>
-        <th class="col-md-3"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for element in elements %}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
         <tr>
-            <td>{{ element[0].lastName }}</td>
-            <td>{{ element[0].firstName }}</td>
-            <td>{{ element[0].studentGroup }}</td>
-            <td>{% if element[3] %}{{ element[1]|number_format(2, ',', '.') }}/{{ element[3]|number_format(2, ',', '.') }} ({{ (100 * element[1]/element[3]) | number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-xs btn-block" role="group">
-                {% block buttons %}
-                    <a href="{{ path('my_student_agreements', {'id': element[0].id}) }}" class="btn btn-info col-xs-12 col-sm-12"><i class="fa fa-calendar"></i> {{ 'form.tracking' | trans }}</a>
-                {% endblock %}
-                </div>
-            </td>
+            <th class="col-md-3">{{ 'form.last_name'|trans }}</th>
+            <th class="col-md-3">{{ 'form.first_name'|trans }}</th>
+            <th class="col-md-1">{{ 'form.group'|trans }}</th>
+            <th class="col-md-2">{{ 'form.tracked_hours'|trans }}</th>
+            <th class="col-md-3"></th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element[0].lastName }}</td>
+                <td>{{ element[0].firstName }}</td>
+                <td>{{ element[0].studentGroup }}</td>
+                <td>{% if element[3] %}{{ element[1]|number_format(2, ',', '.') }}/{{ element[3]|number_format(2, ',', '.') }} ({{ (100 * element[1]/element[3]) | number_format(2, ',', '.') }}%){% else %}0,00/0,00{% endif %}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-xs btn-block" role="group">
+                    {% block buttons %}
+                        <a href="{{ path('my_student_agreements', {'id': element[0].id}) }}" class="btn btn-info col-xs-12 col-sm-12"><i class="fa fa-calendar"></i> {{ 'form.tracking' | trans }}</a>
+                    {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
