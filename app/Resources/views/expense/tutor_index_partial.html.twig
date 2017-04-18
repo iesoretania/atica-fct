@@ -14,9 +14,9 @@
         {% for element in elements %}
             <tr>
                 <td>{{ element[0].lastName }}, {{ element[0].firstName }}</td>
-                <td>{{ element[1]|number_format(2, ',', '.')|default('0,00') }} km.</td>
-                <td>{{ element[3]|number_format(2, ',', '.')|default('0,00') }} km.</td>
-                <td>{{ element[5]|number_format(2, ',', '.')|default('0,00') }} km.</td>
+                <td>{{ element[1]|number_format|default('0,00') }} km.</td>
+                <td>{{ element[3]|number_format|default('0,00') }} km.</td>
+                <td>{{ element[5]|number_format|default('0,00') }} km.</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
                     {% block buttons %}

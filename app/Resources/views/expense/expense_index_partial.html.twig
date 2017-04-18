@@ -16,7 +16,7 @@
             <tr>
                 <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y') }}</td>
                 <td>{{ element.route }}</td>
-                <td>{{ element.distance|number_format(2, ',', '.') }} km.</td>
+                <td>{{ element.distance|number_format }} km.</td>
                 <td>{{ (element.reviewed ? 'form.yes' : 'form.no')|trans }}</td>
                 <td>{{ (element.paid ? 'form.yes' : 'form.no')|trans }}</td>
                 <td class="text-center">

@@ -105,7 +105,7 @@
                 <td style="border:1px solid; padding: 0.1cm; text-align: center">{{ activity[1] | number_format(1, ',', '.') | default('0,0') }}</td>
                 <td style="border:1px solid; padding: 0.1cm; text-align: center">
                     {% if total_hours %}
-                    {{ (100*activity[1]/total_hours) | number_format(2, ',', '.') | default('0,00') }}%
+                    {{ (100*activity[1]/total_hours) | number_format | default('0,00') }}%
                     {% endif %}
                 </td>
             </tr>
@@ -116,7 +116,7 @@
             <td style="border:1px solid; padding: 0.1cm; background-color: #DDDDDD; font-weight: bold; text-align: center">{{ sum | number_format(1, ',', '.') | default('0,0') }}</td>
             <td style="border:1px solid; padding: 0.1cm; background-color: #DDDDDD; font-weight: bold; text-align: center">
                 {% if total_hours %}
-                    {{ (100*sum/total_hours) | number_format(2, ',', '.') | default('0,00') }}%
+                    {{ (100*sum/total_hours) | number_format | default('0,00') }}%
                 {% endif %}
             </td>
         </tr>
@@ -141,7 +141,7 @@
         <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ 'report.summary.percentage'|trans }}</td>
         <td style="border: 1px solid; padding: 0.1cm; text-align: center; font-size: 120%">
             {% if agreement.student.studentGroup.training.programHours %}
-                {{ (100*total/total_hours) | number_format(2, ',', '.') | default('0,00') }}%
+                {{ (100*total/total_hours) | number_format | default('0,00') }}%
             {% endif %}
         </td>
         <td></td>

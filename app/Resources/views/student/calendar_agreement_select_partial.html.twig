@@ -22,7 +22,7 @@
                 <td>{{ element.fromDate|date('d/m/Y') }}</td>
                 <td>{{ element.toDate|date('d/m/Y') }}</td>
                 <td>{{ element.workcenter }}</td>
-                <td>{{ tracked_hours|number_format(2, ',', '.') }}/{{ total_hours|number_format(2, ',', '.') }}{% if total_hours %} ({{ (100 * tracked_hours / total_hours) | number_format(2, ',', '.') }}%){% endif %}</td>
+                <td>{{ tracked_hours|number_format }}/{{ total_hours|number_format }}{% if total_hours %} ({{ (100 * tracked_hours / total_hours) | number_format }}%){% endif %}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
                     {% block buttons %}
@@ -41,7 +41,7 @@
         <tfoot>
             <tr>
                 <td colspan="3">{{ 'form.training_hours'|trans({'%hours%': student.studentGroup.training.programHours}) }}</td>
-                <td>{% if sum_total_hours %} {{ sum_tracked_hours|number_format(2, ',', '.') }}/{{ sum_total_hours|number_format(2, ',', '.') }}({{ (100.0 * sum_tracked_hours / sum_total_hours)|number_format(2, ',', '.') }}%){% endif %}</td>
+                <td>{% if sum_total_hours %} {{ sum_tracked_hours|number_format }}/{{ sum_total_hours|number_format }}({{ (100.0 * sum_tracked_hours / sum_total_hours)|number_format }}%){% endif %}</td>
                 <td></td>
             </tr>
         </tfoot>

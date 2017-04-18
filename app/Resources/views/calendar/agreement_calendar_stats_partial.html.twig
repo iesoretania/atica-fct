@@ -5,7 +5,7 @@
     <dt>{{ 'form.total_hours'|trans }}</dt>
     <dd>{{ total_hours }}</dd>
     <dt>{{ 'form.student_hours'|trans }}</dt>
-    <dd>{{ student_hours | number_format(2, ',', '.') | default('0') }} ({{ (100*student_hours/total_hours) | number_format(2, ',', '.') }}%)</dd>
+    <dd>{{ student_hours | number_format | default('0') }} ({{ (100*student_hours/total_hours) | number_format }}%)</dd>
     <dt>{{ 'form.agreement_hours'|trans }}</dt>
-    <dd>{{ agreement_hours | number_format(2, ',', '.') | default('0') }} ({{ (100*agreement_hours/total_hours) | number_format(2, ',', '.') }}%)</dd>
+    <dd>{{ agreement_hours | number_format | default('0') }} ({{ (100*agreement_hours/total_hours) | number_format }}%)</dd>
 </dl>

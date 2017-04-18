@@ -44,6 +44,10 @@ twig:
         app_organization: "%organization.name%"
         app_organization_city: "%organization.city%"
         menu_extension: "@app.menu_builders_chain"
+    number_format:
+            decimals: 2
+            decimal_point: ','
+            thousands_separator: '.'
 
 # Doctrine Configuration
 doctrine:
