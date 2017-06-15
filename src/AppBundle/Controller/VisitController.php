@@ -179,12 +179,11 @@ class VisitController extends Controller
         return $this->visitFormAction($tutor, $visit, $request);
     }
 
-
     /**
      * @Route("/{id}/informe", name="visit_workcenter_report", methods={"GET"})
      * @Security("is_granted('USER_VISIT_TRACK', tutor)")
      */
-    public function downloadActivityReportAction(User $tutor)
+    public function downloadVisitReportAction(User $tutor)
     {
         $translator = $this->get('translator');
 

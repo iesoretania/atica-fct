@@ -163,4 +163,32 @@ class ExpenseController extends Controller
 
         return $this->expenseFormAction($tutor, $expense, $request);
     }
+
+    /**
+     * @Route("/{id}/informe", name="expense_report", methods={"GET"})
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or is_granted('USER_VISIT_TRACK', tutor)")
+     */
+    public function downloadExpenseReportAction(User $tutor)
+    {
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.expense_report', [], 'expense_report') . ' - ' . (string) $tutor;
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4');
+
+        $obj = $mpdf->getMpdf();
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/A4_vacio.pdf', true);
+
+        $mpdf->useTwigTemplate('expense/expense_report.html.twig', [
+            'tutor' => $tutor,
+            'title' => $title,
+            'expenses' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Expense')->getRelatedExpenses($tutor),
+            'financial_managers' => $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->findBy(['financialManager' => true])
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
+    }
 }

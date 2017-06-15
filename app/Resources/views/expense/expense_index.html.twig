@@ -6,4 +6,5 @@
 
     {{ m.link_button(path(back_route_name), 'arrow-left', 'btn-default', 'form.back'|trans) }}
     {{ m.link_button(path('expense_form_new', {'id': tutor.id}), 'plus', 'btn-success', 'form.new'|trans) }}
+    {{ m.link_button(path('expense_report', {'id': tutor.id}), 'print', 'btn-primary', 'form.report'|trans) }}
 {% endblock %}

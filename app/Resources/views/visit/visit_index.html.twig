@@ -7,5 +7,5 @@
     {{ m.link_button(path(back_route_name), 'arrow-left', 'btn-default', 'form.back'|trans) }}
     {{ m.link_button(path('visit_form_new', {'id': tutor.id}), 'plus', 'btn-success', 'form.new'|trans) }}
     {{ m.link_button(path('visit_workcenter_summary_index', {'id': tutor.id}), 'list', 'btn-primary', 'form.summary'|trans) }}
-    {{ m.link_button(path('visit_workcenter_report', {'id': tutor.id}), 'list', 'btn-primary', 'form.report'|trans) }}
+    {{ m.link_button(path('visit_workcenter_report', {'id': tutor.id}), 'print', 'btn-primary', 'form.report'|trans) }}
 {% endblock %}

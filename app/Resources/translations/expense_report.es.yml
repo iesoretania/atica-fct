@@ -1,0 +1,41 @@
+form.expense_report: Informe de desplazamiento
+
+report.council: CONSEJERÍA DE EDUCACIÓN
+report.page: Página %page% de %total%
+report.title: Control de kilometraje realizado en las visitas
+report.section: SUBPROCESO DE FCT
+report.code: MD750118FC
+report.revision: "REV: 2"
+
+report.academic_year: "CURSO ESCOLAR:"
+report.educational_tutor: "PROFESOR TUTOR/A DOCENTE:"
+
+report.intro: Estimado Sr./a. Secretario/a del centro:
+
+report.text: |
+      Yo, %name%, como tutor/a docente en el módulo de Formación en Centros de Trabajo, y con motivo de las visitas
+      realizadas a las empresas o entidades en las que mis alumnos y alumnas han realizado dicho módulo, comunico las
+      fechas y el número de kilómetros realizados:
+
+report.route.title: RUTA
+report.date.title: FECHA VISITA
+report.kms.title: KILÓMETROS
+report.reviewed.title: REVISADO
+report.date_format: d/m/Y
+report.yes: Sí
+report.no: No
+
+report.text2: |
+      Y, por el presente documento, solicito me sean entregadas las dietas de desplazamiento que me corresponden según
+      la legislación vigente. La firma de la persona que ostenta la responsabilidad económica del centro indica que
+      esta solicitud ha sido aceptada.
+
+report.signature: En %city%, a %day% de %month_string% de %year%
+
+report.educational_tutor.signature: El/la tutor/a docente
+report.financial_manager.signature: El/la secretario/a
+report.signed: Fdo.
+
+
+
+

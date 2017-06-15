@@ -19,6 +19,7 @@ form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Registrar desplazamiento
 form.view: Modificar desplazamiento
+form.report: Imprimir informe de desplazamientos
 
 form.date: Fecha
 form.route: Ruta realizada
