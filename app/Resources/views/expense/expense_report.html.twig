@@ -69,13 +69,13 @@
             <tr style="border: 1px solid">
                 <td style="width: 60%; border: 1px solid; padding: 0.1cm">{{ expense.route }}</td>
                 <td style="width: 20%; border: 1px solid; padding: 0.1cm">{{ expense.date|date('report.date_format'|trans) }}</td>
-                <td style="width: 10%; border: 1px solid; padding: 0.1cm">{{ expense.distance }}</td>
+                <td style="width: 10%; border: 1px solid; padding: 0.1cm">{{ expense.distance | number_format | default('0,00') }}</td>
                 <td style="width: 10%; border: 1px solid; padding: 0.1cm">{{ (expense.reviewed ? 'report.yes' : 'report.no')|trans }}</td>
             </tr>
         {% endfor %}
         <tr style="border: 1px solid">
             <td colspan="2" style="width: 60%; border: 1px solid; padding: 0.1cm; text-align: right; background-color: #DDDDDD">{{ 'report.total'|trans }}</td>
-            <td style="width: 10%; border: 1px solid; padding: 0.1cm; background-color: #DDDDDD">{{ total }}</td>
+            <td style="width: 10%; border: 1px solid; padding: 0.1cm; background-color: #DDDDDD">{{ total | number_format | default('0,00') }}</td>
             <td style="width: 10%; border: 1px solid; padding: 0.1cm; background-color: #DDDDDD"></td>
         </tr>
     </table>
