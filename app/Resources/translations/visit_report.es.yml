@@ -1,0 +1,25 @@
+form.visit_report: Registro de visitas
+
+report.council: CONSEJERÍA DE EDUCACIÓN
+report.page: Página %page% de %total%
+report.title: Ficha de visitas a empresas
+report.section: SUBPROCESO DE FCT
+report.code: MD750109FC
+report.revision: "REV: 3"
+
+report.academic_year: "CURSO ESCOLAR:"
+report.department: "DEPARTAMENTO:"
+report.educational_tutor: "PROFESOR TUTOR/A DOCENTE:"
+
+report.workcenter.title: EMPRESA (Centro de trabajo)
+report.city.title: LOCALIDAD
+report.date.title: FECHA VISITA
+report.students.title: ALUMNOS/AS
+report.date_format: d/m/Y
+
+report.educational_tutor.signature: El tutor/a docente
+report.signed: Fdo.
+
+
+
+

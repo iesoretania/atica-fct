@@ -178,4 +178,33 @@ class VisitController extends Controller
 
         return $this->visitFormAction($tutor, $visit, $request);
     }
+
+
+    /**
+     * @Route("/{id}/informe", name="visit_workcenter_report", methods={"GET"})
+     * @Security("is_granted('USER_VISIT_TRACK', tutor)")
+     */
+    public function downloadActivityReportAction(User $tutor)
+    {
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('form.visit_report', [], 'visit_report') . ' - ' . (string) $tutor;
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4-L');
+
+        $obj = $mpdf->getMpdf();
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/A4A_vacio.pdf', true);
+
+        $mpdf->useTwigTemplate('visit/visit_report.html.twig', [
+            'tutor' => $tutor,
+            'title' => $title,
+            'visits' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Visit')->getRelatedVisits($tutor),
+            'department' => ''
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
+    }
 }

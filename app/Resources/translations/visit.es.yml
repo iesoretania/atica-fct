@@ -15,6 +15,7 @@ form.select: Seleccionar
 form.no_visits: No hay visitas registradas
 
 form.summary: Ver resumen de visitas
+form.report: Generar informe de visitas
 form.submit: Guardar cambios
 form.delete: Eliminar
 form.new: Registrar visita
