@@ -63,7 +63,9 @@
             <td style="width: 10%; border: 1px solid; padding: 0.1cm; font-weight: bold">{{ 'report.kms.title'|trans }}</td>
             <td style="width: 10%; border: 1px solid; padding: 0.1cm; font-weight: bold">{{ 'report.reviewed.title'|trans }}</td>
         </tr>
+        {% set total = 0 %}
         {% for expense in expenses %}
+            {% set total = total + expense.distance %}
             <tr style="border: 1px solid">
                 <td style="width: 60%; border: 1px solid; padding: 0.1cm">{{ expense.route }}</td>
                 <td style="width: 20%; border: 1px solid; padding: 0.1cm">{{ expense.date|date('report.date_format'|trans) }}</td>
@@ -71,6 +73,11 @@
                 <td style="width: 10%; border: 1px solid; padding: 0.1cm">{{ (expense.reviewed ? 'report.yes' : 'report.no')|trans }}</td>
             </tr>
         {% endfor %}
+        <tr style="border: 1px solid">
+            <td colspan="2" style="width: 60%; border: 1px solid; padding: 0.1cm; text-align: right; background-color: #DDDDDD">{{ 'report.total'|trans }}</td>
+            <td style="width: 10%; border: 1px solid; padding: 0.1cm; background-color: #DDDDDD">{{ total }}</td>
+            <td style="width: 10%; border: 1px solid; padding: 0.1cm; background-color: #DDDDDD"></td>
+        </tr>
     </table>
     <p>{{ 'report.text2'|trans }}</p>
     <p></p>

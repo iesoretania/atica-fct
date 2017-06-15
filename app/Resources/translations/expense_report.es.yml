@@ -22,6 +22,7 @@ report.date.title: FECHA VISITA
 report.kms.title: KILÓMETROS
 report.reviewed.title: REVISADO
 report.date_format: d/m/Y
+report.total: "TOTAL DE KILOMETRAJE:"
 report.yes: Sí
 report.no: No
 
