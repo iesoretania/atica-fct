@@ -181,6 +181,12 @@ class ExpenseController extends Controller
         $obj->SetImportUse();
         $obj->SetDocTemplate('pdf/A4_vacio.pdf', true);
 
+        // si no está verificado cada apunte, agregar la marca de agua de borrador
+        if (!$this->getDoctrine()->getManager()->getRepository('AppBundle:Expense')->areExpensesReviewed($tutor)) {
+            $obj->SetWatermarkText($translator->trans('form.draft', [], 'expense_report'), 0.1);
+            $obj->showWatermarkText = true;
+            $obj->watermark_font = 'DejaVuSansCondensed';
+        }
         $mpdf->useTwigTemplate('expense/expense_report.html.twig', [
             'tutor' => $tutor,
             'title' => $title,

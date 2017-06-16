@@ -15,4 +15,16 @@ class ExpenseRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function areExpensesReviewed(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+            ->where('e.teacher = :user')
+            ->andWhere('e.reviewed = 0')
+            ->setParameter('user', $user)
+            ->orderBy('e.date')
+            ->getQuery()
+            ->getSingleScalarResult() == 0;
+    }
 }

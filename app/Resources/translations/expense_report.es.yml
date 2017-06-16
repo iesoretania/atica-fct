@@ -7,6 +7,8 @@ report.section: SUBPROCESO DE FCT
 report.code: MD750118FC
 report.revision: "REV: 2"
 
+form.draft: BORRADOR
+
 report.academic_year: "CURSO ESCOLAR:"
 report.educational_tutor: "PROFESOR TUTOR/A DOCENTE:"
 
