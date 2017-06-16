@@ -23,7 +23,6 @@ class ExpenseRepository extends EntityRepository
             ->where('e.teacher = :user')
             ->andWhere('e.reviewed = 0')
             ->setParameter('user', $user)
-            ->orderBy('e.date')
             ->getQuery()
             ->getSingleScalarResult() == 0;
     }

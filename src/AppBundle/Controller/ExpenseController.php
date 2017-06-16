@@ -158,8 +158,11 @@ class ExpenseController extends Controller
     public function expenseNewAction(User $tutor, Request $request)
     {
         $expense = new Expense();
-        $expense->setTeacher($tutor);
-        $expense->setDate(new \DateTime());
+        $expense
+            ->setTeacher($tutor)
+            ->setDate(new \DateTime())
+            ->setPaid(false)
+            ->setReviewed(false);
 
         return $this->expenseFormAction($tutor, $expense, $request);
     }
