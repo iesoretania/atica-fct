@@ -115,9 +115,8 @@ class MyStudentController extends BaseController
     {
         if ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
             return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'my_student_agreement_calendar');
-        } else {
-            return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'my_student_agreement_calendar');
         }
+        return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'my_student_agreement_calendar');
     }
     /**
      * @Route("/estudiantes/seguimiento/jornada/{id}", name="my_student_agreement_tracking", methods={"GET", "POST"})
@@ -260,8 +259,14 @@ class MyStudentController extends BaseController
         $totalHours = $this->getDoctrine()->getRepository('AppBundle:User')->countAgreementHours($agreement->getStudent());
 
         $activities = [];
+        $documentDate = null;
+
+        /** @var Agreement $a */
         foreach($agreements as $a) {
             $activities[] = [$a, $this->getDoctrine()->getRepository('AppBundle:Agreement')->getActivitiesStats($a)];
+            if (null === $documentDate || $a->getToDate() > $documentDate) {
+                $documentDate = $a->getToDate();
+            }
         }
 
         $mpdf->useTwigTemplate('student/activity_report.html.twig', [
@@ -269,7 +274,8 @@ class MyStudentController extends BaseController
             'title' => $title,
             'activities' => $activities,
             'educational_tutors' => $educationalTutors,
-            'total_hours' => $totalHours
+            'total_hours' => $totalHours,
+            'document_date' => $documentDate
         ]);
 
         $title = str_replace(' ', '_', $title);
