@@ -4,7 +4,13 @@
 {% block content %}
     {% include 'expense/expense_index_partial.html.twig' %}
 
+    <form action="{{ path('expense_operation', {'id': tutor.id}) }}" method="post">
     {{ m.link_button(path(back_route_name), 'arrow-left', 'btn-default', 'form.back'|trans) }}
     {{ m.link_button(path('expense_form_new', {'id': tutor.id}), 'plus', 'btn-success', 'form.new'|trans) }}
     {{ m.link_button(path('expense_report', {'id': tutor.id}), 'print', 'btn-primary', 'form.report'|trans) }}
+    {% if is_granted('ROLE_FINANCIAL_MANAGER') %}
+        {{ m.submit_button('review', 'thumbs-up', 'btn-danger', 'form.reviewed'|trans) }}
+        {{ m.submit_button('pay', 'money', 'btn-danger', 'form.paid'|trans) }}
+    {% endif %}
+    </form>
 {% endblock %}

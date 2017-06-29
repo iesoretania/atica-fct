@@ -26,4 +26,26 @@ class ExpenseRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult() == 0;
     }
+
+    public function setReviewed(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->update()
+            ->set('e.reviewed', 1)
+            ->where('e.teacher = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function setPaid(User $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->update()
+            ->set('e.paid', 1)
+            ->where('e.teacher = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->execute();
+    }
 }

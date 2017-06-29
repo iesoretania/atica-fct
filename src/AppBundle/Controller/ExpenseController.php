@@ -110,7 +110,6 @@ class ExpenseController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/{id}/eliminar/{expense}", name="expense_delete", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_FINANCIAL_MANAGER') or (is_granted('USER_VISIT_TRACK', tutor) and expense.getTeacher() == tutor)")
@@ -165,6 +164,33 @@ class ExpenseController extends Controller
             ->setReviewed(false);
 
         return $this->expenseFormAction($tutor, $expense, $request);
+    }
+
+    /**
+     * @Route("/{id}/operacion", name="expense_operation", methods={"POST"})
+     * @Security("is_granted('ROLE_FINANCIAL_MANAGER')")
+     */
+    public function expenseOperationAction(User $tutor, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            if ($request->request->has('review')) {
+                $em->getRepository('AppBundle:Expense')->setReviewed($tutor);
+            }
+            if ($request->request->has('pay')) {
+                $em->getRepository('AppBundle:Expense')->setPaid($tutor);
+            }
+
+            if ($request->request->has('review')) {
+            }
+            $em->flush();
+            $this->addFlash('success', $this->get('translator')->trans('alert.saved', [], 'expense'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->get('translator')->trans('alert.not_saved', [], 'expense'));
+        }
+
+        return $this->redirectToRoute('expense_index', ['id' => $tutor->getId()]);
     }
 
     /**
