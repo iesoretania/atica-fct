@@ -9,8 +9,8 @@
     {{ m.link_button(path('expense_form_new', {'id': tutor.id}), 'plus', 'btn-success', 'form.new'|trans) }}
     {{ m.link_button(path('expense_report', {'id': tutor.id}), 'print', 'btn-primary', 'form.report'|trans) }}
     {% if is_granted('ROLE_FINANCIAL_MANAGER') %}
-        {{ m.submit_button('review', 'thumbs-up', 'btn-danger', 'form.reviewed'|trans) }}
-        {{ m.submit_button('pay', 'money', 'btn-danger', 'form.paid'|trans) }}
+        {{ m.submit_button('review', 'thumbs-up', 'btn-danger', 'form.review_all'|trans) }}
+        {{ m.submit_button('pay', 'money', 'btn-danger', 'form.pay_all'|trans) }}
     {% endif %}
     </form>
 {% endblock %}

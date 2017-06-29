@@ -20,8 +20,8 @@ form.delete: Eliminar
 form.new: Registrar desplazamiento
 form.view: Modificar desplazamiento
 form.report: Imprimir informe de desplazamientos
-form.reviewed: Marcar todo como revisado
-form.paid: Marcar todo como pagado
+form.review_all: Marcar todo como revisado
+form.pay_all: Marcar todo como pagado
 
 form.date: Fecha
 form.route: Ruta realizada
