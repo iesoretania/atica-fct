@@ -17,6 +17,7 @@ form.reset.password_repeat: Vuelva a introducirla
 form.reset.submit_set: CONFIGURAR NUEVA CONTRASEÑA
 form.reset.sent: Se han enviado instrucciones a la dirección %email%.
 form.reset.error: No se han podido enviar las instrucciones a la dirección indicada.
+form.reset.external_login.error: El usuario tiene activada la autenticación en Séneca, no puede restablecerse su contraseña.
 form.reset.wait: Debe esperar al menos %expiry% minutos entre solicitudes.
 form.reset.email.subject: Restablecimiento de contraseña
 form.reset.email.body: |
