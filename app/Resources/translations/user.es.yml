@@ -42,7 +42,6 @@ alert.not_saved: No se han podido guardar los cambios
 alert.deleted: Usuario eliminado con éxito.
 alert.not_deleted: No se ha podido eliminar el usuario. Compruebe que no tiene datos asociados.
 
-form.delete_back: Volver sin eliminar
 form.view: Detalles
 form.delete: Eliminar
 form.back: Volver

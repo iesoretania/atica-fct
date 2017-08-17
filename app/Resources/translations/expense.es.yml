@@ -3,7 +3,7 @@ browse.expenses: Desplazamientos de %user%
 
 form.educational_tutor: Tutor docente
 form.workcenter: Centro de trabajo
-form.route: Ruta
+form.route: Ruta realizada
 form.mileage: Kilometraje
 form.mileage_total: Km. totales
 form.mileage_verified: Km. verificados
@@ -24,7 +24,6 @@ form.review_all: Marcar todo como revisado
 form.pay_all: Marcar todo como pagado
 
 form.date: Fecha
-form.route: Ruta realizada
 form.reviewed: Revisado
 form.paid: Pagado
 form.notes: Observaciones de la visita

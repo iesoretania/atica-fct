@@ -49,9 +49,6 @@ menu.admin.departments.detail: Gestionar los departamentos del centro
 menu.admin.trainings: Enseñanzas
 menu.admin.trainings.detail: Gestionar enseñanzas del centro
 
-menu.admin.calendar: Calendario escolar
-menu.admin.calendar.detail: Definir periodos no lectivos
-
 menu.admin.programs: Programas formativos
 menu.admin.programs.detail: Gestionar los programas formativos de las enseñanzas
 

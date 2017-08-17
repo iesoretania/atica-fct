@@ -12,9 +12,6 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-/bin/*
-!bin/console
-!bin/symfony_requirements
 /web/bundles/
 /vendor/
 /composer.phar
