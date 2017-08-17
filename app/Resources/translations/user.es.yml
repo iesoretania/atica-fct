@@ -16,6 +16,14 @@ form.tutorized_groups: Es tutor de los grupos
 form.student_group: Es un estudiante del grupo
 form.student_group.placeholder: No es estudiante
 
+form.allow_external_login: Permitir comprobación de contraseña externa
+form.allow_external_login.yes: "El usuario puede activar la autenticación desde Séneca. NOTA: el nombre de usuario deberá ser su usuario IdEA"
+form.allow_external_login.no: El usuario solamente puede utilizar la contraseña almacenada en local
+
+form.external_login: Comprobación de contraseña
+form.external_login.yes: Se comprobará primero en Séneca y luego en local si Séneca no está disponible
+form.external_login.no: Sólo se comprobará en local
+
 form.old_password: Contraseña antigua
 form.new_password: Nueva contraseña
 form.new_password_repeat: Repita nueva contraseña

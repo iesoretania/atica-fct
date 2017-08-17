@@ -88,3 +88,12 @@ services:
         public: false
         tags:
             - { name: security.voter }
+
+    AppBundle\Service\SenecaAuthenticatorService:
+        class: AppBundle\Service\SenecaAuthenticatorService
+        autowire: false
+        arguments: ["%external.url%", "%external.url.force_security%", "%external.enabled%"]
+
+    AppBundle\Security\FormAuthenticator:
+        class: AppBundle\Security\FormAuthenticator
+        autowire: true

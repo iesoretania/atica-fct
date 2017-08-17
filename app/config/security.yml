@@ -17,8 +17,6 @@ security:
         db_provider:
             entity:
                 class: AppBundle:User
-        in_memory:
-            memory: ~
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -28,12 +26,12 @@ security:
 
         login:
             pattern:  ^/(entrar|restablecer)
-            security: false
+            anonymous: ~
 
         main:
-            form_login:
-                login_path: login
-                check_path: login_check
+            guard:
+                authenticators:
+                  - AppBundle\Security\FormAuthenticator
             logout:
                 path: logout
                 target: /

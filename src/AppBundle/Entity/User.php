@@ -25,7 +25,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -34,7 +33,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Entity(repositoryClass="UserRepository")
  * @UniqueEntity("loginUsername")
  */
-class User extends Person implements UserInterface, \Serializable, EquatableInterface
+class User extends Person implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -88,6 +87,18 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
      * @var bool
      */
     protected $financialManager;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    protected $allowExternalLogin;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    protected $externalLogin;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -170,6 +181,9 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
         $this->workTutorAgreements = new ArrayCollection();
         $this->expenses = new ArrayCollection();
         $this->visits = new ArrayCollection();
+
+        $this->allowExternalLogin = false;
+        $this->externalLogin = false;
     }
 
     /**
@@ -391,25 +405,6 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
             $this->loginUsername,
             $this->password
         ) = unserialize($serialized);
-    }
-
-    /**
-     * The equality comparison should neither be done by referential equality
-     * nor by comparing identities (i.e. getId() === getId()).
-     *
-     * However, you do not need to compare every attribute, but only those that
-     * are relevant for assessing whether re-authentication is required.
-     *
-     * Also implementation should consider that $user instance may implement
-     * the extended user interface `AdvancedUserInterface`.
-     *
-     * @param UserInterface $user
-     *
-     * @return bool
-     */
-    public function isEqualTo(UserInterface $user)
-    {
-        return ($this->getRoles() === $user->getRoles());
     }
 
     /**
@@ -810,5 +805,50 @@ class User extends Person implements UserInterface, \Serializable, EquatableInte
     public function isFinancialManager()
     {
         return $this->financialManager;
+    }
+
+    /**
+     * Get allowExternalLogin
+     *
+     * @return bool
+     */
+    public function getAllowExternalLogin()
+    {
+        return $this->allowExternalLogin;
+    }
+
+    /**
+     * Set allowExternalLogin
+     *
+     * @param bool $allowExternalLogin
+     *
+     * @return User
+     */
+    public function setAllowExternalLogin($allowExternalLogin)
+    {
+        $this->allowExternalLogin = $allowExternalLogin;
+        return $this;
+    }
+
+    /**
+     * Has externalLogin
+     *
+     * @return bool
+     */
+    public function hasExternalLogin()
+    {
+        return $this->externalLogin;
+    }
+
+    /**
+     * Set externalLogin
+     *
+     * @param bool $externalLogin
+     * @return User
+     */
+    public function setExternalLogin($externalLogin)
+    {
+        $this->externalLogin = $externalLogin;
+        return $this;
     }
 }

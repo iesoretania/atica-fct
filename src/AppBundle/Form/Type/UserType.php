@@ -21,8 +21,12 @@
 namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Person;
+use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
@@ -95,80 +99,109 @@ class UserType extends AbstractType
                 ->add('financialManager', null, [
                     'label' => 'form.financial_manager',
                     'required' => false
+                ])
+                ->add('allowExternalLogin', ChoiceType::class, [
+                    'label' => 'form.allow_external_login',
+                    'required' => true,
+                    'expanded' => true,
+                    'choices' => [
+                        'form.allow_external_login.no' => false,
+                        'form.allow_external_login.yes' => true
+                    ]
                 ]);
         }
 
-        $builder
-            ->add('tutorizedGroups', null, [
-                'label' => 'form.tutorized_groups',
-                'by_reference' => false,
-                'required' => false,
-                'disabled' => !$options['admin']
-            ])
-            ->add('studentGroup', null, [
-                'label' => 'form.student_group',
-                'placeholder' => 'form.student_group.placeholder',
-                'required' => false,
-                'disabled' => !$options['admin']
-            ]);
 
-        if (!$options['new']) {
-            $builder
-                ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                    'label' => 'form.submit',
-                    'attr' => ['class' => 'btn btn-success']
-                ]);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $builder = $event->getForm();
+            /** @var User $data */
+            $data = $event->getData();
 
-            if (!$options['admin'] && $options['me']) {
+            if ($data->getAllowExternalLogin() || $options['admin']) {
                 $builder
-                    ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
-                        'label' => 'form.old_password',
-                        'required' => false,
-                        'mapped' => false,
-                        'constraints' => [
-                            new UserPassword([
-                                'groups' => ['password']
-                            ]),
-                            new NotBlank([
-                                'groups' => ['password']
-                            ])
+                    ->add('externalLogin', ChoiceType::class, [
+                        'label' => 'form.external_login',
+                        'required' => true,
+                        'expanded' => true,
+                        'choices' => [
+                            'form.external_login.no' => false,
+                            'form.external_login.yes' => true
                         ]
                     ]);
             }
-        }
 
-        if ($options['admin'] || $options['me']) {
             $builder
-                ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
-                    'label' => 'form.new_password',
-                    'required' => $options['new'],
-                    'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
-                    'mapped' => false,
-                    'invalid_message' => 'password.no_match',
-                    'first_options' => [
-                        'label' => 'form.new_password',
-                        'constraints' => [
-                            new Length([
-                                'min' => 7,
-                                'minMessage' => 'password.min_length',
-                                'groups' => ['password']
-                            ]),
-                            new NotBlank([
-                                'groups' => ['password']
-                            ])
-                        ]
-                    ],
-                    'second_options' => [
-                        'label' => 'form.new_password_repeat',
-                        'required' => $options['new']
-                    ]
+                ->add('tutorizedGroups', null, [
+                    'label' => 'form.tutorized_groups',
+                    'by_reference' => false,
+                    'required' => false,
+                    'disabled' => !$options['admin']
                 ])
-                ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                    'label' => 'form.change_password',
-                    'attr' => ['class' => 'btn btn-success'],
-                    'validation_groups' => ['Default', 'password']
+                ->add('studentGroup', null, [
+                    'label' => 'form.student_group',
+                    'placeholder' => 'form.student_group.placeholder',
+                    'required' => false,
+                    'disabled' => !$options['admin']
                 ]);
-        }
+
+            if (!$options['new']) {
+                $builder
+                    ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+                        'label' => 'form.submit',
+                        'attr' => ['class' => 'btn btn-success']
+                    ]);
+
+                if (!$options['admin'] && $options['me']) {
+                    $builder
+                        ->add('oldPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
+                            'label' => 'form.old_password',
+                            'required' => false,
+                            'mapped' => false,
+                            'constraints' => [
+                                new UserPassword([
+                                    'groups' => ['password']
+                                ]),
+                                new NotBlank([
+                                    'groups' => ['password']
+                                ])
+                            ]
+                        ]);
+                }
+            }
+
+            if ($options['admin'] || $options['me']) {
+                $builder
+                    ->add('newPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
+                        'label' => 'form.new_password',
+                        'required' => $options['new'],
+                        'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
+                        'mapped' => false,
+                        'invalid_message' => 'password.no_match',
+                        'first_options' => [
+                            'label' => 'form.new_password',
+                            'constraints' => [
+                                new Length([
+                                    'min' => 7,
+                                    'minMessage' => 'password.min_length',
+                                    'groups' => ['password']
+                                ]),
+                                new NotBlank([
+                                    'groups' => ['password']
+                                ])
+                            ]
+                        ],
+                        'second_options' => [
+                            'label' => 'form.new_password_repeat',
+                            'required' => $options['new']
+                        ]
+                    ])
+                    ->add('changePassword', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+                        'label' => 'form.change_password',
+                        'attr' => ['class' => 'btn btn-success'],
+                        'validation_groups' => ['Default', 'password']
+                    ]);
+            }
+        });
     }
 
     /**
