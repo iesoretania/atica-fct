@@ -14,7 +14,7 @@
             <tr>
                 <td><strong>{{ loop.index }}. </strong>&nbsp;{{ element.date|date('d/m/Y H:i') }}</td>
                 <td>{{ element.workcenter }}</td>
-                <td>{% for student in element.students %}{% if not loop.first %}, {% endif %}{{ student.fullDisplayName }}{% endfor %}</td>
+                <td>{% for agreement in element.agreements %}{% if not loop.first %}, {% endif %}{{ agreement.student.fullDisplayName }}{% endfor %}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-xs btn-block" role="group">
                     {% block buttons %}

@@ -51,10 +51,10 @@ class Visit
     protected $tutor;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="Agreement")
      * @var Collection
      */
-    protected $students;
+    protected $agreements;
 
     /**
      * @ORM\ManyToOne(targetEntity="Workcenter", inversedBy="visits")
@@ -74,7 +74,7 @@ class Visit
      */
     public function __construct()
     {
-        $this->students = new ArrayCollection();
+        $this->agreements = new ArrayCollection();
     }
 
     /**
@@ -184,36 +184,36 @@ class Visit
     }
 
     /**
-     * Add student
+     * Add agreement
      *
-     * @param User $student
+     * @param User $agreement
      *
      * @return Visit
      */
-    public function addStudent(User $student)
+    public function addStudent(User $agreement)
     {
-        $this->students[] = $student;
+        $this->agreements[] = $agreement;
 
         return $this;
     }
 
     /**
-     * Remove student
+     * Remove agreement
      *
-     * @param User $student
+     * @param User $agreement
      */
-    public function removeStudent(User $student)
+    public function removeStudent(User $agreement)
     {
-        $this->students->removeElement($student);
+        $this->agreements->removeElement($agreement);
     }
 
     /**
-     * Get students
+     * Get agreements
      *
      * @return Collection
      */
-    public function getStudents()
+    public function getAgreements()
     {
-        return $this->students;
+        return $this->agreements;
     }
 }

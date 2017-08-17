@@ -75,4 +75,37 @@ class AgreementRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getAgreementsByWorkcenterAndEducationalTutor(Workcenter $workcenter = null, User $tutor = null)
+    {
+        if (null === $workcenter || null === $tutor) {
+            return [];
+        }
+
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT a
+              FROM AppBundle:Agreement a JOIN a.student s WHERE a.workcenter = :workcenter AND a.educationalTutor = :tutor ORDER BY a.quarter, s.lastName, s.firstName')
+            ->setParameter('workcenter', $workcenter)
+            ->setParameter('tutor', $tutor)
+            ->getResult();
+    }
+
+    public function getAgreementsDateRangeByEducationalTutorAndQuarters(User $tutor = null, array $quarters = null)
+    {
+        if (null === $tutor) {
+            return [];
+        }
+
+        if (null === $quarters) {
+            $quarters = [Agreement::FIRST_QUARTER, Agreement::SECOND_QUARTER, Agreement::THIRD_QUARTER];
+        }
+
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT MIN(a.fromDate), MAX(a.toDate)
+              FROM AppBundle:Agreement a WHERE a.educationalTutor = :tutor AND a.quarter IN (:quarters)')
+            ->setParameter('tutor', $tutor)
+            ->setParameter('quarters', $quarters)
+            ->getResult();
+    }
+
 }

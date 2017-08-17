@@ -83,7 +83,7 @@ class VisitController extends Controller
      */
     public function visitWorkcenterSummaryAction(User $tutor)
     {
-        $workcenters = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workcenter')->getVisitRelatedWorkcenters($tutor);
+        $workcenters = $this->getDoctrine()->getManager()->getRepository('AppBundle:Workcenter')->getVisitRelatedWorkcentersByQuarters($tutor);
 
         $title = (string) $tutor;
 
@@ -95,7 +95,7 @@ class VisitController extends Controller
             ],
             'title' => $this->get('translator')->trans('browse.workcenter', ['%user%' => $title], 'visit'),
             'tutor' => $tutor,
-            'elements' => $workcenters,
+            'quarters' => $workcenters,
             'back_route_name' => $this->isGranted('ROLE_DEPARTMENT_HEAD') ? 'visit_index' : 'frontpage'
         ]);
     }

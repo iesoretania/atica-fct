@@ -20,6 +20,7 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workcenter;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -29,22 +30,25 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class VisitType extends AbstractType
 {
 
     private $managerRegistry;
+    private $translator;
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistry $managerRegistry, TranslatorInterface $translator)
     {
         $this->managerRegistry = $managerRegistry;
+        $this->translator = $translator;
     }
 
     public function addElements(FormInterface $form, Workcenter $workcenter = null, User $tutor = null)
     {
         $em = $this->managerRegistry->getManager();
-        $students = $em->getRepository('AppBundle:User')->getStudentsByWorkcenterAndEducationalTutor($workcenter, $tutor);
-        $workcenters = $em->getRepository('AppBundle:Workcenter')->getWorkcentersByEducationTutor($tutor);
+        $agreements = $em->getRepository('AppBundle:Agreement')->getAgreementsByWorkcenterAndEducationalTutor($workcenter, $tutor);
+        $workcenters = $tutor ? $em->getRepository('AppBundle:Workcenter')->getWorkcentersByEducationTutor($tutor) : [];
         $form
             ->add('workcenter', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
                 'label' => 'form.workcenter',
@@ -57,13 +61,15 @@ class VisitType extends AbstractType
                 'label' => 'form.notes',
                 'required' => false
             ])
-            ->add('students', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            ->add('agreements', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
                 'label' => 'form.visited_students',
-                'class' => 'AppBundle\Entity\User',
+                'class' => 'AppBundle\Entity\Agreement',
                 'multiple' => true,
-                'choices' => $students,
+                'choices' => $agreements,
                 'expanded' => true,
-                'choice_label' => 'fullDisplayName',
+                'choice_label' => function(Agreement $a) {
+                    return $a->getStudent()->getFullDisplayName().' - '.$this->translator->trans('form.'.$a->getQuarter().'Q', [], 'agreement');
+                },
                 'required' => false
             ]);
     }

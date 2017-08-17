@@ -57,7 +57,7 @@ services:
 
     AppBundle\Form\Type\VisitType:
         class: AppBundle\Form\Type\VisitType
-        arguments: ['@doctrine']
+        arguments: ['@doctrine', '@translator']
         tags:
             - { name: form.type }
 
