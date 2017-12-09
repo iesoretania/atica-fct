@@ -22,6 +22,11 @@ namespace AppBundle\Service;
 
 class SenecaAuthenticatorService
 {
+    const STATUS_NOT_AVAILABLE = 0;
+    const STATUS_USER_AUTHENTICATED = 1;
+    const STATUS_WRONG_USER_OR_PASSWORD = 2;
+    const STATUS_USER_BLOCKED = 3;
+
     /** @var string */
     private $url;
 
@@ -47,13 +52,13 @@ class SenecaAuthenticatorService
     {
         // devolver error si no está habilitado
         if (false === $this->enabled) {
-            return null;
+            return self::STATUS_NOT_AVAILABLE;
         }
 
         // obtener URL de entrada
         $str = $this->getUrl($this->url, $this->forceSecurity);
         if (!$str) {
-            return null;
+            return self::STATUS_NOT_AVAILABLE;
         }
 
         $dom = new \DOMDocument();
@@ -64,7 +69,7 @@ class SenecaAuthenticatorService
         $hidden = $xpath->query('//input[@name="N_V_"]')->item(0);
 
         if (!$form || !$hidden) {
-            return null;
+            return self::STATUS_NOT_AVAILABLE;
         }
 
         // enviar datos del formulario
@@ -80,7 +85,7 @@ class SenecaAuthenticatorService
         $str = $this->postToUrl($fields, $postUrl, $this->url, $this->forceSecurity);
 
         if (!$str) {
-            return null;
+            return self::STATUS_NOT_AVAILABLE;
         }
 
         $dom = new \DOMDocument();
@@ -89,8 +94,21 @@ class SenecaAuthenticatorService
         $xpath = new \DOMXPath($dom);
         $nav = $xpath->query('//nav');
         $error = $xpath->query('//p[@class="text-danger"]');
+        $message = $error->length > 0 ? $error->item(0)->firstChild->nodeValue : '';
 
-        return $nav->length === 1 && $error->length === 0;
+        if ($nav->length === 1 && $error->length === 0) {
+            $result = self::STATUS_USER_AUTHENTICATED;
+        }
+        elseif (false !== strpos($message, 'Usuario bloqueado')) {
+            $result = self::STATUS_USER_BLOCKED;
+        }
+        elseif (false !== strpos($message, 'Usuario incorrecto')) {
+            $result = self::STATUS_WRONG_USER_OR_PASSWORD;
+        }
+        else {
+            $result = self::STATUS_NOT_AVAILABLE;
+        }
+        return $result;
     }
 
     /**

@@ -116,7 +116,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
         if ($user->hasExternalLogin() && $user->getAllowExternalLogin() && $user->getLoginUsername()) {
             $result = $this->senecaAuthenticator->checkUserCredentials($user->getLoginUsername(), $plainPassword);
 
-            if (true === $result) {
+            if (SenecaAuthenticatorService::STATUS_USER_AUTHENTICATED === $result) {
                 // contraseña correcta, actualizar en local por si perdemos la conectividad
                 if (false === $this->encoder->isPasswordValid($user, $plainPassword)) {
                     $user->setPassword($this->encoder->encodePassword($user, $plainPassword));
@@ -128,11 +128,15 @@ class FormAuthenticator extends AbstractGuardAuthenticator
                 return true;
             }
 
-            if (false === $result) {
+            if (SenecaAuthenticatorService::STATUS_WRONG_USER_OR_PASSWORD === $result) {
                 return false;
             }
 
-            // si no es ni "true" ni "false" es que no se ha podido contactar con Séneca, intentar en local
+            if (SenecaAuthenticatorService::STATUS_USER_BLOCKED === $result) {
+                throw new \Symfony\Component\Security\Core\Exception\LockedException();
+            }
+
+            // si estamos aquí es que no se ha podido contactar con Séneca, intentar en local
         }
 
         // comprobación local
