@@ -282,7 +282,6 @@ class MyStudentController extends BaseController
         return $mpdf->generateInlineFileResponse($title . '.pdf');
     }
 
-
     /**
      * @Route("/estudiantes/detalle/{id}", name="my_student_detail", methods={"GET"})
      * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
@@ -305,6 +304,32 @@ class MyStudentController extends BaseController
                 ],
                 'title' => (string) $student,
                 'user' => $student,
+                'agreement' => $agreement,
+                'form' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/estudiantes/centro/{id}", name="workcenter_detail", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function workCenterDetailAction(Agreement $agreement)
+    {
+        $workcenter = $agreement->getWorkcenter();
+        $form = $this->createForm('AppBundle\Form\Type\WorkcenterType', $workcenter, [
+            'disabled' => true
+        ]);
+
+        return $this->render('student/workcenter_detail.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+                'breadcrumb' => [
+                    ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => $this->get('translator')->trans('form.workcenter', [], 'company')]
+                ],
+                'title' => (string) $workcenter,
+                'workcenter' => $workcenter,
                 'agreement' => $agreement,
                 'form' => $form->createView()
             ]);
