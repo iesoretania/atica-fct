@@ -25,7 +25,9 @@
 {% endif %}
 
 <button class="btn btn-info btn-xs" data-toggle="collapse" data-target="#stats"><i class="fa fa-list-ul"></i> {{ 'form.show_stats'|trans }}</button>
-
+{% if agreement_report is defined and  agreement_report %}
+    <a href="{{ path('my_student_detail', {'id': agreement.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-user"></i> {{ 'student.detail'|trans({}, 'group') }}</a>
+{% endif %}
 <div id="stats" class="collapse">
     <div class="well">
         <dl class="dl">

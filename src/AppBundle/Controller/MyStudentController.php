@@ -281,4 +281,32 @@ class MyStudentController extends BaseController
         $title = str_replace(' ', '_', $title);
         return $mpdf->generateInlineFileResponse($title . '.pdf');
     }
+
+
+    /**
+     * @Route("/estudiantes/detalle/{id}", name="my_student_detail", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function myStudentDetailAction(Agreement $agreement)
+    {
+        $student = $agreement->getStudent();
+        $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $student, [
+            'admin' => false,
+            'disabled' => true
+        ]);
+
+        return $this->render('student/student_detail.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
+                'breadcrumb' => [
+                    ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => $this->get('translator')->trans('student.detail', [], 'group')]
+                ],
+                'title' => (string) $student,
+                'user' => $student,
+                'agreement' => $agreement,
+                'form' => $form->createView()
+            ]);
+    }
 }
