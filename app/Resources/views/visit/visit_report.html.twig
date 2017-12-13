@@ -76,7 +76,7 @@
             <td style="width: 35%; border: 1px solid; padding: 0.1cm">{{ visit.workcenter }}</td>
             <td style="width: 15%; border: 1px solid; padding: 0.1cm">{{ visit.workcenter.city }}</td>
             <td style="width: 15%; border: 1px solid; padding: 0.1cm">{{ visit.date|date('report.date_format'|trans) }}</td>
-            <td style="width: 35%; border: 1px solid; padding: 0.1cm">{{ visit.students | join(', ') }}</td>
+            <td style="width: 35%; border: 1px solid; padding: 0.1cm">{% for agreement in visit.agreements %}{{ agreement.student.fullDisplayName }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
         </tr>
     {% endfor %}
 </table>
