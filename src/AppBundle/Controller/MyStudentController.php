@@ -228,7 +228,8 @@ class MyStudentController extends BaseController
         $mpdf->useTwigTemplate('student/training_program_report.html.twig', [
             'agreement' => $agreement,
             'title' => $title,
-            'learning_program' => $this->getDoctrine()->getRepository('AppBundle:LearningOutcome')->getLearningProgramFromAgreement($agreement)
+            'learning_program' => $this->getDoctrine()->getRepository('AppBundle:LearningOutcome')->getLearningProgramFromAgreement($agreement),
+            'academic_year' => $this->getParameter('academic.year')
         ]);
 
         $title = str_replace(' ', '_', $title);
@@ -275,7 +276,8 @@ class MyStudentController extends BaseController
             'activities' => $activities,
             'educational_tutors' => $educationalTutors,
             'total_hours' => $totalHours,
-            'document_date' => $documentDate
+            'document_date' => $documentDate,
+            'academic_year' => $this->getParameter('academic.year')
         ]);
 
         $title = str_replace(' ', '_', $title);

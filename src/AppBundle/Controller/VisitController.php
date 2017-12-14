@@ -199,7 +199,8 @@ class VisitController extends Controller
         $mpdf->useTwigTemplate('visit/visit_report.html.twig', [
             'tutor' => $tutor,
             'title' => $title,
-            'visits' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Visit')->getRelatedVisits($tutor)
+            'visits' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Visit')->getRelatedVisits($tutor),
+            'academic_year' => $this->getParameter('academic.year')
         ]);
 
         $title = str_replace(' ', '_', $title);

@@ -49,6 +49,9 @@ parameters:
     # Localidad de la organización
     organization.city: "Linares"
 
+    # Curso académico
+    academic.year: "2017-2018"
+
     # iSéneca web URL
     # Poner a "true" la siguiente opción para activar a nivel global la comprobación externa
     external.enabled:           false
