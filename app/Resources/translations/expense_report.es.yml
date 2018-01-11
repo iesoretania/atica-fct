@@ -15,7 +15,7 @@ report.educational_tutor: "PROFESOR TUTOR/A DOCENTE:"
 report.intro: Estimado Sr./a. Secretario/a del centro:
 
 report.text: |
-      Yo, %name%, como tutor/a docente en el módulo de Formación en Centros de Trabajo, y con motivo de las visitas
+      Yo, %name%, con DNI %id%, como tutor/a docente en el módulo de Formación en Centros de Trabajo, y con motivo de las visitas
       realizadas a las empresas o entidades en las que mis alumnos y alumnas han realizado dicho módulo, comunico las
       fechas y el número de kilómetros realizados:
 
