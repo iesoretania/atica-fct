@@ -301,13 +301,14 @@ class MyStudentController extends BaseController
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
                     ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
-                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
                     ['fixed' => $this->get('translator')->trans('student.detail', [], 'group')]
                 ],
                 'title' => (string) $student,
                 'user' => $student,
                 'agreement' => $agreement,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'back' => 'my_student_agreement_calendar'
             ]);
     }
 
@@ -327,13 +328,14 @@ class MyStudentController extends BaseController
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index'),
                 'breadcrumb' => [
                     ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
-                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
                     ['fixed' => $this->get('translator')->trans('form.workcenter', [], 'company')]
                 ],
                 'title' => (string) $workcenter,
                 'workcenter' => $workcenter,
                 'agreement' => $agreement,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'back' => 'my_student_agreement_calendar'
             ]);
     }
 }

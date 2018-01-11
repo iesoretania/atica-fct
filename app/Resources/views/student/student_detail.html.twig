@@ -6,5 +6,5 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
-    {{ m.link_button(path('admin_group_student_calendar', {'id':agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path(back, {'id':agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
 {% endblock %}

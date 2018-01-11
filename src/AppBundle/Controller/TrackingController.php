@@ -296,4 +296,64 @@ class TrackingController extends BaseController
             'agreement' => $agreement
         ]);
     }
+
+    /**
+     * @Route("/seguimiento/acuerdo/estudiante/{id}", name="admin_group_student_agreement_student_info", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+    public function agreementStudentDetailAction(Agreement $agreement)
+    {
+        $student = $agreement->getStudent();
+        $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $student, [
+            'admin' => false,
+            'disabled' => true
+        ]);
+
+        return $this->render('student/student_detail.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => $this->get('translator')->trans('student.detail', [], 'group')]
+                ],
+                'title' => (string) $student,
+                'user' => $student,
+                'agreement' => $agreement,
+                'form' => $form->createView(),
+                'back' => 'admin_group_student_calendar'
+            ]);
+    }
+
+
+    /**
+     * @Route("/seguimiento/acuerdo/centro/{id}", name="admin_group_student_agreement_workcenter_info", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_MANAGE', agreement)")
+     */
+    public function workCenterDetailAction(Agreement $agreement)
+    {
+        $workcenter = $agreement->getWorkcenter();
+        $student = $agreement->getStudent();
+
+        $form = $this->createForm('AppBundle\Form\Type\WorkcenterType', $workcenter, [
+            'disabled' => true
+        ]);
+
+        return $this->render('student/workcenter_detail.html.twig',
+            [
+                'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
+                'breadcrumb' => [
+                    ['fixed' => $student->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $student->getStudentGroup()->getId()]],
+                    ['fixed' => (string) $student, 'path' => 'admin_group_student_agreements', 'options' => ['id' => $student->getId()]],
+                    ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                    ['fixed' => $this->get('translator')->trans('form.workcenter', [], 'company')]
+                ],
+                'title' => (string) $workcenter,
+                'workcenter' => $workcenter,
+                'agreement' => $agreement,
+                'form' => $form->createView(),
+                'back' => 'admin_group_student_calendar'
+            ]);
+    }
 }

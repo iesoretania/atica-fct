@@ -9,7 +9,7 @@
     {% set agreement_report = is_granted('AGREEMENT_REPORT', agreement) %}
 
     {% if activities_stats %}
-        {% include 'calendar/agreement_activities_stats_partial.html.twig' %}
+        {% include 'calendar/agreement_activities_stats_partial.html.twig' with {'student_detail': 'my_student_detail', 'workcenter_detail': 'workcenter_detail'} %}
     {% endif %}
 
     <h2>{{ 'calendar.title'|trans }}</h2>
