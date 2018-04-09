@@ -116,7 +116,8 @@ class GroupController extends BaseController
     public function studentIndexAction(User $student, Request $request)
     {
         $form = $this->createForm('AppBundle\Form\Type\StudentUserType', $student, [
-            'admin' => $this->isGranted('ROLE_ADMIN')
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+            'tutor' => true
         ]);
 
         $form->handleRequest($request);

@@ -41,7 +41,7 @@ class StudentUserType extends AbstractType
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => 'form.email',
                 'required' => false,
-                'disabled' => !$options['admin']
+                'disabled' => !($options['admin'] || $options['tutor'])
             ])
             ->add('reference', null, [
                 'label' => 'form.reference',
@@ -86,6 +86,7 @@ class StudentUserType extends AbstractType
             'data_class' => 'AppBundle\Entity\User',
             'translation_domain' => 'user',
             'admin' => false,
+            'tutor' => false,
             'new' => false
         ]);
     }
