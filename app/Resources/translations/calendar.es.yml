@@ -37,7 +37,8 @@ form.delete_item: Eliminar
 form.delete: Eliminar jornadas seleccionadas
 form.lock_action: Bloquear
 form.unlock_action: Desbloquear
-form.week_lock_action: Bloquear semana
+form.week_lock_action: Bloquear
+form.week_lock_print_action: Bloq. e imp.
 form.week_unlock_action: Desbloquear semana
 form.print: Imprimir hoja semanal
 form.select_deselect: Seleccionar/deseleccionar jornadas

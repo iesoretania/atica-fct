@@ -113,8 +113,16 @@ class MyStudentController extends BaseController
      */
     public function operationWorkdayAction(Agreement $agreement, Request $request)
     {
-        if ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
-            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'my_student_agreement_calendar');
+        if ($request->request->has('week_lock') || $request->request->has('week_lock_print') || ($request->request->has('week_unlock'))) {
+            $this->lockWeekHelper($agreement, $request, $request->request->has('week_lock'));
+
+            if ($request->request->has('week_lock_print')) {
+                $data = $request->request->get('week_lock_print');
+                $week = $data % 100;
+                $year = intdiv($data, 100);
+                return $this->redirectToRoute('my_student_weekly_report_download', ['id' => $agreement->getId(), 'week' => $week, 'year' => $year]);
+            }
+            $this->redirectToRoute('my_student_agreement_calendar', ['id' => $agreement->getId()]);
         }
         return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'my_student_agreement_calendar');
     }

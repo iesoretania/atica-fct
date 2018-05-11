@@ -93,8 +93,15 @@ class TrackingController extends BaseController
         if ($request->request->has('delete')) {
             return $this->deleteWorkdayAction($agreement, $request);
         }
-        if ($request->request->has('week_lock') || ($request->request->has('week_unlock'))) {
-            return $this->lockWeekAction($agreement, $request, $request->request->has('week_lock'), 'admin_group_student_calendar');
+        if ($request->request->has('week_lock') || $request->request->has('week_lock_print') || ($request->request->has('week_unlock'))) {
+            $this->lockWeekHelper($agreement, $request, !$request->request->has('week_unlock'));
+            if ($request->request->has('week_lock_print')) {
+                $data = $request->request->get('week_lock_print');
+                $week = $data % 100;
+                $year = intdiv($data, 100);
+                return $this->redirectToRoute('my_student_weekly_report_download', ['id' => $agreement->getId(), 'week' => $week, 'year' => $year]);
+            }
+            return $this->redirectToRoute('admin_group_student_calendar', ['id' => $agreement->getId()]);
         }
         return $this->lockWorkdayAction($agreement, $request, $request->request->has('lock'), 'admin_group_student_calendar');
     }

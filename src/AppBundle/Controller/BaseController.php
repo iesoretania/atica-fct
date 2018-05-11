@@ -105,11 +105,11 @@ class BaseController extends Controller
         return $this->redirectToRoute($routeName, ['id' => $agreement->getId()]);
     }
 
-    protected function lockWeekAction(Agreement $agreement, Request $request, $status, $routeName)
+    protected function lockWeekHelper(Agreement $agreement, Request $request, $status)
     {
         $this->denyAccessUnlessGranted($status ? 'AGREEMENT_LOCK' : 'AGREEMENT_UNLOCK', $agreement);
 
-        $data = $request->get($status ? 'week_lock' : 'week_unlock');
+        $data = $request->get('week_lock_print', false) ?: $request->get($status ? 'week_lock' : 'week_unlock');
         $week = $data % 100;
         $year = intdiv($data, 100);
 
@@ -128,8 +128,6 @@ class BaseController extends Controller
         } catch (\Exception $e) {
             $this->addFlash('error', $this->get('translator')->trans('alert.locked_error', [], 'calendar'));
         }
-
-        return $this->redirectToRoute($routeName, ['id' => $agreement->getId()]);
     }
 
     protected function deleteWorkdayAction(Agreement $agreement, Request $request)
