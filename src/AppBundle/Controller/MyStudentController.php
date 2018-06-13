@@ -114,7 +114,7 @@ class MyStudentController extends BaseController
     public function operationWorkdayAction(Agreement $agreement, Request $request)
     {
         if ($request->request->has('week_lock') || $request->request->has('week_lock_print') || ($request->request->has('week_unlock'))) {
-            $this->lockWeekHelper($agreement, $request, $request->request->has('week_lock'));
+            $this->lockWeekHelper($agreement, $request, !$request->request->has('week_unlock'));
 
             if ($request->request->has('week_lock_print')) {
                 $data = $request->request->get('week_lock_print');
