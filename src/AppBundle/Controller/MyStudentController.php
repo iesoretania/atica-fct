@@ -26,6 +26,7 @@ use AppBundle\Entity\Workday;
 use AppBundle\Form\Model\Attendance;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -348,18 +349,8 @@ class MyStudentController extends BaseController
             ]);
     }
 
-
-
-    /**
-     * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report", methods={"GET"})
-     * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report", methods={"GET"})
-     * @Route("/asistencia/{id}", name="attendance_report", methods={"GET"})
-     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
-     */
-    public function attendanceReportAction(Request $request, Agreement $agreement)
+    private function attendanceForm(Request $request, Agreement $agreement, Form $form)
     {
-        $form = $this->createForm('AppBundle\Form\Type\AttendanceType', new Attendance());
-
         $title = $this->get('translator')->trans('form.attendance_report', [], 'student');
 
         $routeName = $request->get('_route');
@@ -400,6 +391,19 @@ class MyStudentController extends BaseController
     }
 
     /**
+     * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report", methods={"GET"})
+     * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report", methods={"GET"})
+     * @Route("/asistencia/{id}", name="attendance_report", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
+     */
+    public function attendanceReportAction(Request $request, Agreement $agreement)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\AttendanceType', new Attendance());
+
+        return $this->attendanceForm($request, $agreement, $form);
+    }
+
+    /**
      * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report_download", methods={"POST"})
      * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report_download", methods={"POST"})
      * @Route("/asistencia/{id}", name="attendance_report_download", methods={"POST"})
@@ -411,27 +415,32 @@ class MyStudentController extends BaseController
         $form = $this->createForm('AppBundle\Form\Type\AttendanceType', $attendance);
         $form->handleRequest($request);
 
-        $translator = $this->get('translator');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $translator = $this->get('translator');
 
-        $title = $translator->trans('report.title', [], 'attendance_report') . ' - ' . $agreement->getStudent();
+            $title = $translator->trans('report.title', [], 'attendance_report') . ' - ' . $agreement->getStudent();
 
-        $mpdf = $this->get('sasedev_mpdf');
-        $mpdf->init('', 'A4-L');
+            $mpdf = $this->get('sasedev_mpdf');
+            $mpdf->init('', 'A4-L');
 
-        $obj = $mpdf->getMpdf();
-        $obj->SetImportUse();
-        $obj->SetDocTemplate('pdf/Modelo_de_acreditacion_de_asistencia_a_la_empresa_FCT_vacio.pdf', true);
+            $obj = $mpdf->getMpdf();
+            $obj->SetImportUse();
+            $obj->SetDocTemplate('pdf/Modelo_de_acreditacion_de_asistencia_a_la_empresa_FCT_vacio.pdf', true);
 
-        $agreements = $agreement->getStudent()->getStudentAgreements();
+            $agreements = $agreement->getStudent()->getStudentAgreements();
 
-        $mpdf->useTwigTemplate('student/attendance_report.html.twig', [
-            'agreement' => $agreement,
-            'attendance' => $attendance,
-            'title' => $title,
-            'academic_year' => $this->getParameter('academic.year')
-        ]);
+            $mpdf->useTwigTemplate('student/attendance_report.html.twig', [
+                'agreement' => $agreement,
+                'attendance' => $attendance,
+                'title' => $title,
+                'academic_year' => $this->getParameter('academic.year')
+            ]);
 
-        $title = str_replace(' ', '_', $title);
-        return $mpdf->generateInlineFileResponse($title . '.pdf');
+            $title = str_replace(' ', '_', $title);
+            return $mpdf->generateInlineFileResponse($title . '.pdf');
+        }
+        else {
+            return $this->attendanceForm($request, $agreement, $form);
+        }
     }
 }
