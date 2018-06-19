@@ -13,4 +13,5 @@
     {% include 'student/calendar_agreement_partial.html.twig' %}
 
     {{ m.link_button(path(back_route_name, back_route_params), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+    {{ m.link_button(path('attendance_report', {'id': agreement.id}), 'car', 'btn-success', 'form.attendance_report'|trans) }}
 {% endblock %}

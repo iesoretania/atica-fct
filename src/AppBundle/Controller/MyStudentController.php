@@ -353,7 +353,8 @@ class MyStudentController extends BaseController
     /**
      * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report", methods={"GET"})
      * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report", methods={"GET"})
-     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     * @Route("/asistencia/{id}", name="attendance_report", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
      */
     public function attendanceReportAction(Request $request, Agreement $agreement)
     {
@@ -361,7 +362,8 @@ class MyStudentController extends BaseController
 
         $title = $this->get('translator')->trans('form.attendance_report', [], 'student');
 
-        if ($request->get('_route') === 'admin_group_attendance_report') {
+        $routeName = $request->get('_route');
+        if ($routeName === 'admin_group_attendance_report') {
             $breadcrumb = [
                 ['fixed' => $agreement->getStudent()->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $agreement->getStudent()->getStudentGroup()->getId()]],
                 ['fixed' => (string) $agreement->getStudent(), 'path' => 'admin_group_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
@@ -370,7 +372,7 @@ class MyStudentController extends BaseController
             ];
             $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group');
             $backRoute = 'admin_group_student_calendar';
-        } else {
+        } elseif ($routeName === 'my_student_attendance_report') {
             $breadcrumb =  [
                 ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
                 ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
@@ -378,6 +380,13 @@ class MyStudentController extends BaseController
             ];
             $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index');
             $backRoute = 'my_student_agreement_calendar';
+        } else {
+            $breadcrumb = [
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'student_calendar_agreement', 'options' => ['id' => $agreement->getId()]],
+                ['fixed' => $title]
+            ];
+            $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('student_calendar');
+            $backRoute = 'student_calendar_agreement';
         }
         return $this->render('student/attendance.html.twig',
             [
@@ -393,7 +402,8 @@ class MyStudentController extends BaseController
     /**
      * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report_download", methods={"POST"})
      * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report_download", methods={"POST"})
-     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     * @Route("/asistencia/{id}", name="attendance_report_download", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_ACCESS', agreement)")
      */
     public function downloadAttendanceReportAction(Request $request, Agreement $agreement)
     {
