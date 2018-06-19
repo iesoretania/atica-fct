@@ -53,6 +53,7 @@ form.impersonate: Acceder como el estudiante
 
 form.report: Informe del tutor laboral
 form.activity_report: Imprimir registro de actividades
+form.attendance_report: Acreditación de asistencia
 form.weekly_report: Ficha semanal
 form.work_activities: Áreas y puestos de trabajo donde ha desarrollado las actividades formativas
 form.professional_competence: Valoración de la competencia profesional

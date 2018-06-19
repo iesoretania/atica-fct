@@ -1,0 +1,117 @@
+{% trans_default_domain 'attendance_report' %}
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        @page {
+            margin-top: 3cm;
+            margin-bottom: 6cm;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+            odd-footer-name: html_footer;
+            even-footer-name: html_footer;
+        }
+    </style>
+</head>
+
+<body style="font-family: sans-serif; font-size: 12px">
+
+<htmlpagefooter name="footer">
+
+    <div style="page-break-inside: avoid; text-align: center; padding-bottom: 1cm; font-weight: bold">
+        <div>{{ 'report.signature'|trans({
+                '%city%': agreement.workCenter.city,
+                '%day%': attendance.signDate|date('d'),
+                '%month_string%': ('r_month' ~ (attendance.signDate|date('m') - 1))|trans({}, 'calendar'),
+                '%year%': attendance.signDate|date('Y')
+            }) }}</div>
+        <table style="margin-top: 0.5cm; vertical-align: top">
+            <tr style="width: 100%">
+                <td width="83%" style="text-align: left">
+                    {{ 'report.work_tutor.signature'|trans }}<br /><br /><br /><br /><br /><br /><br /><br />
+                </td>
+                <td style="text-align: right">
+                    {{ 'report.work_tutor.stamp'|trans }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'report.signed'|trans }} {{ agreement.workTutor }}</td>
+                <td>{{ 'report.page'|trans({'%page%': '{PAGENO}', '%total%': '{nbpg}'}) }}</td>
+            </tr>
+        </table>
+
+    </div>
+</htmlpagefooter>
+
+<p style="text-align: center; font-weight: bold">
+    {{ 'report.title'|trans }}
+</p>
+
+{% set column = 0 %}
+<table style="width: 100%; vertical-align: top; font-weight: bold">
+    <tr>
+        <td width="50%">{{ 'report.organization.title'|trans }} {{ app_organization }}</td>
+        <td width="50%">{{ 'report.academic_year.title'|trans }} {{ academic_year }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">{{ 'report.student.title'|trans }} {{ agreement.student }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">{{ 'report.workcenter.title'|trans }} {{ agreement.workcenter }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">{{ 'report.work_tutor.title'|trans }} {{ agreement.workTutor }}</td>
+    </tr>
+</table>
+<p></p>
+<table style="border: 1px solid; border-spacing: 0; width: 100%; vertical-align: middle; margin-bottom: 0.3cm">
+    <thead>
+        <tr>
+            <th width="11%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.date.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.in.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.out.header'|trans }}</th>
+            <th width="11%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.date.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.in.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.out.header'|trans }}</th>
+            <th width="11%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.date.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.in.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.out.header'|trans }}</th>
+            <th width="11%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.date.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.in.header'|trans }}</th><th width="7%" style="border: 1px solid; background-color: #DDDDDD; text-align: center; font-size: 110%; font-weight: bold">{{ 'report.out.header'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for workday in agreement.workdays %}
+                <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ workday.date|date('report.date_format'|trans) }}</td>
+                {% if not loop.last or attendance.startTime3 == '' %}
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime1 }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime1 }}</td>
+                    {% set column = column + 1 %}
+                    {% if column == 4 %}
+                        {% set column = 0 %}
+                        </tr><tr>
+                    {% endif %}
+                    {% if attendance.startTime2 %}
+                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ workday.date|date('report.date_format'|trans) }}</td>
+                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime2 }}</td>
+                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime2 }}</td>
+                        {% set column = column + 1 %}
+                        {% if column == 4 %}
+                            {% set column = 0 %}
+                            </tr><tr>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime3 }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime3 }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+
+<p style="text-align: center; font-weight: bold">
+    {{ 'report.total.title'|trans }} {{ agreement.workdays.count() }}
+</p>
+
+</body>
+</html>

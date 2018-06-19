@@ -1,0 +1,12 @@
+{% trans_default_domain 'student' %}
+{% extends 'layout.html.twig' %}
+{% import '::macros.html.twig' as m %}
+
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ m.link_button(path(back, {'id':agreement.id}), 'arrow-left', 'btn-default', 'form.back'|trans) }}
+        {{ m.submit_button('submit', 'print', 'btn-success', 'form.attendance_report'|trans) }}
+    {{ form_end(form) }}
+
+{% endblock %}

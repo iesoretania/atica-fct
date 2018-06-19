@@ -23,6 +23,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Agreement;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workday;
+use AppBundle\Form\Model\Attendance;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -345,5 +346,82 @@ class MyStudentController extends BaseController
                 'form' => $form->createView(),
                 'back' => 'my_student_agreement_calendar'
             ]);
+    }
+
+
+
+    /**
+     * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report", methods={"GET"})
+     * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report", methods={"GET"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function attendanceReportAction(Request $request, Agreement $agreement)
+    {
+        $form = $this->createForm('AppBundle\Form\Type\AttendanceType', new Attendance());
+
+        $title = $this->get('translator')->trans('form.attendance_report', [], 'student');
+
+        if ($request->get('_route') === 'admin_group_attendance_report') {
+            $breadcrumb = [
+                ['fixed' => $agreement->getStudent()->getStudentGroup()->getName(), 'path' => 'admin_group_students', 'options' => ['id' => $agreement->getStudent()->getStudentGroup()->getId()]],
+                ['fixed' => (string) $agreement->getStudent(), 'path' => 'admin_group_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'admin_group_student_calendar', 'options' => ['id' => $agreement->getId()]],
+                ['fixed' => $title]
+            ];
+            $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group');
+            $backRoute = 'admin_group_student_calendar';
+        } else {
+            $breadcrumb =  [
+                ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
+                ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
+                ['fixed' => $title]
+            ];
+            $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('my_student_index');
+            $backRoute = 'my_student_agreement_calendar';
+        }
+        return $this->render('student/attendance.html.twig',
+            [
+                'menu_item' => $menuItem,
+                'breadcrumb' => $breadcrumb,
+                'title' => (string) $title,
+                'agreement' => $agreement,
+                'form' => $form->createView(),
+                'back' => $backRoute
+            ]);
+    }
+
+    /**
+     * @Route("/alumnado/seguimiento/asistencia/{id}", name="admin_group_attendance_report_download", methods={"POST"})
+     * @Route("/estudiantes/asistencia/{id}", name="my_student_attendance_report_download", methods={"POST"})
+     * @Security("is_granted('AGREEMENT_REPORT', agreement)")
+     */
+    public function downloadAttendanceReportAction(Request $request, Agreement $agreement)
+    {
+        $attendance = new Attendance();
+        $form = $this->createForm('AppBundle\Form\Type\AttendanceType', $attendance);
+        $form->handleRequest($request);
+
+        $translator = $this->get('translator');
+
+        $title = $translator->trans('report.title', [], 'attendance_report') . ' - ' . $agreement->getStudent();
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4-L');
+
+        $obj = $mpdf->getMpdf();
+        $obj->SetImportUse();
+        $obj->SetDocTemplate('pdf/Modelo_de_acreditacion_de_asistencia_a_la_empresa_FCT_vacio.pdf', true);
+
+        $agreements = $agreement->getStudent()->getStudentAgreements();
+
+        $mpdf->useTwigTemplate('student/attendance_report.html.twig', [
+            'agreement' => $agreement,
+            'attendance' => $attendance,
+            'title' => $title,
+            'academic_year' => $this->getParameter('academic.year')
+        ]);
+
+        $title = str_replace(' ', '_', $title);
+        return $mpdf->generateInlineFileResponse($title . '.pdf');
     }
 }
