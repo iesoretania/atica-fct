@@ -25,9 +25,9 @@
     <div style="page-break-inside: avoid; text-align: center; padding-bottom: 1cm; font-weight: bold">
         <div>{{ 'report.signature'|trans({
                 '%city%': agreement.workCenter.city,
-                '%day%': attendance.signDate|date('d'),
-                '%month_string%': ('r_month' ~ (attendance.signDate|date('m') - 1))|trans({}, 'calendar'),
-                '%year%': attendance.signDate|date('Y')
+                '%day%': attendance.signDate|date('d', false),
+                '%month_string%': ('r_month' ~ (attendance.signDate|date('m', false) - 1))|trans({}, 'calendar'),
+                '%year%': attendance.signDate|date('Y', false)
             }) }}</div>
         <table style="margin-top: 0.5cm; vertical-align: top">
             <tr style="width: 100%">
