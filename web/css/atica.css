@@ -434,6 +434,11 @@ form[role=login] button {
     font-family: FontAwesome;
 }
 
+label.control-label.required:after {
+    content: "*";
+    color: darkred;
+}
+
 @media print
 {
     .no-print {
