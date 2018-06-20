@@ -4,8 +4,8 @@ report.page: Página %page% de %total%
 form.start_time1: Hora de inicio jornada normal
 form.end_time1: Hora de fin jornada normal
 
-form.start_time2: Hora de inicio segunda parte (opcional)
-form.end_time2: Hora de fin segunda parte (opcional)
+form.start_time2: Hora de inicio segundo tramo (opcional)
+form.end_time2: Hora de fin segundo tramo (opcional)
 
 form.start_time3: Hora de inicio última jornada (opcional)
 form.end_time3: Hora de fin última jornada (opcional)

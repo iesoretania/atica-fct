@@ -32,28 +32,46 @@ class AttendanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startTime1', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('startTime1', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.start_time1',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => true
             ])
-            ->add('endTime1', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('endTime1', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.end_time1',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => true
             ])
-            ->add('startTime2', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('startTime2', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.start_time2',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => false
             ])
-            ->add('endTime2', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('endTime2', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.end_time2',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => false
             ])
-            ->add('startTime3', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('startTime3', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.start_time3',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => false
             ])
-            ->add('endTime3', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('endTime3', 'Symfony\Component\Form\Extension\Core\Type\TimeType', [
                 'label' => 'form.end_time3',
+                'input' => 'string',
+                'widget' => 'single_text',
+                'with_seconds' => false,
                 'required' => false
             ])
             ->add('signDate', 'Symfony\Component\Form\Extension\Core\Type\DateType', [

@@ -26,39 +26,33 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class Attendance
 {
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @Assert\NotBlank()
      * @var string
      */
     protected $startTime1;
 
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @Assert\NotBlank()
      * @var string
      */
     protected $endTime1;
 
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @var string
      */
     protected $startTime2;
 
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @var string
      */
     protected $endTime2;
 
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @var string
      */
     protected $startTime3;
 
     /**
-     * @Assert\Regex(pattern="/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/")
      * @var string
      */
     protected $endTime3;
@@ -205,7 +199,27 @@ class Attendance
      */
     public function validate(ExecutionContextInterface $context)
     {
-        // Add validation later
+        if ($this->getEndTime1() <= $this->getStartTime1()) {
+            $context->buildViolation('attendance.end_before_start')
+                ->atPath('endTime1')
+                ->addViolation();
+        }
+        if ($this->getStartTime2() && $this->getEndTime2() <= $this->getStartTime2()) {
+            $context->buildViolation('attendance.end_before_start')
+                ->atPath('endTime2')
+                ->addViolation();
+        }
+        if ($this->getStartTime2() && $this->getStartTime2() <= $this->getEndTime1()) {
+            $context->buildViolation('attendance.late_before_initial')
+                ->atPath('startTime2')
+                ->addViolation();
+        }
+        if ($this->getStartTime3() && $this->getEndTime3() <= $this->getStartTime3()) {
+            $context->buildViolation('attendance.end_before_start')
+                ->atPath('endTime3')
+                ->addViolation();
+        }
+
     }
 
 }

@@ -82,8 +82,8 @@
             {% for workday in agreement.workdays %}
                 <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ workday.date|date('report.date_format'|trans) }}</td>
                 {% if not loop.last or attendance.startTime3 == '' %}
-                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime1 }}</td>
-                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime1 }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime1|slice(0, 5) }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime1|slice(0, 5) }}</td>
                     {% set column = column + 1 %}
                     {% if column == 4 %}
                         {% set column = 0 %}
@@ -91,8 +91,8 @@
                     {% endif %}
                     {% if attendance.startTime2 %}
                         <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ workday.date|date('report.date_format'|trans) }}</td>
-                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime2 }}</td>
-                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime2 }}</td>
+                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime2|slice(0, 5) }}</td>
+                        <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime2|slice(0, 5) }}</td>
                         {% set column = column + 1 %}
                         {% if column == 4 %}
                             {% set column = 0 %}
@@ -100,8 +100,8 @@
                         {% endif %}
                     {% endif %}
                 {% else %}
-                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime3 }}</td>
-                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime3 }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.startTime3|slice(0, 5) }}</td>
+                    <td style="border: 1px solid; padding: 0.1cm; text-align: center">{{ attendance.endTime3|slice(0, 5) }}</td>
                 {% endif %}
             {% endfor %}
         </tr>
