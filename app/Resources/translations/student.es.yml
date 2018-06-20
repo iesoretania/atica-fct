@@ -2,6 +2,7 @@ browse.title: Datos del estudiante
 calendar_select.title: Seleccione un acuerdo de colaboración
 calendar.title: Calendario del acuerdo de colaboración
 student.browse.title: Listado de alumnado
+work_tutor.title: Tutor/a laboral
 
 form.login_username: Nombre de usuario
 form.reference: NIF/NIE

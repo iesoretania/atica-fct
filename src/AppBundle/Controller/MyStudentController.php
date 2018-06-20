@@ -26,7 +26,7 @@ use AppBundle\Entity\Workday;
 use AppBundle\Form\Model\Attendance;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -332,6 +332,9 @@ class MyStudentController extends BaseController
         $form = $this->createForm('AppBundle\Form\Type\WorkcenterType', $workcenter, [
             'disabled' => true
         ]);
+        $form2 = $this->createForm('AppBundle\Form\Type\WorkTutorType', $agreement->getWorkTutor(), [
+            'disabled' => true
+        ]);
 
         return $this->render('student/workcenter_detail.html.twig',
             [
@@ -342,14 +345,14 @@ class MyStudentController extends BaseController
                     ['fixed' => $this->get('translator')->trans('form.workcenter', [], 'company')]
                 ],
                 'title' => (string) $workcenter,
-                'workcenter' => $workcenter,
                 'agreement' => $agreement,
                 'form' => $form->createView(),
+                'form2' => $form2->createView(),
                 'back' => 'my_student_agreement_calendar'
             ]);
     }
 
-    private function attendanceForm(Request $request, Agreement $agreement, Form $form)
+    private function attendanceForm(Request $request, Agreement $agreement, FormInterface $form)
     {
         $title = $this->get('translator')->trans('form.attendance_report', [], 'student');
 
@@ -426,8 +429,6 @@ class MyStudentController extends BaseController
             $obj = $mpdf->getMpdf();
             $obj->SetImportUse();
             $obj->SetDocTemplate('pdf/Modelo_de_acreditacion_de_asistencia_a_la_empresa_FCT_vacio.pdf', true);
-
-            $agreements = $agreement->getStudent()->getStudentAgreements();
 
             $mpdf->useTwigTemplate('student/attendance_report.html.twig', [
                 'agreement' => $agreement,
