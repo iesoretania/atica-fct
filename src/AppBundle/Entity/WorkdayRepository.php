@@ -233,7 +233,7 @@ class WorkdayRepository extends EntityRepository
         $workDays = $workday->getAgreement()->getWorkdays();
 
         /** @var Workday $day */
-        foreach($workDays as $day) {
+        foreach ($workDays as $day) {
             $numWeek = $day->getDate()->format('W');
 
             if ($numWeek != $oldNumWeek) {

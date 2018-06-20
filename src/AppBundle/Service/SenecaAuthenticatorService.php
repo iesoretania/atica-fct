@@ -98,14 +98,11 @@ class SenecaAuthenticatorService
 
         if ($nav->length === 1 && $error->length === 0) {
             $result = self::STATUS_USER_AUTHENTICATED;
-        }
-        elseif (false !== strpos($message, 'Usuario bloqueado')) {
+        } elseif (false !== strpos($message, 'Usuario bloqueado')) {
             $result = self::STATUS_USER_BLOCKED;
-        }
-        elseif (false !== strpos($message, 'Usuario incorrecto')) {
+        } elseif (false !== strpos($message, 'Usuario incorrecto')) {
             $result = self::STATUS_WRONG_USER_OR_PASSWORD;
-        }
-        else {
+        } else {
             $result = self::STATUS_NOT_AVAILABLE;
         }
         return $result;
@@ -147,7 +144,7 @@ class SenecaAuthenticatorService
     {
         $fieldsString = '';
         foreach ($fields as $key => $value) {
-            $fieldsString .= $key.'='.$value.'&';
+            $fieldsString .= $key . '=' . $value . '&';
         }
         $fieldsString = rtrim($fieldsString, '&');
 

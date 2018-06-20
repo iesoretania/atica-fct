@@ -282,12 +282,12 @@ class BaseController extends Controller
         $noActivity = htmlentities($translator->trans('form.no_activities', [], 'calendar'));
         $noWorkday = htmlentities($translator->trans('form.no_workday', [], 'calendar'));
 
-        foreach($weekDays as $workDay) {
+        foreach ($weekDays as $workDay) {
             $day = $workDay->getDate()->format('N');
             $activities[$day] = '';
             $hours[$day] = '';
 
-            foreach($workDay->getTrackingActivities() as $trackingActivity) {
+            foreach ($workDay->getTrackingActivities() as $trackingActivity) {
                 $activities[$day] .= '<li style="list-style-position: inside; list-style: square;">';
                 if ($trackingActivity->getActivity()->getCode()) {
                     $activities[$day] .= '<b>' . htmlentities($trackingActivity->getActivity()->getCode()) . ': </b>';

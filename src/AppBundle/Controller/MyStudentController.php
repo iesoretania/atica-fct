@@ -273,7 +273,7 @@ class MyStudentController extends BaseController
         $documentDate = null;
 
         /** @var Agreement $a */
-        foreach($agreements as $a) {
+        foreach ($agreements as $a) {
             $activities[] = [$a, $this->getDoctrine()->getRepository('AppBundle:Agreement')->getActivitiesStats($a)];
             if (null === $documentDate || $a->getToDate() > $documentDate) {
                 $documentDate = $a->getToDate();
@@ -367,7 +367,7 @@ class MyStudentController extends BaseController
             $menuItem = $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group');
             $backRoute = 'admin_group_student_calendar';
         } elseif ($routeName === 'my_student_attendance_report') {
-            $breadcrumb =  [
+            $breadcrumb = [
                 ['fixed' => $agreement->getStudent()->getFullDisplayName(), 'path' => 'my_student_agreements', 'options' => ['id' => $agreement->getStudent()->getId()]],
                 ['fixed' => (string) $agreement->getWorkcenter(), 'path' => 'my_student_agreement_calendar', 'options' => ['id' => $agreement->getId()]],
                 ['fixed' => $title]
@@ -439,8 +439,7 @@ class MyStudentController extends BaseController
 
             $title = str_replace(' ', '_', $title);
             return $mpdf->generateInlineFileResponse($title . '.pdf');
-        }
-        else {
+        } else {
             return $this->attendanceForm($request, $agreement, $form);
         }
     }

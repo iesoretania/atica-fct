@@ -68,8 +68,7 @@ class SecurityController extends Controller
 
                 if ($this->getParameter('external.enabled') && $user->getAllowExternalLogin() && $user->hasExternalLogin()) {
                     $this->addFlash('error', $this->get('translator')->trans('form.reset.external_login.error', [], 'security'));
-                }
-                else {
+                } else {
                     // comprobar que no se ha generado un token hace poco
                     if ($user->getToken() && $user->getTokenValidity() > new \DateTime()) {
                         $error = $this->get('translator')->trans('form.reset.wait', ['%expiry%' => $expire], 'security');

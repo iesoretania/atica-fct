@@ -68,7 +68,7 @@ class VisitType extends AbstractType
                 'choices' => $agreements,
                 'expanded' => true,
                 'choice_label' => function(Agreement $a) {
-                    return $a->getStudent()->getFullDisplayName().' - '.$this->translator->trans('form.'.$a->getQuarter().'Q', [], 'agreement');
+                    return $a->getStudent()->getFullDisplayName() . ' - ' . $this->translator->trans('form.' . $a->getQuarter() . 'Q', [], 'agreement');
                 },
                 'required' => false
             ]);

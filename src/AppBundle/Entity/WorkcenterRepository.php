@@ -40,7 +40,7 @@ class WorkcenterRepository extends EntityRepository
 
         $result = [];
 
-        foreach($quarters as $quarter) {
+        foreach ($quarters as $quarter) {
             $partial = $this->getVisitRelatedWorkcenters($user, [$quarter]);
             if ($partial) {
                 $result[$quarter] = $partial;

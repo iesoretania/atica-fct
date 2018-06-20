@@ -54,7 +54,7 @@ class ActivityType extends AbstractType
                 'required' => false
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             /** @var Activity $activity */
             $activity = $event->getData();
 

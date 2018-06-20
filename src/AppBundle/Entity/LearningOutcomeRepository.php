@@ -15,7 +15,7 @@ class LearningOutcomeRepository extends EntityRepository
         $outcomes = new ArrayCollection();
 
         /** @var Activity $activity */
-        foreach($activities as $activity) {
+        foreach ($activities as $activity) {
             if (false === $outcomes->contains($activity->getLearningOutcome())) {
                 $outcomes->add($activity->getLearningOutcome());
             }
@@ -30,7 +30,7 @@ class LearningOutcomeRepository extends EntityRepository
         $learningOutcomes = $this->getFromAgreement($agreement);
         $result = [];
 
-        foreach($learningOutcomes as $learningOutcome) {
+        foreach ($learningOutcomes as $learningOutcome) {
             $item = [];
             $item['learning_outcome'] = $learningOutcome;
             $item['activities'] = $this->getEntityManager()->getRepository('AppBundle:Activity')->getFromAgreementAndLearningOutcome($agreement, $learningOutcome);

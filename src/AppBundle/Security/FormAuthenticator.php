@@ -152,7 +152,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
+        $targetPath = $request->getSession()->get('_security.' . $providerKey . '.target_path');
         if (!$targetPath) {
             $targetPath = $this->router->generate('frontpage');
         }
