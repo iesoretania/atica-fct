@@ -16,7 +16,7 @@
         "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.6",
         "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "^1.6",
@@ -27,7 +27,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "sasedev/mpdf-bundle": "^1.0"
+        "sasedev/mpdf-bundle": "^1.0",
+        "mpdf/mpdf": "^6.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -52,12 +53,8 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
-        "platform": {
-            "php": "5.5.9"
-        }
+        "bin-dir": "bin"
     },
-
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
