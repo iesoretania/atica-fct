@@ -2,10 +2,9 @@ form.expense_report: Informe de desplazamientos
 
 report.council: CONSEJERÍA DE EDUCACIÓN
 report.page: Página %page% de %total%
-report.title: Control de kilometraje realizado en las visitas
-report.section: SUBPROCESO DE FCT
-report.code: MD750118FC
-report.revision: "REV: 2"
+report.title: REGISTRO DE DESPLAZAMIENTOS FUERA DE LA LOCALIDAD
+report.code: MD850605
+report.revision: "REV: 0"
 
 form.draft: BORRADOR
 

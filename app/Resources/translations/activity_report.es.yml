@@ -2,10 +2,9 @@ form.activity_report: Registro de actividades
 
 report.council: CONSEJERÍA DE EDUCACIÓN
 report.page: Página %page% de %total%
-report.title: Registro de las actividades realizadas por el estudiante en la F.C.T.
-report.section: SUBPROCESO DE FCT
-report.code: MD750110FC
-report.revision: "REV: 1"
+report.title: SEGUIMIENTO DEL PROGRAMA FORMATIVO
+report.code: MD850606
+report.revision: "REV: 0"
 
 report.academic_year: "Curso Escolar:"
 
@@ -21,7 +20,7 @@ report.group: "CURSO Y GRUPO:"
 
 report.activities.title: ACTIVIDADES FORMATIVAS EN EL ENTORNO PRODUCTIVO
 report.workcenter: CENTRO DE TRABAJO
-report.period: "PERÍODO:"
+report.period: "PERIODO:"
 report.date_range: Del %from% al %to%
 report.date_format: d/m/Y
 
