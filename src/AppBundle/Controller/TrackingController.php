@@ -347,6 +347,10 @@ class TrackingController extends BaseController
             'disabled' => true
         ]);
 
+        $form2 = $this->createForm('AppBundle\Form\Type\WorkTutorType', $agreement->getWorkTutor(), [
+            'disabled' => true
+        ]);
+
         return $this->render('student/workcenter_detail.html.twig',
             [
                 'menu_item' => $this->get('app.menu_builders_chain')->getMenuItemByRouteName('admin_tutor_group'),
@@ -360,6 +364,7 @@ class TrackingController extends BaseController
                 'workcenter' => $workcenter,
                 'agreement' => $agreement,
                 'form' => $form->createView(),
+                'form2' => $form2->createView(),
                 'back' => 'admin_group_student_calendar'
             ]);
     }
