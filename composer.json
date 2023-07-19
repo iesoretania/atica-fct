@@ -28,7 +28,7 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "knplabs/knp-paginator-bundle": "^2.5",
         "sasedev/mpdf-bundle": "^1.0",
-        "mpdf/mpdf": "^6.0"
+        "mpdf/mpdf": "^7.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
